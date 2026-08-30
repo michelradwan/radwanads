@@ -176,6 +176,9 @@
         }
 
         async completeOnboarding(type, workspaceName) {
+            const errorEl = document.getElementById('onboarding-error-msg');
+            if (errorEl) errorEl.classList.add('hidden');
+
             try {
                 const res = await fetch('/api/saas-auth', {
                     method: 'POST',
@@ -193,7 +196,12 @@
                 this.onboardingModal?.classList.add('is-hidden');
                 this.revealDashboard();
             } catch (err) {
-                alert(`Erro no onboarding: ${err.message}`);
+                if (errorEl) {
+                    errorEl.textContent = `Erro no onboarding: ${err.message}`;
+                    errorEl.classList.remove('hidden');
+                } else {
+                    console.error('[Onboarding Error]', err.message);
+                }
             }
         }
 
