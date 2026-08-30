@@ -2071,7 +2071,7 @@ tr:hover .row-quick-actions {
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 45;
+    z-index: 60;
     pointer-events: none; /* Container invisível para cliques fora do dock */
     display: flex;
     justify-content: center;
