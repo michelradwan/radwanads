@@ -102,58 +102,62 @@
     --apple-switch-thumb-shadow: 0 3px 8px rgba(0, 0, 0, 0.35), 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-/* ─── LIGHT MODE TOKENS (APPLE / LINEAR / VERCEL EDITORIAL GRADE) ──────────── */
+/* ─── LIGHT MODE TOKENS — RADWAN PORCELAIN OFFICIAL DESIGN SYSTEM ──────────── */
 html[data-theme="light"],
 html.light {
-    --bg-main: #F8F9FA;
+    --bg-main: #F7F7F8;
     --bg-secondary: #FFFFFF;
     --surface-1: #FFFFFF;
-    --surface-elevated: #F1F3F5;
-    --surface-subtle: #F8F9FA;
-    --surface-hover: #E9ECEF;
-    --surface-active: #DEE2E6;
+    --surface-elevated: #FAFAFB;
+    --surface-subtle: #F7F7F8;
+    --surface-hover: #F2F2F4;
+    --surface-active: #E8E8EC;
 
-    --border-subtle: rgba(0, 0, 0, 0.08);
-    --border-hover: rgba(0, 0, 0, 0.16);
-    --border-focus: rgba(255, 45, 45, 0.60);
-    --border-active: rgba(255, 45, 45, 0.45);
+    --border-subtle: #EEEEF0;
+    --border-default: #E3E3E7;
+    --border-strong: #D3D3D8;
+    --border-hover: #D3D3D8;
+    --border-focus: rgba(255, 36, 56, 0.45);
+    --border-active: rgba(255, 36, 56, 0.35);
 
-    --text-primary: #1C1C1E;
-    --text-secondary: #636366;
-    --text-tertiary: #8E8E93;
+    --text-primary: #111113;
+    --text-secondary: #616166;
+    --text-tertiary: #8E8E95;
+    --text-muted: #8E8E95;
+    --text-disabled: #B4B4BA;
     --text-inverse: #FFFFFF;
 
-    --accent-red: #E60000;
-    --accent-red-hover: #FF1A1A;
-    --accent-red-pressed: #CC0000;
-    --accent-red-deep: #B30000;
-    --accent-red-muted: rgba(230, 0, 0, 0.08);
-    --accent-red-border: rgba(230, 0, 0, 0.20);
+    --accent-red: #FF2438;
+    --accent-red-hover: #E9192E;
+    --accent-red-pressed: #CF1427;
+    --accent-red-deep: #B81021;
+    --accent-red-muted: #FFF0F2;
+    --accent-red-border: rgba(255, 36, 56, 0.25);
 
-    --status-success: #1B9E55;
-    --status-success-bg: rgba(27, 158, 85, 0.10);
-    --status-warning: #D98200;
-    --status-warning-bg: rgba(217, 130, 0, 0.10);
-    --status-error: #E03131;
-    --status-error-bg: rgba(224, 49, 49, 0.10);
+    --status-success: #18A957;
+    --status-success-bg: rgba(24, 169, 87, 0.10);
+    --status-warning: #D89500;
+    --status-warning-bg: rgba(216, 149, 0, 0.10);
+    --status-error: #E5484D;
+    --status-error-bg: rgba(229, 72, 77, 0.10);
     --status-info: #0070F3;
     --status-info-bg: rgba(0, 112, 243, 0.10);
 
-    --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
-    --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.03);
-    --shadow-modal: 0 24px 60px -12px rgba(0, 0, 0, 0.18), 0 0 0 1px var(--border-subtle);
+    --shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.03);
+    --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.03), 0 4px 14px rgba(0, 0, 0, 0.035);
+    --shadow-modal: 0 24px 60px -12px rgba(0, 0, 0, 0.18), 0 0 0 1px var(--border-default);
     --shadow-drawer: -16px 0 48px rgba(0, 0, 0, 0.12);
-    --card-shadow-hover: 0 10px 28px -4px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.12);
+    --card-shadow-hover: 0 6px 20px rgba(0, 0, 0, 0.06), 0 0 0 1px #D3D3D8;
 
-    --dock-bg: rgba(255, 255, 255, 0.82);
-    --dock-border: rgba(0, 0, 0, 0.10);
-    --dock-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.04);
-    --dock-item-hover: rgba(0, 0, 0, 0.05);
+    --dock-bg: rgba(255, 255, 255, 0.90);
+    --dock-border: rgba(0, 0, 0, 0.08);
+    --dock-shadow: 0 12px 38px rgba(0, 0, 0, 0.10), 0 2px 6px rgba(0, 0, 0, 0.04);
+    --dock-item-hover: rgba(0, 0, 0, 0.04);
     --dock-tooltip-bg: #FFFFFF;
-    --dock-tooltip-text: #1C1C1E;
-    --dock-tooltip-border: rgba(0, 0, 0, 0.10);
+    --dock-tooltip-text: #111113;
+    --dock-tooltip-border: rgba(0, 0, 0, 0.08);
 
-    --apple-switch-off-bg: #E5E5EA;
+    --apple-switch-off-bg: #D1D1D6;
     --apple-switch-track-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.10);
     --apple-switch-thumb-shadow: 0 3px 8px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.08);
 }
@@ -416,6 +420,40 @@ body.sidebar-open {
 
 .sidebar.collapsed .nav-item span:not(.icon-only) {
     display: none;
+}
+
+/* Sidebar Footer & Collapsed Mini Rail */
+.sidebar-footer-container {
+    margin-top: auto;
+    width: 100%;
+}
+
+.sidebar-footer-compact {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 4px;
+    background: #101014;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    cursor: default;
+}
+
+.sidebar.collapsed .sidebar-footer-expanded {
+    display: none !important;
+}
+
+.sidebar.collapsed .sidebar-footer-compact {
+    display: flex !important;
+}
+
+.status-indicator-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 6px currentColor;
 }
 
 /* ==============================================================================
@@ -2788,6 +2826,30 @@ tr:hover .row-quick-actions {
     border-radius: 12px;
     padding: 6px;
     box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.9);
+    z-index: 100;
+}
+
+#topbar-account-name {
+    display: inline-block;
+    max-width: 170px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+@media (max-width: 1024px) {
+    #topbar-account-name {
+        max-width: 130px;
+    }
+}
+
+@media (max-width: 640px) {
+    #topbar-account-name {
+        max-width: 110px;
+    }
+}
+
 /* ==============================================================================
    RADWAN LUXURY THEME TOGGLE BUTTON (APPLE / LINEAR THEMETOGGLEBUTTON2 SPEC)
    Continuous Morph SVG • 38px-42px Desktop / 36px-40px Mobile • Zero Dependency
@@ -3050,34 +3112,159 @@ html.light .apple-switch-thumb {
 html[data-theme="light"] .btn-secondary,
 html.light .btn-secondary {
     background: #FFFFFF !important;
-    border-color: rgba(0, 0, 0, 0.10) !important;
-    color: #1C1C1E !important;
+    border-color: #E3E3E7 !important;
+    color: #111113 !important;
 }
 
 html[data-theme="light"] .btn-secondary:hover,
 html.light .btn-secondary:hover {
-    background: #F1F3F5 !important;
-    border-color: rgba(0, 0, 0, 0.18) !important;
+    background: #F7F7F8 !important;
+    border-color: #D3D3D8 !important;
 }
 
 html[data-theme="light"] .workspace-switcher-btn,
 html.light .workspace-switcher-btn {
-    background: #F1F3F5 !important;
-    border-color: rgba(0, 0, 0, 0.08) !important;
-    color: #1C1C1E !important;
+    background: #FFFFFF !important;
+    border-color: #E3E3E7 !important;
+    color: #111113 !important;
 }
 
 html[data-theme="light"] #topbar-account-name,
 html.light #topbar-account-name {
-    color: #1C1C1E !important;
+    color: #111113 !important;
 }
 
 html[data-theme="light"] .toast,
 html.light .toast {
     background: #FFFFFF !important;
-    border-color: rgba(0, 0, 0, 0.08) !important;
-    color: #1C1C1E !important;
-    box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.04) !important;
+    border-color: #E3E3E7 !important;
+    color: #111113 !important;
+    box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* ─── PORCELAIN OVERRIDES PARA CARDS, PANELS E CONTAINERS TAILWIND HARDCODED ─── */
+html[data-theme="light"] .panel,
+html[data-theme="light"] .creative-card,
+html[data-theme="light"] .modal-content,
+html[data-theme="light"] .data-table-container,
+html.light .panel,
+html.light .creative-card,
+html.light .modal-content,
+html.light .data-table-container {
+    background: #FFFFFF !important;
+    border-color: #E3E3E7 !important;
+    color: #111113 !important;
+}
+
+html[data-theme="light"] .snapshot-cell,
+html.light .snapshot-cell {
+    background: #FFFFFF !important;
+    border-color: #E3E3E7 !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03), 0 4px 14px rgba(0, 0, 0, 0.03) !important;
+}
+
+html[data-theme="light"] .snapshot-cell p:first-child,
+html.light .snapshot-cell p:first-child {
+    color: #616166 !important;
+}
+
+html[data-theme="light"] .snapshot-cell p:nth-child(2),
+html.light .snapshot-cell p:nth-child(2) {
+    color: #111113 !important;
+}
+
+html[data-theme="light"] .snapshot-cell p:last-child,
+html.light .snapshot-cell p:last-child {
+    color: #8E8E95 !important;
+}
+
+html[data-theme="light"] .input-dark,
+html[data-theme="light"] input[type="text"],
+html[data-theme="light"] input[type="password"],
+html[data-theme="light"] input[type="email"],
+html[data-theme="light"] input[type="number"],
+html[data-theme="light"] select,
+html[data-theme="light"] textarea,
+html.light .input-dark,
+html.light input[type="text"],
+html.light input[type="password"],
+html.light input[type="email"],
+html.light input[type="number"],
+html.light select,
+html.light textarea {
+    background-color: #FFFFFF !important;
+    border-color: #E3E3E7 !important;
+    color: #111113 !important;
+}
+
+html[data-theme="light"] input::placeholder,
+html[data-theme="light"] textarea::placeholder,
+html.light input::placeholder,
+html.light textarea::placeholder {
+    color: #8E8E95 !important;
+}
+
+html[data-theme="light"] .bg-\[\#141418\],
+html[data-theme="light"] .bg-\[\#101014\],
+html[data-theme="light"] .bg-\[\#15151A\],
+html[data-theme="light"] .bg-\[\#16161D\],
+html[data-theme="light"] .bg-\[\#0D0D12\],
+html[data-theme="light"] .bg-\[\#09090C\],
+html.light .bg-\[\#141418\],
+html.light .bg-\[\#101014\],
+html.light .bg-\[\#15151A\],
+html.light .bg-\[\#16161D\],
+html.light .bg-\[\#0D0D12\],
+html.light .bg-\[\#09090C\] {
+    background-color: #FFFFFF !important;
+    border-color: #E3E3E7 !important;
+}
+
+html[data-theme="light"] .text-\[\#F5F5F7\],
+html.light .text-\[\#F5F5F7\] {
+    color: #111113 !important;
+}
+
+html[data-theme="light"] .text-\[\#A1A1A6\],
+html.light .text-\[\#A1A1A6\] {
+    color: #616166 !important;
+}
+
+html[data-theme="light"] .text-\[\#6E6E73\],
+html.light .text-\[\#6E6E73\] {
+    color: #8E8E95 !important;
+}
+
+html[data-theme="light"] .border-white\/\[0\.08\],
+html[data-theme="light"] .border-white\/\[0\.07\],
+html[data-theme="light"] .border-white\/\[0\.06\],
+html[data-theme="light"] .border-white\/\[0\.05\],
+html[data-theme="light"] .border-white\/\[0\.04\],
+html.light .border-white\/\[0\.08\],
+html.light .border-white\/\[0\.07\],
+html.light .border-white\/\[0\.06\],
+html.light .border-white\/\[0\.05\],
+html.light .border-white\/\[0\.04\] {
+    border-color: #EEEEF0 !important;
+}
+
+html[data-theme="light"] .sidebar,
+html.light .sidebar {
+    background: #FFFFFF !important;
+    border-right-color: #ECECEF !important;
+}
+
+html[data-theme="light"] .nav-link:hover,
+html.light .nav-link:hover {
+    background-color: #F7F7F8 !important;
+    color: #111113 !important;
+}
+
+html[data-theme="light"] .nav-link.active,
+html.light .nav-link.active {
+    background-color: #FFF0F2 !important;
+    color: #111113 !important;
+    border-left: 3px solid #FF2438 !important;
 }
 
 /* Reduced Motion Override */
@@ -3085,9 +3272,396 @@ html.light .toast {
     .theme-toggle-icon,
     .theme-sun-ray,
     .theme-celestial-body,
-    .theme-moon-mask {
+    .theme-moon-mask,
+    .op-link-flow {
         transition: none !important;
+        animation: none !important;
     }
+}
+
+/* ==============================================================================
+   MAPA DA OPERAÇÃO (TOPOLOGIA VISUAL, FLOW DIAGRAM & FEIXE RADWAN)
+   ============================================================================== */
+.op-map-viewport {
+    background: radial-gradient(circle at 50% 50%, rgba(255, 45, 45, 0.025) 0%, rgba(9, 9, 12, 1) 100%), #09090C;
+    box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8);
+    touch-action: none;
+}
+
+.op-map-grid-bg {
+    position: absolute;
+    inset: -200%;
+    width: 500%;
+    height: 500%;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+    background-size: 24px 24px;
+    opacity: 0.45;
+    pointer-events: none;
+}
+
+.op-map-world {
+    transform-origin: 0 0;
+    transition: transform 0.05s ease-out;
+}
+
+.op-map-world.is-animating {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.op-map-phase {
+    position: relative;
+    z-index: 2;
+}
+
+.op-map-phase-header {
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.op-map-phase-tag {
+    font-size: 9.5px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: #FF2D2D;
+    font-family: 'JetBrains Mono', monospace;
+    display: block;
+    margin-bottom: 2px;
+}
+
+/* Cards / Nodes da Operação */
+.op-map-node {
+    background: #111116;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 14px;
+    padding: 12px 14px;
+    cursor: grab;
+    transition: box-shadow 180ms ease, border-color 180ms ease, opacity 180ms ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    touch-action: none;
+    user-select: none;
+}
+
+.op-map-node:active {
+    cursor: grabbing;
+}
+
+.op-map-node.is-dragging {
+    z-index: 50 !important;
+    cursor: grabbing !important;
+    box-shadow: 0 16px 36px rgba(255, 45, 45, 0.25), 0 0 0 1.5px #FF2D2D !important;
+    user-select: none !important;
+    touch-action: none !important;
+}
+
+.op-map-node.elastic-limit-pulse {
+    animation: elastic-node-pulse 220ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+@keyframes elastic-node-pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.025); }
+    100% { transform: scale(1); }
+}
+
+.edge-limit-glow {
+    stroke: #FF2D2D !important;
+    stroke-width: 2px !important;
+    filter: drop-shadow(0 0 6px #FF2D2D) !important;
+    transition: stroke 200ms ease, filter 200ms ease;
+}
+
+@keyframes op-link-spring-pulse {
+    0% { stroke-width: 1.25px; stroke: rgba(255, 255, 255, 0.08); }
+    50% { stroke-width: 2.5px; stroke: #FF2D2D; filter: drop-shadow(0 0 6px #FF2D2D); }
+    100% { stroke-width: 1.25px; stroke: rgba(255, 255, 255, 0.08); filter: none; }
+}
+
+.op-map-node:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 45, 45, 0.4);
+    background: #16161D;
+    box-shadow: 0 8px 24px rgba(255, 45, 45, 0.12), 0 0 0 1px rgba(255, 45, 45, 0.25);
+}
+
+.op-map-node.is-active {
+    border-color: #FF2D2D !important;
+    background: #181822 !important;
+    box-shadow: 0 0 16px rgba(255, 45, 45, 0.22), 0 0 0 1.5px #FF2D2D !important;
+}
+
+.op-map-node.is-dimmed {
+    opacity: 0.50;
+    filter: none !important;
+    transform: none !important;
+}
+
+/* Inspector Drawer Lateral Discreto (Não-bloqueante) */
+.op-map-drawer {
+    width: 380px;
+    max-width: 90vw;
+    background: rgba(14, 14, 18, 0.96) !important;
+    border-left: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: -8px 0 32px rgba(0, 0, 0, 0.45) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 50;
+}
+
+@media (max-width: 768px) {
+    .op-map-drawer {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 75vh !important;
+        top: auto !important;
+        bottom: 0 !important;
+        border-left: none !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-radius: 20px 20px 0 0;
+        transform: translateY(100%) !important;
+    }
+    .op-map-drawer.is-open {
+        transform: translateY(0) !important;
+    }
+}
+
+/* Badges e Dots de Status do Node */
+.op-node-status-badge {
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.badge-healthy {
+    background: rgba(31, 193, 107, 0.15);
+    color: #1FC16B;
+    border: 1px solid rgba(31, 193, 107, 0.3);
+}
+
+.badge-warning {
+    background: rgba(255, 179, 0, 0.15);
+    color: #FFB300;
+    border: 1px solid rgba(255, 179, 0, 0.3);
+}
+
+.badge-inactive {
+    background: rgba(255, 255, 255, 0.06);
+    color: #8E8E93;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.op-node-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot-healthy {
+    background: #1FC16B;
+    box-shadow: 0 0 6px #1FC16B;
+}
+
+.dot-warning {
+    background: #FFB300;
+    box-shadow: 0 0 6px #FFB300;
+}
+
+.dot-inactive {
+    background: #6E6E73;
+}
+
+/* ─── MAPA DA OPERAÇÃO: PORCELAIN LIGHT MODE SYSTEM ─────────────────────── */
+html[data-theme="light"] .op-map-viewport,
+html.light .op-map-viewport {
+    background: #FBFBFC !important;
+    border-color: #E3E3E7 !important;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.03) !important;
+}
+
+html[data-theme="light"] .op-map-grid-bg,
+html.light .op-map-grid-bg {
+    background-image: radial-gradient(rgba(0, 0, 0, 0.065) 1px, transparent 1px) !important;
+    opacity: 0.8 !important;
+}
+
+html[data-theme="light"] .op-map-phase-header,
+html.light .op-map-phase-header {
+    border-bottom-color: #EEEEF0 !important;
+}
+
+html[data-theme="light"] .op-map-phase-header h4,
+html.light .op-map-phase-header h4 {
+    color: #111113 !important;
+}
+
+html[data-theme="light"] .op-map-node,
+html.light .op-map-node {
+    background: #FFFFFF !important;
+    border-color: #E3E3E7 !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03), 0 4px 12px rgba(0, 0, 0, 0.03) !important;
+}
+
+html[data-theme="light"] .op-map-node:hover,
+html.light .op-map-node:hover {
+    border-color: rgba(255, 36, 56, 0.4) !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(255, 36, 56, 0.15) !important;
+}
+
+html[data-theme="light"] .op-map-node.is-active,
+html.light .op-map-node.is-active {
+    border-color: #FF2438 !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 0 0 3px rgba(255, 36, 56, 0.08), 0 6px 18px rgba(255, 36, 56, 0.12) !important;
+}
+
+html[data-theme="light"] .op-map-node h5,
+html.light .op-map-node h5 {
+    color: #111113 !important;
+}
+
+html[data-theme="light"] .op-map-node p,
+html.light .op-map-node p {
+    color: #616166 !important;
+    border-top-color: #EEEEF0 !important;
+}
+
+html[data-theme="light"] .op-link-base,
+html.light .op-link-base {
+    stroke: #D8D8DD !important;
+}
+
+html[data-theme="light"] .op-link-base.status-inactive,
+html.light .op-link-base.status-inactive {
+    stroke: #EAEAEA !important;
+}
+
+html[data-theme="light"] .op-link-base.status-warning,
+html.light .op-link-base.status-warning {
+    stroke: rgba(216, 149, 0, 0.45) !important;
+}
+
+html[data-theme="light"] .op-map-drawer,
+html.light .op-map-drawer {
+    background: rgba(255, 255, 255, 0.98) !important;
+    border-left-color: #E3E3E7 !important;
+    box-shadow: -8px 0 32px rgba(0, 0, 0, 0.08) !important;
+}
+
+html[data-theme="light"] .op-map-drawer h3,
+html.light .op-map-drawer h3 {
+    color: #111113 !important;
+}
+
+html[data-theme="light"] #drawer-node-footer,
+html.light #drawer-node-footer {
+    background: #F7F7F8 !important;
+    border-top-color: #EEEEF0 !important;
+}
+
+html[data-theme="light"] #op-map-minimap,
+html.light #op-map-minimap {
+    background: rgba(255, 255, 255, 0.94) !important;
+    border-color: #E3E3E7 !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06) !important;
+}
+
+html[data-theme="light"] #op-map-minimap span,
+html.light #op-map-minimap span {
+    color: #616166 !important;
+}
+
+/* Camada SVG & Feixe Contínuo de Dados — ORTHOGONAL CIRCUITS & RADWAN BEAM */
+.op-link-base {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.10);
+    stroke-width: 1.25px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: opacity 180ms ease, stroke 180ms ease, stroke-width 180ms ease;
+}
+
+.op-link-base.status-warning,
+.op-link-base.status-pending {
+    stroke: rgba(255, 179, 0, 0.45) !important;
+    stroke-dasharray: 5 4;
+}
+
+.op-link-base.status-inactive {
+    stroke: rgba(255, 255, 255, 0.08) !important;
+    stroke-dasharray: 4 4;
+}
+
+.op-link-base.status-error {
+    stroke: #FF453A !important;
+    stroke-width: 1.5px !important;
+}
+
+.op-link-base.status-not_configured {
+    stroke: rgba(255, 255, 255, 0.05) !important;
+    stroke-dasharray: 3 3;
+}
+
+html[data-theme="light"] .op-link-base.status-warning,
+html[data-theme="light"] .op-link-base.status-pending,
+html.light .op-link-base.status-warning,
+html.light .op-link-base.status-pending {
+    stroke: #D98200 !important;
+    stroke-dasharray: 5 4;
+}
+
+html[data-theme="light"] .op-link-base.status-inactive,
+html.light .op-link-base.status-inactive {
+    stroke: #D3D3D8 !important;
+    stroke-dasharray: 4 4;
+}
+
+html[data-theme="light"] .op-link-base.status-error,
+html.light .op-link-base.status-error {
+    stroke: #E5484D !important;
+    stroke-width: 1.5px !important;
+}
+
+html[data-theme="light"] .op-link-base.status-not_configured,
+html.light .op-link-base.status-not_configured {
+    stroke: #E5E5EA !important;
+    stroke-dasharray: 3 3;
+}
+
+.op-link-base.is-dimmed {
+    opacity: 0.25;
+}
+
+.op-link-base.is-highlighted {
+    stroke: #FF2D2D !important;
+    stroke-width: 1.75px !important;
+    opacity: 1 !important;
+}
+
+/* Feixe Luminoso Vermelho Contínuo Único (Normalizado via pathLength="1000") */
+.op-link-flow {
+    fill: none !important;
+    stroke: #FF2D2D !important;
+    stroke-width: 1.85px !important;
+    stroke-linecap: round !important;
+    stroke-linejoin: round !important;
+    filter: drop-shadow(0 0 3px rgba(255, 45, 45, 0.95)) !important;
+    transition: opacity 180ms ease, stroke-width 180ms ease;
+    pointer-events: none;
+}
+
+.op-link-flow.is-dimmed {
+    opacity: 0.35 !important;
+}
+
+.op-link-flow.is-highlighted {
+    stroke-width: 2.75px !important;
+    stroke: #FF4A55 !important;
+    filter: drop-shadow(0 0 6px #FF2D2D) !important;
 }
 
 

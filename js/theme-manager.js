@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ==============================================================================
  * RADWAN ADS — THEME MANAGER (DARK ↔ LIGHT ENGINE)
  * Vanilla JS • Zero External Dependencies • Instant FOUC Prevention • Storage Sync
@@ -97,17 +97,34 @@
         }
 
         bindEvents() {
-            document.addEventListener('DOMContentLoaded', () => {
+            const attachListeners = () => {
                 this.updateToggleButtons();
-                
-                // Listener global para cliques no botão
                 document.querySelectorAll('.theme-toggle-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        this.toggleTheme();
-                    });
+                    if (!btn.dataset.themeBound) {
+                        btn.dataset.themeBound = 'true';
+                        btn.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            this.toggleTheme();
+                        });
+                    }
                 });
+            };
+
+            // Delegação global imediata
+            document.addEventListener('click', (e) => {
+                const btn = e.target.closest('.theme-toggle-btn');
+                if (btn) {
+                    e.preventDefault();
+                    this.toggleTheme();
+                }
             });
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', attachListeners);
+            } else {
+                attachListeners();
+            }
 
             // Sincroniza se o usuário alterar a preferência do sistema operacional e não tiver fixado
             if (window.matchMedia) {

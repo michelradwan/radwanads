@@ -142,28 +142,68 @@
     <!-- ===================================================================
          3. ONBOARDING GUIADO (PRIMEIRA VEZ)
          =================================================================== -->
-    <div id="onboarding-modal-screen" class="is-hidden fixed inset-0 z-[9999] bg-[#050506] flex items-center justify-center p-4">
-        <div class="w-full max-w-md bg-[#0E0E12] border border-white/[0.08] rounded-2xl p-6 sm:p-8 space-y-6 shadow-2xl">
-            <div class="text-center space-y-2">
-                <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-white/[0.04] mb-1">
-                    <span class="text-2xl">🚀</span>
+    <!-- ===================================================================
+         3. ONBOARDING GUIADO (PRÁTICO & ESSENCIAL)
+         =================================================================== -->
+    <div id="onboarding-modal-screen" class="is-hidden fixed inset-0 z-[9999] bg-[#050506]/95 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="w-full max-w-md bg-[#0E0E12] border border-white/[0.08] rounded-2xl p-6 sm:p-8 space-y-6 shadow-2xl relative">
+            <!-- Header do Onboarding -->
+            <div class="text-center space-y-1.5">
+                <div class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-white/[0.04] mb-1">
+                    <span class="text-2xl" id="onb-header-icon">🚀</span>
                 </div>
-                <h3 class="text-lg font-bold text-[#F5F5F7]">Como você vai usar o RADWAN ADS?</h3>
-                <p class="text-xs text-[#A1A1A6]">Selecione o modelo que melhor se adapta à sua rotina:</p>
+                <h3 class="text-lg font-bold text-[#F5F5F7]" id="onb-header-title">Como você vai usar o RADWAN ADS?</h3>
+                <p class="text-xs text-[#A1A1A6]" id="onb-header-desc">Vamos configurar sua primeira operação em poucos passos.</p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                <button type="button" onclick="window.authGate.completeOnboarding('solo', 'Minha Operação')" class="p-4 rounded-xl bg-[#15151A] border border-white/[0.08] hover:border-[#FF2D2D] text-left transition-all group">
-                    <span class="text-xl block mb-2">🏪</span>
-                    <h4 class="font-bold text-xs text-[#F5F5F7] group-hover:text-[#FF2D2D]">Minha Operação</h4>
-                    <p class="text-[10.5px] text-[#6E6E73] mt-1">Gerencio meu próprio e-commerce ou infoproduto.</p>
-                </button>
+            <!-- PASSO 1: Seleção de Perfil (Solo vs Gestor) -->
+            <div id="onb-step-1" class="space-y-3">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <button type="button" onclick="window.authGate.selectUsageType('solo')" class="p-4 rounded-xl bg-[#15151A] border border-white/[0.08] hover:border-[#FF2D2D] text-left transition-all group">
+                        <span class="text-xl block mb-2">🏪</span>
+                        <h4 class="font-bold text-xs text-[#F5F5F7] group-hover:text-[#FF2D2D]">Minha Operação</h4>
+                        <p class="text-[10.5px] text-[#6E6E73] mt-1">Gerencio meu próprio e-commerce ou infoproduto.</p>
+                    </button>
 
-                <button type="button" onclick="window.authGate.completeOnboarding('agency', 'Primeiro Cliente')" class="p-4 rounded-xl bg-[#15151A] border border-white/[0.08] hover:border-[#FF2D2D] text-left transition-all group">
-                    <span class="text-xl block mb-2">👥</span>
-                    <h4 class="font-bold text-xs text-[#F5F5F7] group-hover:text-[#FF2D2D]">Gerencio Clientes</h4>
-                    <p class="text-[10.5px] text-[#6E6E73] mt-1">Sou gestor ou agência com múltiplas contas e clientes.</p>
-                </button>
+                    <button type="button" onclick="window.authGate.selectUsageType('agency')" class="p-4 rounded-xl bg-[#15151A] border border-white/[0.08] hover:border-[#FF2D2D] text-left transition-all group">
+                        <span class="text-xl block mb-2">👥</span>
+                        <h4 class="font-bold text-xs text-[#F5F5F7] group-hover:text-[#FF2D2D]">Gerencio Clientes</h4>
+                        <p class="text-[10.5px] text-[#6E6E73] mt-1">Sou gestor ou agência com múltiplos clientes.</p>
+                    </button>
+                </div>
+            </div>
+
+            <!-- PASSO 2: Nome da Operação -->
+            <div id="onb-step-2" class="space-y-4 hidden">
+                <div class="space-y-1.5">
+                    <label class="block text-[11px] font-bold text-[#A1A1A6]">Nome da Primeira Operação</label>
+                    <input type="text" id="onb-workspace-name-input" placeholder="Ex: Minha Loja Principal" class="w-full bg-[#15151A] border border-white/[0.1] rounded-xl px-3.5 py-2.5 text-xs text-[#F5F5F7] placeholder-[#6E6E73] focus:outline-none focus:border-[#FF2D2D]">
+                    <p class="text-[10px] text-[#6E6E73]">Você poderá renomear ou adicionar outras operações a qualquer momento.</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button type="button" onclick="window.authGate.goToOnboardingStep(1)" class="btn btn-secondary flex-1 py-2 text-xs">Voltar</button>
+                    <button type="button" onclick="window.authGate.submitWorkspaceCreation()" class="btn btn-primary flex-1 py-2 text-xs font-bold">Continuar</button>
+                </div>
+            </div>
+
+            <!-- PASSO 3: Conexão Meta & Finalização -->
+            <div id="onb-step-3" class="space-y-4 hidden text-center">
+                <div class="p-4 rounded-xl bg-[#15151A] border border-white/[0.08] space-y-2 text-left">
+                    <div class="flex items-center gap-2">
+                        <span class="text-lg">🔑</span>
+                        <h4 class="font-bold text-xs text-[#F5F5F7]">Conectar Meta Ads</h4>
+                    </div>
+                    <p class="text-[11px] text-[#A1A1A6] leading-relaxed">Conecte sua conta Meta agora para carregar campanhas e métricas em tempo real, ou configure mais tarde nas configurações da operação.</p>
+                </div>
+
+                <div class="space-y-2 pt-1">
+                    <button type="button" onclick="window.dashboard.openTokenModal(); window.authGate.finishOnboarding();" class="btn btn-primary w-full py-2.5 text-xs font-bold justify-center rounded-xl">
+                        <span>🔑 Conectar Meta Agora</span>
+                    </button>
+                    <button type="button" onclick="window.authGate.finishOnboarding()" class="w-full text-center py-2 text-xs text-[#A1A1A6] hover:text-[#F5F5F7] transition-colors">
+                        Configurar depois e abrir dashboard →
+                    </button>
+                </div>
             </div>
 
             <div id="onboarding-error-msg" class="text-xs text-[#FF453A] bg-[#FF453A]/10 border border-[#FF453A]/20 p-2.5 rounded-lg hidden text-center"></div>
@@ -199,9 +239,12 @@
                                 <div id="workspace-list-container" class="space-y-1">
                                     <!-- Renderizado dinamicamente -->
                                 </div>
-                                <div class="border-t border-white/[0.06] my-1 pt-1">
+                                <div class="border-t border-white/[0.06] my-1 pt-1 space-y-0.5">
                                     <button onclick="window.authGate.showOnboarding(); document.getElementById('workspace-dropdown-menu').classList.add('hidden');" class="w-full text-left px-2.5 py-1.5 text-xs text-[#FF2D2D] hover:bg-white/[0.04] rounded-lg font-semibold flex items-center gap-1.5">
                                         <span>+</span> <span>Nova Operação</span>
+                                    </button>
+                                    <button onclick="window.dashboard.openWorkspaceManagerModal(); document.getElementById('workspace-dropdown-menu').classList.add('hidden');" class="w-full text-left px-2.5 py-1.5 text-xs text-[#A1A1A6] hover:text-[#F5F5F7] hover:bg-white/[0.04] rounded-lg font-medium flex items-center gap-1.5">
+                                        <span>⚙️</span> <span>Gerenciar Operações</span>
                                     </button>
                                 </div>
                             </div>
@@ -369,6 +412,11 @@
                             <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
                             <span class="truncate">Visão Geral</span>
                         </div>
+                        <div class="nav-item" data-nav-target="operation-map" title="Mapa Visual da Operação (Fluxo, Nodes & Health Check)">
+                            <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+                            <span class="truncate">Mapa da Operação</span>
+                            <span class="ml-auto text-[9.5px] px-1.5 py-0.2 rounded bg-[#FF2D2D]/15 text-[#FF2D2D] font-bold border border-[#FF2D2D]/30 font-mono">LIVE</span>
+                        </div>
                         <div class="nav-item" data-nav-target="campaigns" title="Gestão de Campanhas, Conjuntos e Anúncios">
                             <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path></svg>
                             <span class="truncate">Campanhas</span>
@@ -424,15 +472,24 @@
                 </div>
             </div>
 
-            <!-- Sidebar Footer -->
-            <div class="p-3 rounded-xl bg-[#101014] border border-white/[0.05] space-y-1.5 text-[11px]">
-                <div class="flex items-center justify-between">
-                    <span class="text-[#6E6E73]">Parada de Segurança</span>
-                    <span id="sidebar-emergency-status" class="text-[#1FC16B] font-semibold">Inativa</span>
+            <!-- Sidebar Footer (Expandido e Mini Rail Compacto para Collapsed) -->
+            <div id="sidebar-footer-container" class="sidebar-footer-container">
+                <!-- Versão Expandida -->
+                <div class="sidebar-footer-expanded p-3 rounded-xl bg-[#101014] border border-white/[0.05] space-y-1.5 text-[11px]">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[#6E6E73]">Parada de Segurança</span>
+                        <span id="sidebar-emergency-status" class="text-[#1FC16B] font-semibold">Inativa</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-[#6E6E73]">Modo do RADWAN</span>
+                        <span id="sidebar-ai-mode" class="text-[#A1A1A6] font-semibold">Assistido</span>
+                    </div>
                 </div>
-                <div class="flex items-center justify-between">
-                    <span class="text-[#6E6E73]">Modo do RADWAN</span>
-                    <span id="sidebar-ai-mode" class="text-[#A1A1A6] font-semibold">Assistido</span>
+
+                <!-- Versão Mini Rail Compacta (Exibida exclusivamente quando .sidebar.collapsed) -->
+                <div class="sidebar-footer-compact" title="Status: Normal • Modo Assistido">
+                    <span class="status-indicator-dot bg-[#1FC16B]" title="Parada de Segurança Inativa"></span>
+                    <span class="status-indicator-dot bg-[#A1A1A6]" title="Modo Assistido"></span>
                 </div>
             </div>
         </aside>
@@ -1298,12 +1355,12 @@
 
                     <div class="space-y-3.5">
                         <!-- Master Sound Switch -->
-                        <div class="flex items-center justify-between p-3 rounded-xl bg-[#141418] border border-white/[0.05]">
-                            <div>
+                        <div class="p-3 rounded-xl bg-[#141418] border border-white/[0.05] flex items-center justify-between gap-3">
+                            <div class="min-w-0 pr-2">
                                 <p class="font-semibold text-xs text-[#F5F5F7]">Notificações Sonoras Globais</p>
-                                <p class="text-[11px] text-[#6E6E73]">Habilita feedback acústico quando novas vendas ou PIX forem confirmados</p>
+                                <p class="text-[11px] text-[#6E6E73] truncate sm:whitespace-normal">Habilita feedback acústico quando novas vendas ou PIX forem confirmados</p>
                             </div>
-                            <label class="apple-switch" title="Notificações Sonoras Globais">
+                            <label class="apple-switch flex-shrink-0" title="Notificações Sonoras Globais">
                                 <input type="checkbox" id="setting-sound-master" checked onchange="window.salesNotificationEngine?.updateAudioSetting('soundEnabled', this.checked)">
                                 <span class="apple-switch-track"><span class="apple-switch-thumb"></span></span>
                             </label>
@@ -1390,11 +1447,247 @@
                 </div>
             </section>
 
+            <!-- ===================================================================
+                 SEÇÃO 8: MAPA DA OPERAÇÃO (FLOW DIAGRAM & LIVE DATA FEIXE ENGINE)
+                 =================================================================== -->
+            <section id="view-operation-map" class="view-section space-y-6 hidden">
+                <!-- Header do Mapa da Operação com Toolbar Interativa Completa -->
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-2 border-b border-white/[0.06]">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xl">🗺️</span>
+                            <h2 class="text-lg font-bold text-[#F5F5F7]">Mapa da Operação</h2>
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-[#1FC16B]/15 text-[#1FC16B] border border-[#1FC16B]/30 flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-[#1FC16B] animate-pulse"></span>
+                                FLUXO ATIVO
+                            </span>
+                            <span id="op-map-layout-badge" class="px-2 py-0.5 rounded-full text-[10px] font-mono text-[#A1A1A6] bg-white/[0.04] border border-white/[0.08]">Layout Padrão</span>
+                        </div>
+                        <p class="text-xs text-[#A1A1A6] mt-0.5">Topologia viva: arraste nós, use <kbd class="px-1 py-0.2 text-[9.5px] font-mono bg-white/[0.06] border border-white/[0.1] rounded text-[#A1A1A6]">Ctrl+Scroll</kbd> para zoom, inspecione conexões e restaure a qualquer momento.</p>
+                    </div>
+
+                    <!-- Toolbar de Controles de Câmera e Layout -->
+                    <div class="flex items-center gap-1.5 flex-wrap self-start lg:self-auto bg-[#101014] border border-white/[0.08] p-1.5 rounded-xl shadow-lg">
+                        <!-- Busca Rápida de Nodes -->
+                        <div class="relative flex items-center">
+                            <span class="absolute left-2.5 text-xs text-[#6E6E73] pointer-events-none">🔍</span>
+                            <input type="text" id="op-map-search-input" placeholder="Buscar nó..." oninput="window.operationMapEngine?.handleSearch(this.value)" class="pl-7 pr-2 py-1 text-xs bg-[#15151A] border border-white/[0.06] rounded-lg text-[#F5F5F7] placeholder-[#6E6E73] w-28 focus:w-36 transition-all focus:border-[#FF2D2D]/50 focus:outline-none font-medium">
+                        </div>
+
+                        <div class="w-[1px] h-5 bg-white/[0.08] mx-0.5"></div>
+
+                        <!-- Controles de Zoom em Steps Exatos de 10% (50% a 180%) -->
+                        <div class="flex items-center bg-[#15151A] rounded-lg p-0.5 border border-white/[0.06]">
+                            <button type="button" id="op-map-zoom-out-btn" onclick="window.operationMapEngine?.zoomOut()" class="btn-icon w-7 h-7 text-xs text-[#A1A1A6] hover:text-[#F5F5F7] disabled:opacity-30" title="Diminuir Zoom (Ctrl -)">−</button>
+                            <button type="button" onclick="window.operationMapEngine?.resetZoom()" id="op-map-zoom-label" class="px-2 text-[11px] font-mono font-bold text-[#F5F5F7] hover:text-[#FF2D2D]" title="Resetar para 100% (Tecla 0)">100%</button>
+                            <button type="button" id="op-map-zoom-in-btn" onclick="window.operationMapEngine?.zoomIn()" class="btn-icon w-7 h-7 text-xs text-[#A1A1A6] hover:text-[#F5F5F7] disabled:opacity-30" title="Aumentar Zoom (Ctrl +)">+</button>
+                        </div>
+
+                        <div class="w-[1px] h-5 bg-white/[0.08] mx-0.5"></div>
+
+                        <!-- Câmera: Fit e Center -->
+                        <button type="button" onclick="window.operationMapEngine?.fitToScreen()" class="btn btn-secondary btn-sm text-xs py-1 px-2.5" title="Ajustar todos os nós na tela (Tecla F)">
+                            <span>🎯</span> <span class="hidden sm:inline">Ajustar</span>
+                        </button>
+                        <button type="button" onclick="window.operationMapEngine?.centerView()" class="btn btn-secondary btn-sm text-xs py-1 px-2.5" title="Centralizar visão (Tecla C)">
+                            <span>🔍</span> <span class="hidden sm:inline">Centralizar</span>
+                        </button>
+
+                        <div class="w-[1px] h-5 bg-white/[0.08] mx-0.5"></div>
+
+                        <!-- Features Avançadas: Diagnosticar & Seguir Fluxo -->
+                        <button type="button" id="op-map-diagnose-btn" onclick="window.operationMapEngine?.toggleDiagnoseMode()" class="btn btn-secondary btn-sm text-xs py-1 px-2.5 text-[#F5F5F7]" title="Diagnosticar gargalos e status da operação">
+                            <span>🩺</span> <span class="hidden md:inline">Diagnosticar</span>
+                        </button>
+                        <button type="button" id="op-map-flow-btn" onclick="window.operationMapEngine?.playTraceFlow()" class="btn btn-secondary btn-sm text-xs py-1 px-2.5 text-[#F5F5F7]" title="Seguir fluxo sequencial da cadeia">
+                            <span>▶️</span> <span class="hidden md:inline">Seguir Fluxo</span>
+                        </button>
+
+                        <div class="w-[1px] h-5 bg-white/[0.08] mx-0.5"></div>
+
+                        <!-- Layout: Auto-organizar & Restaurar -->
+                        <button type="button" id="op-map-auto-organize-btn" onclick="window.operationMapEngine?.autoOrganize()" class="btn btn-secondary btn-sm text-xs py-1 px-2.5 text-[#F5F5F7] hover:border-[#FF2D2D]/40" title="Organizar nós automaticamente">
+                            <span>⚡</span> <span class="hidden sm:inline">Auto-organizar</span>
+                        </button>
+                        <button type="button" onclick="window.operationMapEngine?.promptRestoreLayout()" class="btn btn-secondary btn-sm text-xs py-1 px-2.5 text-[#A1A1A6] hover:text-[#FF453A]" title="Restaurar posições originais de fábrica">
+                            <span>↺</span> <span class="hidden sm:inline">Restaurar</span>
+                        </button>
+
+                        <div class="w-[1px] h-5 bg-white/[0.08] mx-0.5"></div>
+
+                        <!-- Lock Layout Toggle -->
+                        <button type="button" id="op-map-lock-btn" onclick="window.operationMapEngine?.toggleLockLayout()" class="btn-icon w-7 h-7 text-xs text-[#A1A1A6] hover:text-[#F5F5F7]" title="Bloquear posições dos nós">🔓</button>
+
+                        <!-- Undo / Redo Histórico Visual -->
+                        <button type="button" id="op-map-undo-btn" onclick="window.operationMapEngine?.undo()" class="btn-icon w-7 h-7 text-xs text-[#A1A1A6] hover:text-white disabled:opacity-30" title="Desfazer movimento (Ctrl+Z)" disabled>↶</button>
+                        <button type="button" id="op-map-redo-btn" onclick="window.operationMapEngine?.redo()" class="btn-icon w-7 h-7 text-xs text-[#A1A1A6] hover:text-white disabled:opacity-30" title="Refazer movimento (Ctrl+Y)" disabled>↷</button>
+                    </div>
+                </div>
+
+                <!-- Banner Informativo de Diagnóstico / Seguir Fluxo (Ativado sob demanda) -->
+                <div id="op-map-feedback-banner" class="hidden p-3 rounded-xl bg-[#15151A] border border-[#FF2D2D]/30 flex items-center justify-between text-xs transition-all">
+                    <div class="flex items-center gap-2">
+                        <span id="op-map-feedback-icon" class="text-base">🩺</span>
+                        <span id="op-map-feedback-text" class="text-[#F5F5F7] font-medium">Modo de Diagnóstico Ativo</span>
+                    </div>
+                    <button type="button" onclick="window.operationMapEngine?.clearFeedbackBanner()" class="text-[#A1A1A6] hover:text-[#F5F5F7] text-xs">✕ Fechar</button>
+                </div>
+
+                <!-- Canvas / Container do Grafo Interativo -->
+                <div id="operation-map-container" class="op-map-viewport relative rounded-2xl bg-[#09090C] border border-white/[0.08] overflow-hidden min-h-[660px] h-[72vh] select-none cursor-grab active:cursor-grabbing">
+                    <!-- Fundo em Grid Tecnológico Pontilhado Sutil com Transform de Pan/Zoom -->
+                    <div id="op-map-grid-bg" class="op-map-grid-bg"></div>
+
+                    <!-- World Transform Container (Move e Aplica Escala em Nodes e SVGs juntos) -->
+                    <div id="op-map-world" class="op-map-world absolute inset-0 origin-top-left will-change-transform">
+                        <!-- Camada de Conexões SVG com Feixe de Dados Animado -->
+                        <svg id="op-map-svg-layer" class="op-map-svg-layer absolute inset-0 w-full h-full pointer-events-none" style="min-width: 2600px; min-height: 1800px;">
+                        <defs>
+                            <!-- Gradiente Suave para o Feixe Luminoso Vermelho RADWAN -->
+                            <linearGradient id="radwan-beam-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#FF2D2D" stop-opacity="0" />
+                                <stop offset="50%" stop-color="#FFF" stop-opacity="0.95" />
+                                <stop offset="100%" stop-color="#FF2D2D" stop-opacity="0" />
+                            </linearGradient>
+                            <filter id="radwan-beam-glow" x="-20%" y="-20%" width="140%" height="140%">
+                                <feGaussianBlur stdDeviation="1.5" result="blur" />
+                                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                            </filter>
+                        </defs>
+                        <g id="op-map-links-base"></g>
+                        <g id="op-map-links-flow"></g>
+                    </svg>
+
+                    <!-- Camada de Nodes DOM (Organização por Fases da Operação) -->
+                    <div id="op-map-nodes-container" class="op-map-nodes-container relative z-10 p-6 sm:p-8 flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-8 xl:gap-6 min-w-full">
+                        <!-- FASE 1: AQUISIÇÃO & TRÁFEGO -->
+                        <div class="op-map-phase flex-1 space-y-4" data-phase="acquisition">
+                            <div class="op-map-phase-header">
+                                <span class="op-map-phase-tag">01. AQUISIÇÃO</span>
+                                <h4 class="text-xs font-bold text-[#F5F5F7]">Origem do Tráfego</h4>
+                            </div>
+                            <div class="space-y-3" id="nodes-col-acquisition">
+                                <!-- Nodes Meta Ads & Conta de Anúncios injetados dinamicamente -->
+                            </div>
+                        </div>
+
+                        <!-- FASE 2: RASTREAMENTO & TRACKING -->
+                        <div class="op-map-phase flex-1 space-y-4" data-phase="tracking">
+                            <div class="op-map-phase-header">
+                                <span class="op-map-phase-tag">02. TRACKING</span>
+                                <h4 class="text-xs font-bold text-[#F5F5F7]">Pixels, CAPI & UTM</h4>
+                            </div>
+                            <div class="space-y-3" id="nodes-col-tracking">
+                                <!-- Nodes Tracking & Rastreamento -->
+                            </div>
+                        </div>
+
+                        <!-- FASE 3: CONVERSÃO & CHECKOUT -->
+                        <div class="op-map-phase flex-1 space-y-4" data-phase="conversion">
+                            <div class="op-map-phase-header">
+                                <span class="op-map-phase-tag">03. CONVERSÃO</span>
+                                <h4 class="text-xs font-bold text-[#F5F5F7]">Checkout & PIX</h4>
+                            </div>
+                            <div class="space-y-3" id="nodes-col-conversion">
+                                <!-- Nodes Checkout, PIX e Pagamento -->
+                            </div>
+                        </div>
+
+                        <!-- FASE 4: RECEITA & VENDAS -->
+                        <div class="op-map-phase flex-1 space-y-4" data-phase="revenue">
+                            <div class="op-map-phase-header">
+                                <span class="op-map-phase-tag">04. RECEITA</span>
+                                <h4 class="text-xs font-bold text-[#F5F5F7]">Vendas & Faturamento</h4>
+                            </div>
+                            <div class="space-y-3" id="nodes-col-revenue">
+                                <!-- Nodes Aprovados & Receita -->
+                            </div>
+                        </div>
+
+                        <!-- FASE 5: INTELIGÊNCIA & AUTOPILOT -->
+                        <div class="op-map-phase flex-1 space-y-4" data-phase="intelligence">
+                            <div class="op-map-phase-header">
+                                <span class="op-map-phase-tag">05. DECISÃO & AÇÃO</span>
+                                <h4 class="text-xs font-bold text-[#F5F5F7]">RADWAN Brain & Autopilot</h4>
+                            </div>
+                            <div class="space-y-3" id="nodes-col-intelligence">
+                                <!-- Nodes RADWAN Brain, Notificações & Autopilot -->
+                            </div>
+                        </div>
+                    </div>
+                    </div><!-- /#op-map-world -->
+
+                    <!-- Mini-Map Discreto de Navegação (Desktop >= 1024px) -->
+                    <div id="op-map-minimap" class="hidden lg:flex flex-col absolute bottom-4 right-4 z-20 w-44 h-28 bg-[#0D0D12]/90 border border-white/[0.1] rounded-xl p-1.5 shadow-2xl backdrop-blur-md overflow-hidden pointer-events-none select-none">
+                        <div class="flex items-center justify-between text-[9px] text-[#6E6E73] font-mono px-1 pb-1 border-b border-white/[0.05]">
+                            <span>MINI-MAP</span>
+                            <span id="minimap-zoom-val">100%</span>
+                        </div>
+                        <div class="relative flex-1 w-full h-full overflow-hidden mt-1">
+                            <div id="minimap-nodes-layer" class="absolute inset-0"></div>
+                            <div id="minimap-viewport-indicator" class="absolute border border-[#FF2D2D] bg-[#FF2D2D]/10 rounded transition-all duration-75"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Drawer Lateral de Inspeção do Node -->
+                <div id="op-map-drawer" class="op-map-drawer fixed top-0 right-0 h-full w-full max-w-md bg-[#0D0D11] border-l border-white/[0.08] shadow-2xl z-50 transform translate-x-full transition-transform duration-300 ease-out flex flex-col">
+                    <div class="p-5 border-b border-white/[0.07] flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <span id="drawer-node-icon" class="text-2xl">⚡</span>
+                            <div>
+                                <h3 id="drawer-node-title" class="font-bold text-sm text-[#F5F5F7]">Detalhes do Componente</h3>
+                                <p id="drawer-node-category" class="text-[10.5px] text-[#A1A1A6]">Fase da Operação</p>
+                            </div>
+                        </div>
+                        <button type="button" onclick="window.operationMapEngine?.closeDrawer()" class="btn-icon text-gray-400 hover:text-white">✕</button>
+                    </div>
+
+                    <div id="drawer-node-body" class="p-5 space-y-4 flex-1 overflow-y-auto text-xs">
+                        <!-- Informações, Métricas e Ações Dinâmicas -->
+                    </div>
+
+                    <div id="drawer-node-footer" class="p-4 border-t border-white/[0.06] bg-[#09090C] flex items-center justify-between flex-shrink-0">
+                        <button type="button" onclick="window.operationMapEngine?.closeDrawer()" class="btn btn-secondary btn-sm text-xs">Fechar</button>
+                        <div id="drawer-node-actions" class="flex items-center gap-2"></div>
+                    </div>
+                </div>
+                <!-- Backdrop do Drawer Discreto (Apenas Mobile/Tablet Leve, Sem Blur Bloqueante) -->
+                <div id="op-map-drawer-backdrop" class="fixed inset-0 bg-black/20 md:hidden z-40 hidden" onclick="window.operationMapEngine?.closeDrawer()"></div>
+            </section>
+
             </div>
         </main>
     </div>
 
     <!-- MODAIS, DRAWERS E TOASTS -->
+
+    <!-- Modal Gerenciador de Operações / Workspaces -->
+    <div id="workspace-manager-modal" class="modal-overlay hidden">
+        <div class="modal-content max-w-md p-6 space-y-5">
+            <div class="flex items-center justify-between border-b border-white/[0.07] pb-3">
+                <div class="flex items-center space-x-2">
+                    <span class="text-xl">⚙️</span>
+                    <h3 class="font-bold text-[#F5F5F7] text-base">Gerenciar Operações</h3>
+                </div>
+                <button onclick="window.dashboard.closeWorkspaceManagerModal()" class="text-xs text-[#A1A1A6] hover:text-[#F5F5F7]">✕ Fechar</button>
+            </div>
+
+            <!-- Lista de Operações com Edição / Renomeação -->
+            <div class="space-y-2.5 max-h-[300px] overflow-y-auto" id="workspace-manager-list">
+                <!-- Renderizado dinamicamente via JS -->
+            </div>
+
+            <div class="pt-2 border-t border-white/[0.06] flex items-center justify-between">
+                <button type="button" onclick="window.dashboard.closeWorkspaceManagerModal(); window.authGate.showOnboarding();" class="btn btn-primary btn-sm text-xs">
+                    <span>+ Nova Operação</span>
+                </button>
+                <button type="button" onclick="window.dashboard.closeWorkspaceManagerModal()" class="btn btn-secondary btn-sm text-xs">
+                    Concluir
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- Modal Seleção de Período Personalizado & Comparação -->
     <div id="custom-date-modal" class="modal-overlay hidden">
@@ -2052,6 +2345,8 @@
     <script src="js/autopilot.js?v=8.0-hardened"></script>
     <script src="js/dock-physics.js?v=8.0-dock"></script>
     <script src="js/sales-notification-engine.js?v=8.0-sales"></script>
+    <script src="js/graph-router.js?v=8.0-router"></script>
+    <script src="js/operation-map.js?v=8.0-map"></script>
     <script src="js/dashboard.js?v=8.0-hardened"></script>
 </body>
 

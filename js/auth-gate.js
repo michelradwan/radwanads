@@ -177,11 +177,55 @@
             }
         }
 
-        // ─── 4. ONBOARDING GUIADO (MINHA OPERAÇÃO VS GESTOR) ─────────────────────
+        // ─── 4. ONBOARDING GUIADO (PASSOS 1, 2 E 3) ─────────────────────────────
         showOnboarding() {
             if (this.onboardingModal) {
+                this.goToOnboardingStep(1);
                 this.onboardingModal.classList.remove('is-hidden');
             }
+        }
+
+        goToOnboardingStep(step) {
+            const step1 = document.getElementById('onb-step-1');
+            const step2 = document.getElementById('onb-step-2');
+            const step3 = document.getElementById('onb-step-3');
+            const titleEl = document.getElementById('onb-header-title');
+            const descEl = document.getElementById('onb-header-desc');
+            const iconEl = document.getElementById('onb-header-icon');
+
+            if (step1) step1.classList.toggle('hidden', step !== 1);
+            if (step2) step2.classList.toggle('hidden', step !== 2);
+            if (step3) step3.classList.toggle('hidden', step !== 3);
+
+            if (step === 1) {
+                if (titleEl) titleEl.textContent = 'Como você vai usar o RADWAN ADS?';
+                if (descEl) descEl.textContent = 'Vamos configurar sua primeira operação em poucos passos.';
+                if (iconEl) iconEl.textContent = '🚀';
+            } else if (step === 2) {
+                if (titleEl) titleEl.textContent = 'Identificação da Operação';
+                if (descEl) descEl.textContent = 'Escolha um nome claro para o seu projeto ou cliente.';
+                if (iconEl) iconEl.textContent = '🏷️';
+                const input = document.getElementById('onb-workspace-name-input');
+                if (input && !input.value) {
+                    input.value = this.selectedUsageType === 'agency' ? 'Primeiro Cliente' : 'Minha Operação';
+                }
+                setTimeout(() => input?.focus(), 100);
+            } else if (step === 3) {
+                if (titleEl) titleEl.textContent = 'Conexão Meta Ads';
+                if (descEl) descEl.textContent = 'Traga suas campanhas e métricas em tempo real.';
+                if (iconEl) iconEl.textContent = '🔑';
+            }
+        }
+
+        selectUsageType(type) {
+            this.selectedUsageType = type;
+            this.goToOnboardingStep(2);
+        }
+
+        async submitWorkspaceCreation() {
+            const input = document.getElementById('onb-workspace-name-input');
+            const name = input?.value?.trim() || (this.selectedUsageType === 'agency' ? 'Primeiro Cliente' : 'Minha Operação');
+            await this.completeOnboarding(this.selectedUsageType, name);
         }
 
         async completeOnboarding(type, workspaceName) {
@@ -223,8 +267,10 @@
 
                 this.currentWorkspace = data.workspace;
                 this.userWorkspaces.push(data.workspace);
-                this.onboardingModal?.classList.add('is-hidden');
-                this.revealDashboard();
+                this.updateWorkspaceUI();
+
+                // Avança para o Passo 3 (Conectar Meta ou Pular)
+                this.goToOnboardingStep(3);
             } catch (err) {
                 if (errorEl) {
                     errorEl.textContent = `Não foi possível salvar sua escolha: ${err.message}`;
@@ -235,6 +281,11 @@
             } finally {
                 buttons.forEach(b => b.disabled = false);
             }
+        }
+
+        finishOnboarding() {
+            this.onboardingModal?.classList.add('is-hidden');
+            this.revealDashboard();
         }
 
         // ─── 5. REVELAÇÃO DO DASHBOARD EXISTENTE ─────────────────────────────────

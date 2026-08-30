@@ -249,7 +249,9 @@ class DashboardApp {
             }
         });
 
-        if (canonical === 'site-intelligence') {
+        if (canonical === 'operation-map') {
+            if (window.operationMapEngine) window.operationMapEngine.renderMap();
+        } else if (canonical === 'site-intelligence') {
             this.loadSIData();
         } else if (canonical === 'orders') {
             this.loadOrdersData();
@@ -383,6 +385,73 @@ class DashboardApp {
         if (compareCb) compareCb.checked = window.periodStore.comparisonMode;
 
         modal.classList.remove('hidden');
+    }
+
+    // Gerenciador de Operações / Workspaces
+    openWorkspaceManagerModal() {
+        const modal = document.getElementById('workspace-manager-modal');
+        if (!modal) return;
+        this.renderWorkspaceManagerList();
+        modal.classList.remove('hidden');
+    }
+
+    closeWorkspaceManagerModal() {
+        document.getElementById('workspace-manager-modal')?.classList.add('hidden');
+    }
+
+    renderWorkspaceManagerList() {
+        const listEl = document.getElementById('workspace-manager-list');
+        if (!listEl || !window.authGate) return;
+
+        const workspaces = window.authGate.userWorkspaces || [];
+        const currentId = window.authGate.currentWorkspace?.id;
+
+        if (workspaces.length === 0) {
+            listEl.innerHTML = `<p class="text-xs text-[#6E6E73] p-3 text-center">Nenhuma operação cadastrada.</p>`;
+            return;
+        }
+
+        listEl.innerHTML = workspaces.map(ws => {
+            const isCurrent = ws.id === currentId;
+            return `
+                <div class="p-3 rounded-xl bg-[#141418] border ${isCurrent ? 'border-[#FF2D2D]/40' : 'border-white/[0.06]'} flex items-center justify-between gap-2">
+                    <div class="min-w-0 flex-1">
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-xs font-bold text-[#F5F5F7] truncate">${ws.name}</span>
+                            ${isCurrent ? '<span class="px-1.5 py-0.2 rounded text-[9.5px] bg-[#FF2D2D]/20 text-[#FF2D2D] font-bold">Ativa</span>' : ''}
+                        </div>
+                        <p class="text-[10px] text-[#6E6E73] font-mono truncate">ID: ${ws.id}</p>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <button type="button" onclick="window.dashboard.promptRenameWorkspace('${ws.id}', '${ws.name.replace(/'/g, "\\'")}')" class="btn btn-secondary btn-sm text-[11px] px-2 py-1" title="Renomear Operação">
+                            ✏️
+                        </button>
+                        ${!isCurrent ? `
+                            <button type="button" onclick="window.authGate.switchWorkspace('${ws.id}'); window.dashboard.renderWorkspaceManagerList();" class="btn btn-primary btn-sm text-[11px] px-2.5 py-1">
+                                Selecionar
+                            </button>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    promptRenameWorkspace(workspaceId, currentName) {
+        const newName = prompt('Digite o novo nome para esta operação:', currentName);
+        if (!newName || newName.trim() === '' || newName.trim() === currentName) return;
+
+        const cleanName = newName.trim();
+        const ws = window.authGate.userWorkspaces.find(w => w.id === workspaceId);
+        if (ws) {
+            ws.name = cleanName;
+            if (window.authGate.currentWorkspace && window.authGate.currentWorkspace.id === workspaceId) {
+                window.authGate.currentWorkspace.name = cleanName;
+            }
+            window.authGate.updateWorkspaceUI();
+            this.renderWorkspaceManagerList();
+            this.showToast(`Operação renomeada para "${cleanName}"`, 'success');
+        }
     }
 
     closeCustomDateModal() {
