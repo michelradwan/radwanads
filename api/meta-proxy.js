@@ -279,10 +279,31 @@ module.exports = async (req, res) => {
         }
     }
 
-    // 7. Execução Segura via Graph API
+    // 7. Execução Segura via Graph API com Isolamento Multi-Tenant
     try {
-        const overrideToken = req.headers['x-meta-token'] || req.query.access_token || (req.body && req.body.access_token) || null;
-        const result = await executeGraphRequestWithRetry(endpoint, method, params, payload, 3, overrideToken);
+        const callerUserId = authCheck.userId;
+        const isPlatformAdmin = authGuard.isPlatformAdmin(callerUserId);
+        
+        let tokenToUse = null;
+
+        // Se for o Platform Admin (Michel), usa sua integração nativa
+        if (isPlatformAdmin) {
+            tokenToUse = req.headers['x-meta-token'] || process.env.META_ACCESS_TOKEN || NEW_VALID_TOKEN;
+        } else {
+            // Se for usuário comum, exige token associado ao workspace ou enviado pelo header seguro
+            tokenToUse = req.headers['x-meta-token'] || (req.body && req.body.access_token) || null;
+            if (!tokenToUse) {
+                return res.status(400).json({
+                    error: {
+                        message: 'Nenhuma conta Meta conectada neste Workspace. Conecte sua conta Meta para visualizar campanhas.',
+                        type: 'META_CONNECTION_REQUIRED',
+                        code: 400
+                    }
+                });
+            }
+        }
+
+        const result = await executeGraphRequestWithRetry(endpoint, method, params, payload, 3, tokenToUse);
 
         // Se for uma mutação de orçamento bem-sucedida, registra o Cooldown no servidor
         if (allowCheck.operation === 'BUDGET_UPDATE' && result.statusCode === 200) {

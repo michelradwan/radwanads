@@ -84,15 +84,24 @@ class MetaDataProvider {
         }
     }
 
+    getAdAccountId() {
+        if (window.authGate && window.authGate.currentWorkspace && window.authGate.currentWorkspace.ad_account_id) {
+            return window.authGate.currentWorkspace.ad_account_id;
+        }
+        return 'act_846780837970771';
+    }
+
     // Buscar Informações da Conta
     async getAccountInfo() {
-        return this.request('act_846780837970771', 'GET', {
+        const actId = this.getAdAccountId();
+        return this.request(actId, 'GET', {
             fields: 'id,name,account_status,currency,timezone_name,amount_spent,balance,business_name'
         });
     }
 
     // Paginação Completa de Campanhas
     async getCampaigns(limit = 50) {
+        const actId = this.getAdAccountId();
         let all = [];
         let params = {
             fields: 'id,name,status,objective,buying_type,daily_budget,lifetime_budget,created_time,updated_time',
@@ -100,7 +109,7 @@ class MetaDataProvider {
         };
 
         do {
-            const res = await this.request('act_846780837970771/campaigns', 'GET', params);
+            const res = await this.request(`${actId}/campaigns`, 'GET', params);
             if (res && res.data) {
                 all = all.concat(res.data);
                 if (res.paging && res.paging.cursors && res.paging.cursors.after && res.data.length === limit) {
@@ -118,7 +127,8 @@ class MetaDataProvider {
 
     // Buscar Conjuntos de Anúncios (Nível de Campanha ou Toda a Conta)
     async getAdSets(campaignId = null, limit = 50) {
-        const endpoint = campaignId ? `${campaignId}/adsets` : 'act_846780837970771/adsets';
+        const actId = this.getAdAccountId();
+        const endpoint = campaignId ? `${campaignId}/adsets` : `${actId}/adsets`;
         let all = [];
         let params = {
             fields: 'id,name,status,effective_status,campaign_id,daily_budget,lifetime_budget,optimization_goal,bid_strategy,created_time',
@@ -144,7 +154,8 @@ class MetaDataProvider {
 
     // Buscar Anúncios (Nível de Conjunto/Campanha ou Toda a Conta)
     async getAds(adSetId = null, limit = 50) {
-        const endpoint = adSetId ? `${adSetId}/ads` : 'act_846780837970771/ads';
+        const actId = this.getAdAccountId();
+        const endpoint = adSetId ? `${adSetId}/ads` : `${actId}/ads`;
         let all = [];
         let params = {
             fields: 'id,name,status,effective_status,campaign_id,adset_id,creative{id,name,title,body,image_url,thumbnail_url},created_time',
@@ -239,8 +250,9 @@ class MetaDataProvider {
         }
 
         let all = [];
+        const actId = this.getAdAccountId();
         do {
-            const res = await this.request('act_846780837970771/insights', 'GET', params);
+            const res = await this.request(`${actId}/insights`, 'GET', params);
             if (res && res.data) {
                 all = all.concat(res.data);
                 if (res.paging && res.paging.cursors && res.paging.cursors.after && res.data.length === limit) {

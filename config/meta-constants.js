@@ -33,14 +33,14 @@ module.exports = {
         'SOCIAL_ISSUES'
     ],
 
-    // Mapeamento Estrito de Recursos e Operações Permitidas
+    // Mapeamento Estrito de Recursos e Operações Permitidas (Multi-Tenant Ready)
     ALLOWED_OPERATIONS: {
-        'ACCOUNT_INFO': { method: 'GET', pathRegex: /^act_846780837970771$/ },
-        'CAMPAIGNS_LIST': { method: 'GET', pathRegex: /^act_846780837970771\/campaigns$/ },
-        'CAMPAIGN_CREATE': { method: 'POST', pathRegex: /^act_846780837970771\/campaigns$/ },
-        'ADSETS_LIST': { method: 'GET', pathRegex: /^([0-9]+|act_846780837970771)\/adsets$/ },
-        'ADS_LIST': { method: 'GET', pathRegex: /^([0-9]+|act_846780837970771)\/ads$/ },
-        'INSIGHTS_READ': { method: 'GET', pathRegex: /^([0-9]+|act_846780837970771)\/insights$/ },
+        'ACCOUNT_INFO': { method: 'GET', pathRegex: /^act_[0-9]+$/ },
+        'CAMPAIGNS_LIST': { method: 'GET', pathRegex: /^act_[0-9]+\/campaigns$/ },
+        'CAMPAIGN_CREATE': { method: 'POST', pathRegex: /^act_[0-9]+\/campaigns$/ },
+        'ADSETS_LIST': { method: 'GET', pathRegex: /^([0-9]+|act_[0-9]+)\/adsets$/ },
+        'ADS_LIST': { method: 'GET', pathRegex: /^([0-9]+|act_[0-9]+)\/ads$/ },
+        'INSIGHTS_READ': { method: 'GET', pathRegex: /^([0-9]+|act_[0-9]+)\/insights$/ },
         'STATUS_UPDATE': { method: 'POST', pathRegex: /^[0-9]+$/ },
         'BUDGET_UPDATE': { method: 'POST', pathRegex: /^[0-9]+$/ },
         'RENAME_UPDATE': { method: 'POST', pathRegex: /^[0-9]+$/ },
