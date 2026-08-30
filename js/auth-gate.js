@@ -122,6 +122,7 @@
                 if (this.authMode === 'signup') {
                     const res = await fetch('/api/saas-auth', {
                         method: 'POST',
+                        credentials: 'include',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ action: 'signup', email, password, name })
                     });
@@ -129,11 +130,13 @@
                     if (!res.ok) throw new Error(data.error || 'Falha ao criar conta.');
 
                     this.currentUser = data.user;
+                    if (data.sessionToken) localStorage.setItem('radwan_client_token', data.sessionToken);
                     this.authModal?.classList.add('is-hidden');
                     this.showOnboarding();
                 } else if (this.authMode === 'login') {
                     const res = await fetch('/api/saas-auth', {
                         method: 'POST',
+                        credentials: 'include',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ action: 'login', email, password })
                     });
@@ -141,6 +144,7 @@
                     if (!res.ok) throw new Error(data.error || 'Email ou senha incorretos.');
 
                     this.currentUser = data.user;
+                    if (data.sessionToken) localStorage.setItem('radwan_client_token', data.sessionToken);
                     this.userWorkspaces = data.workspaces || [];
 
                     if (this.userWorkspaces.length === 0) {
@@ -153,13 +157,14 @@
                 } else if (this.authMode === 'reset') {
                     const res = await fetch('/api/saas-auth', {
                         method: 'POST',
+                        credentials: 'include',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ action: 'reset_password', email })
                     });
                     const data = await res.json();
                     if (!res.ok) throw new Error(data.error || 'Falha ao solicitar reset.');
-                    alert('Se o email estiver cadastrado, um link seguro de recuperação foi enviado.');
-                    this.switchAuthMode('login');
+                    this.showError('Se o email estiver cadastrado, um link seguro de recuperação foi enviado.');
+                    setTimeout(() => this.switchAuthMode('login'), 2000);
                 }
             } catch (err) {
                 this.showError(err.message);
@@ -180,9 +185,14 @@
             if (errorEl) errorEl.classList.add('hidden');
 
             try {
+                const clientToken = localStorage.getItem('radwan_client_token') || '';
+                const headers = { 'Content-Type': 'application/json' };
+                if (clientToken) headers['Authorization'] = `Bearer ${clientToken}`;
+
                 const res = await fetch('/api/saas-auth', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    headers: headers,
                     body: JSON.stringify({
                         action: 'create_workspace',
                         name: workspaceName || (type === 'agency' ? 'Primeiro Cliente' : 'Minha Operação')

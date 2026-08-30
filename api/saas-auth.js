@@ -64,6 +64,7 @@ module.exports = async (req, res) => {
             return res.status(200).json({
                 success: true,
                 user: { id: authRes.user.id, email: authRes.user.email, name },
+                sessionToken: sessionToken,
                 message: 'Conta criada com sucesso.'
             });
         }
@@ -81,6 +82,7 @@ module.exports = async (req, res) => {
 
                 return res.status(200).json({
                     success: true,
+                    sessionToken: sessionToken,
                     user: { id: 'legacy_admin_user', email: 'admin@radwanads.com', name: 'Administrador' },
                     workspaces: [{ id: 'default_ws', name: 'Brasil Vendas', role: 'OWNER' }]
                 });
@@ -102,6 +104,7 @@ module.exports = async (req, res) => {
 
             return res.status(200).json({
                 success: true,
+                sessionToken: sessionToken,
                 user: { id: authRes.user.id, email: authRes.user.email },
                 workspaces: workspaces
             });
@@ -110,7 +113,10 @@ module.exports = async (req, res) => {
         // ─── 4. CRIAÇÃO DE NOVO WORKSPACE (ONBOARDING) ───────────────────────────
         if (action === 'create_workspace' && req.method === 'POST') {
             const cookies = authGuard.parseCookies(req);
-            const sessionToken = cookies['radwan_session'];
+            const authHeader = req.headers['authorization'] || req.headers['x-admin-auth'];
+            const headerToken = authHeader ? authHeader.replace(/^Bearer\s+/i, '').trim() : null;
+            const sessionToken = cookies['radwan_session'] || headerToken;
+
             if (!sessionToken || !authGuard.verifySessionToken(sessionToken)) {
                 return res.status(401).json({ error: 'Não autorizado.' });
             }
