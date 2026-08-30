@@ -1,0 +1,14 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/admin-ads", "destination": "/index.html" },
+    { "source": "/ads", "destination": "/index.html" }
+  ],
+  "crons": [
+    {
+      "path": "/api/meta-autopilot",
+      "schedule": "0 0 * * *"
+    }
+  ]
+}
