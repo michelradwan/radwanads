@@ -2642,10 +2642,15 @@ tr:hover .row-quick-actions {
     transition: opacity 280ms cubic-bezier(0.16, 1, 0.3, 1), transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-#auth-modal-screen.is-hidden {
+#auth-modal-screen.is-hidden,
+#onboarding-modal-screen.is-hidden {
     opacity: 0;
     pointer-events: none;
     transform: scale(0.97);
+}
+
+#onboarding-modal-screen {
+    transition: opacity 280ms cubic-bezier(0.16, 1, 0.3, 1), transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .auth-card {
