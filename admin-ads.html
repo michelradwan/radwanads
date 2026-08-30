@@ -1991,30 +1991,45 @@
             <button onclick="window.dashboard.switchView('home')" class="mobile-dock-btn active" data-dock-view="home" aria-label="Home">
                 <span class="dock-tooltip">Home</span>
                 <span class="mobile-dock-icon-wrapper">
-                    <span class="mobile-dock-icon text-base">📊</span>
+                    <svg class="mobile-dock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-5H10v5a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+                    </svg>
                 </span>
                 <span class="dock-label">Home</span>
+                <span class="dock-active-dot"></span>
             </button>
             <button onclick="window.dashboard.switchView('campaigns')" class="mobile-dock-btn" data-dock-view="campaigns" aria-label="Campanhas">
                 <span class="dock-tooltip">Campanhas</span>
                 <span class="mobile-dock-icon-wrapper">
-                    <span class="mobile-dock-icon text-base">📢</span>
+                    <svg class="mobile-dock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 20V10M18 20V4M6 20v-4"/>
+                    </svg>
                 </span>
                 <span class="dock-label">Campanhas</span>
+                <span class="dock-active-dot"></span>
             </button>
             <button onclick="window.dashboard.switchView('site-intelligence')" class="mobile-dock-btn" data-dock-view="site-intelligence" aria-label="Inteligência">
                 <span class="dock-tooltip">Inteligência</span>
                 <span class="mobile-dock-icon-wrapper">
-                    <span class="mobile-dock-icon text-base">🧠</span>
+                    <svg class="mobile-dock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7z"/>
+                        <path d="M9 21h6"/>
+                    </svg>
                 </span>
                 <span class="dock-label">Inteligência</span>
+                <span class="dock-active-dot"></span>
             </button>
             <button onclick="window.dashboard.toggleSidebar()" class="mobile-dock-btn" data-dock-view="more" aria-label="Mais Opções">
                 <span class="dock-tooltip">Mais Opções</span>
                 <span class="mobile-dock-icon-wrapper">
-                    <span class="mobile-dock-icon text-base">☰</span>
+                    <svg class="mobile-dock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="5" cy="12" r="1.5" fill="currentColor"/>
+                        <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+                        <circle cx="19" cy="12" r="1.5" fill="currentColor"/>
+                    </svg>
                 </span>
                 <span class="dock-label">Mais</span>
+                <span class="dock-active-dot"></span>
             </button>
         </div>
     </nav>
