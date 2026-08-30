@@ -27,82 +27,27 @@
 
     <!-- Design System CSS Black & Red Surreal Apple-Grade (External + Embedded) -->
     <link rel="stylesheet" href="assets/admin-ads.css?v=8.0-dock-apple">
-    <style>
-        :root {
-            --bg-main: #050506;
-            --bg-secondary: #0A0A0C;
-            --surface-1: #101014;
-            --surface-elevated: #15151A;
-            --surface-subtle: #0E0E12;
-            --border-subtle: rgba(255, 255, 255, 0.07);
-            --border-hover: rgba(255, 255, 255, 0.12);
-            --text-primary: #F5F5F7;
-            --text-secondary: #A1A1A6;
-            --text-tertiary: #6E6E73;
-            --accent-red: #FF2D2D;
-            --accent-red-hover: #FF3B3B;
-            --accent-red-muted: rgba(255, 45, 45, 0.10);
-            --accent-red-border: rgba(255, 45, 45, 0.25);
-            --status-success: #1FC16B;
-            --status-warning: #F5A524;
-            --status-error: #FF453A;
-            --status-info: #5DA9FF;
-            --radius-sm: 8px;
-            --radius-md: 10px;
-            --radius-lg: 14px;
-            --radius-xl: 16px;
-            --shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.6);
-            --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.7);
-            --shadow-modal: 0 24px 60px -12px rgba(0, 0, 0, 0.9);
-        }
-        *, *::before, *::after { box-sizing: border-box; }
-        body { background-color: var(--bg-main); color: var(--text-primary); font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; }
-        .tabular-nums { font-variant-numeric: tabular-nums; }
-        .font-mono { font-family: 'JetBrains Mono', monospace; }
-        .workspace-content { width: 100%; max-width: 1480px; margin: 0 auto; padding: 28px 32px 48px 32px; }
-        .panel { background: var(--surface-1); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); box-shadow: var(--shadow-subtle); padding: 20px 24px; transition: all 180ms ease-out; }
-        .panel:hover { border-color: var(--border-hover); }
-        .sidebar { width: 240px; background: var(--bg-secondary); border-right: 1px solid var(--border-subtle); display: flex; flex-direction: column; justify-content: space-between; flex-shrink: 0; }
-        .sidebar.collapsed { width: 64px; }
-        .sidebar-group-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); padding: 0.75rem 1rem 0.35rem 1rem; }
-        .nav-item { display: flex; align-items: center; gap: 0.85rem; height: 42px; padding: 0 1rem; border-radius: var(--radius-md); color: var(--text-secondary); font-size: 13.5px; font-weight: 500; cursor: pointer; position: relative; transition: all 140ms ease-out; }
-        .nav-item:hover { color: var(--text-primary); background: var(--surface-elevated); }
-        .nav-item.active { color: var(--text-primary); background: var(--surface-elevated); font-weight: 600; }
-        .nav-item.active::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 8px; width: 3.5px; background: var(--accent-red); border-radius: 0 4px 4px 0; }
-        .status-strip { height: 56px; background: var(--bg-secondary); border-bottom: 1px solid var(--border-subtle); }
-        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; height: 36px; font-size: 12.5px; font-weight: 600; line-height: 1; border-radius: var(--radius-sm); padding: 0 1rem; cursor: pointer; border: 1px solid transparent; transition: all 140ms ease-out; white-space: nowrap; }
-        .btn-primary { background: var(--accent-red); color: #FFF; border-color: var(--accent-red); }
-        .btn-primary:hover { background: var(--accent-red-hover); }
-        .btn-secondary { background: var(--surface-elevated); color: var(--text-primary); border-color: var(--border-subtle); }
-        .btn-secondary:hover { background: #1C1C22; border-color: var(--border-hover); }
-        .btn-danger { background: var(--accent-red-muted); color: var(--accent-red); border-color: var(--accent-red-border); }
-        .btn-danger:hover { background: var(--accent-red); color: #FFF; }
-        .btn-sm { height: 30px; padding: 0 0.75rem; font-size: 11.5px; }
-        .badge { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 11px; font-weight: 600; padding: 0.25rem 0.6rem; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.04em; }
-        .badge-winner { background: var(--accent-red-muted); color: var(--accent-red); border: 1px solid var(--accent-red-border); }
-        .badge-active { background: rgba(31, 193, 107, 0.1); color: var(--status-success); border: 1px solid rgba(31, 193, 107, 0.25); }
-        .badge-paused { background: rgba(255, 255, 255, 0.05); color: var(--text-secondary); border: 1px solid var(--border-subtle); }
-        .badge-warning { background: rgba(245, 165, 36, 0.1); color: var(--status-warning); border: 1px solid rgba(245, 165, 36, 0.25); }
-        .badge-error { background: rgba(255, 69, 58, 0.1); color: var(--status-error); border: 1px solid rgba(255, 69, 58, 0.25); }
-        .status-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
-        .status-dot-active { background: var(--status-success); box-shadow: 0 0 6px rgba(31, 193, 107, 0.6); }
-        .status-dot-paused { background: var(--text-tertiary); }
-        .snapshot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1px; background: var(--border-subtle); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); overflow: hidden; }
-        .snapshot-cell { background: var(--surface-1); padding: 18px 22px; transition: background-color 140ms ease-out; }
-        .snapshot-cell:hover { background: var(--surface-elevated); }
-        .cause-map-flow { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; padding: 1rem 1.25rem; background: var(--surface-subtle); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); }
-        .cause-map-node { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.45rem 0.85rem; border-radius: var(--radius-sm); font-size: 12.5px; font-weight: 600; background: var(--surface-1); border: 1px solid var(--border-subtle); }
-        .data-table-container { background: var(--surface-1); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); overflow: hidden; }
-        .data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-        .data-table th { background: var(--bg-secondary); color: var(--text-tertiary); font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 0.85rem 1.15rem; border-bottom: 1px solid var(--border-subtle); }
-        .data-table td { padding: 0.95rem 1.15rem; border-bottom: 1px solid var(--border-subtle); color: var(--text-primary); }
-        .data-table tbody tr:hover td { background: var(--surface-elevated); }
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); z-index: 999; display: flex; align-items: center; justify-content: center; padding: 1.5rem; }
-        .modal-content { background: var(--surface-1); border: 1px solid var(--border-hover); border-radius: var(--radius-xl); box-shadow: var(--shadow-modal); width: 100%; max-height: 90vh; overflow-y: auto; }
-        .drawer { position: fixed; top: 0; right: 0; height: 100%; width: 100%; max-width: 520px; background: var(--surface-1); border-left: 1px solid var(--border-subtle); box-shadow: -16px 0 48px rgba(0, 0, 0, 0.85); z-index: 1000; transform: translateX(100%); transition: transform 220ms ease-out; }
-        .drawer.open { transform: translateX(0); }
-    </style>
-<body class="bg-[#050506] text-[#F5F5F7] min-h-screen antialiased flex flex-col selection:bg-[#FF2D2D] selection:text-white">
+    <!-- Prevenção Imediata de FOUC / Theme Flash (Execução Instantânea no Head) -->
+    <script>
+        (function() {
+            try {
+                var stored = localStorage.getItem('radwan_theme_preference');
+                var prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+                var theme = (stored === 'light' || stored === 'dark') ? stored : (prefersLight ? 'light' : 'dark');
+                if (theme === 'light') {
+                    document.documentElement.classList.remove('dark');
+                    document.documentElement.classList.add('light');
+                    document.documentElement.setAttribute('data-theme', 'light');
+                } else {
+                    document.documentElement.classList.remove('light');
+                    document.documentElement.classList.add('dark');
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                }
+            } catch(e) {}
+        })();
+    </script>
+</head>
+<body class="min-h-screen antialiased flex flex-col selection:bg-[#FF2D2D] selection:text-white" style="background-color: var(--bg-main); color: var(--text-primary);">
 
     <!-- ===================================================================
          1. SPLASH SCREEN MINIMALISTA (BOTÃO EXCLUSIVO DE ENTRADA RADWAN ADS)
@@ -304,6 +249,27 @@
 
             <!-- Desktop Buttons (>= 768px) -->
             <div class="hidden md:flex items-center space-x-1.5">
+                <!-- Theme Toggle Button (Apple / Linear Grade Morph SVG) -->
+                <button type="button" class="theme-toggle-btn" aria-label="Alternar tema claro/escuro" title="Alternar tema">
+                    <svg class="theme-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <mask id="radwan-theme-mask">
+                            <rect x="0" y="0" width="24" height="24" fill="white" />
+                            <circle class="theme-moon-mask" cx="17" cy="7" r="9" fill="black" />
+                        </mask>
+                        <circle class="theme-celestial-body" cx="12" cy="12" r="5" fill="currentColor" mask="url(#radwan-theme-mask)" />
+                        <g class="theme-sun-ray">
+                            <line x1="12" y1="1" x2="12" y2="3" />
+                            <line x1="12" y1="21" x2="12" y2="23" />
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                            <line x1="1" y1="12" x2="3" y2="12" />
+                            <line x1="21" y1="12" x2="23" y2="12" />
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                        </g>
+                    </svg>
+                </button>
+
                 <button onclick="window.dashboard.openTokenModal()" class="btn btn-secondary btn-sm flex items-center gap-1" title="Credencial Meta">
                     <span class="text-[#FF2D2D]">🔑</span>
                     <span class="hidden lg:inline">Token</span>
@@ -318,11 +284,36 @@
             </div>
 
             <!-- Mobile More Menu Button (< 768px) -->
-            <div class="relative md:hidden">
+            <div class="relative md:hidden flex items-center space-x-1.5">
+                <!-- Theme Toggle Button Mobile no Header -->
+                <button type="button" class="theme-toggle-btn" aria-label="Alternar tema claro/escuro" title="Alternar tema">
+                    <svg class="theme-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <mask id="radwan-theme-mask-mobile">
+                            <rect x="0" y="0" width="24" height="24" fill="white" />
+                            <circle class="theme-moon-mask" cx="17" cy="7" r="9" fill="black" />
+                        </mask>
+                        <circle class="theme-celestial-body" cx="12" cy="12" r="5" fill="currentColor" mask="url(#radwan-theme-mask-mobile)" />
+                        <g class="theme-sun-ray">
+                            <line x1="12" y1="1" x2="12" y2="3" />
+                            <line x1="12" y1="21" x2="12" y2="23" />
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                            <line x1="1" y1="12" x2="3" y2="12" />
+                            <line x1="21" y1="12" x2="23" y2="12" />
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                        </g>
+                    </svg>
+                </button>
+
                 <button onclick="window.dashboard.toggleTopMoreMenu()" class="btn-icon text-gray-300 hover:text-white" title="Mais Opções" aria-label="Mais Opções">
                     <span>•••</span>
                 </button>
                 <div id="topbar-more-menu" class="topbar-popover">
+                    <button onclick="window.themeManager?.toggleTheme(); window.dashboard.closeTopMoreMenu();" class="popover-item">
+                        <span id="mobile-theme-icon">☀️</span>
+                        <span id="mobile-theme-label">Alternar Tema</span>
+                    </button>
                     <button onclick="window.dashboard.syncAllData(); window.dashboard.closeTopMoreMenu();" class="popover-item">
                         <span>🔄</span>
                         <span>Sincronizar dados</span>
@@ -2032,6 +2023,7 @@
     <div id="toast-container"></div>
 
     <!-- SCRIPTS DA APLICAÇÃO (ORDEM RIGOROSA - CACHE BUSTER V8.0 ENTERPRISE) -->
+    <script src="js/theme-manager.js?v=8.0-theme"></script>
     <script src="js/auth-gate.js?v=8.0-auth"></script>
     <script src="js/period-store.js?v=8.0-hardened"></script>
     <script src="js/metrics-registry.js?v=8.0-hardened"></script>
