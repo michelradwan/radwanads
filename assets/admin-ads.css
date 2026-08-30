@@ -134,14 +134,14 @@ html.light {
     --accent-red-muted: #FFF0F2;
     --accent-red-border: rgba(255, 36, 56, 0.25);
 
-    --status-success: #18A957;
-    --status-success-bg: rgba(24, 169, 87, 0.10);
-    --status-warning: #D89500;
-    --status-warning-bg: rgba(216, 149, 0, 0.10);
-    --status-error: #E5484D;
-    --status-error-bg: rgba(229, 72, 77, 0.10);
-    --status-info: #0070F3;
-    --status-info-bg: rgba(0, 112, 243, 0.10);
+    --status-success: #1FC16B;
+    --status-success-bg: rgba(31, 193, 107, 0.12);
+    --status-warning: #F5A524;
+    --status-warning-bg: rgba(245, 165, 36, 0.12);
+    --status-error: #FF453A;
+    --status-error-bg: rgba(255, 69, 58, 0.12);
+    --status-info: #5DA9FF;
+    --status-info-bg: rgba(93, 169, 255, 0.12);
 
     --shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.03);
     --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.03), 0 4px 14px rgba(0, 0, 0, 0.035);
@@ -3248,6 +3248,72 @@ html.light .border-white\/\[0\.04\] {
     border-color: #EEEEF0 !important;
 }
 
+/* Tratamento de Superfícies Inversas Intencionais (Inverse Surfaces) */
+html[data-theme="light"] .surface-inverse,
+html[data-theme="light"] .bg-inverse,
+html.light .surface-inverse,
+html.light .bg-inverse {
+    background-color: #0D0D0F !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+html[data-theme="light"] .surface-inverse *,
+html[data-theme="light"] .bg-inverse *,
+html.light .surface-inverse *,
+html.light .bg-inverse * {
+    color: inherit;
+}
+
+html[data-theme="light"] .surface-inverse .text-title,
+html.light .surface-inverse .text-title {
+    color: #F7F7F8 !important;
+}
+
+html[data-theme="light"] .surface-inverse .text-body,
+html.light .surface-inverse .text-body {
+    color: #C1C1C7 !important;
+}
+
+html[data-theme="light"] .surface-inverse .text-muted,
+html.light .surface-inverse .text-muted {
+    color: #96969D !important;
+}
+
+/* Toast Light & Dark Perfeito */
+html[data-theme="light"] .toast,
+html.light .toast {
+    background: #FFFFFF !important;
+    border: 1px solid #E3E3E7 !important;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.03) !important;
+}
+
+html[data-theme="light"] .toast .toast-message,
+html.light .toast .toast-message {
+    color: #111113 !important;
+}
+
+html[data-theme="light"] .toast .toast-close,
+html.light .toast .toast-close {
+    color: #8E8E95 !important;
+}
+
+html[data-theme="light"] .toast .toast-close:hover,
+html.light .toast .toast-close:hover {
+    color: #111113 !important;
+}
+
+/* Switches Ativos (ON) Sempre Usam o Verde Padrão Aprovado em ambos os temas */
+html[data-theme="light"] .apple-switch input:checked + .apple-switch-track,
+html.light .apple-switch input:checked + .apple-switch-track {
+    background-color: #1FC16B !important;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.12), 0 0 10px rgba(31, 193, 107, 0.28) !important;
+}
+
+.apple-switch input:checked + .apple-switch-track {
+    background-color: #1FC16B !important;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15), 0 0 12px rgba(31, 193, 107, 0.35) !important;
+}
+
 html[data-theme="light"] .sidebar,
 html.light .sidebar {
     background: #FFFFFF !important;
@@ -3286,6 +3352,16 @@ html.light .nav-link.active {
     background: radial-gradient(circle at 50% 50%, rgba(255, 45, 45, 0.025) 0%, rgba(9, 9, 12, 1) 100%), #09090C;
     box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8);
     touch-action: none;
+    cursor: grab;
+}
+
+.op-map-viewport.is-panning {
+    cursor: grabbing !important;
+    user-select: none;
+}
+
+.op-map-viewport.is-panning * {
+    cursor: grabbing !important;
 }
 
 .op-map-grid-bg {
@@ -3397,28 +3473,52 @@ html.light .nav-link.active {
     transform: none !important;
 }
 
-/* Inspector Drawer Lateral Discreto (Não-bloqueante) */
+/* Inspector Drawer Lateral Discreto (Não-bloqueante — Ancorado abaixo da Topbar com Footer Fixo) */
 .op-map-drawer {
-    width: 380px;
-    max-width: 90vw;
-    background: rgba(14, 14, 18, 0.96) !important;
+    position: fixed !important;
+    top: 56px !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 380px !important;
+    max-width: 90vw !important;
+    height: calc(100dvh - 56px) !important;
+    background: rgba(14, 14, 18, 0.98) !important;
     border-left: 1px solid rgba(255, 255, 255, 0.08) !important;
     box-shadow: -8px 0 32px rgba(0, 0, 0, 0.45) !important;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    z-index: 50;
+    z-index: 50 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+}
+
+#drawer-node-body {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain !important;
+}
+
+#drawer-node-footer {
+    flex: 0 0 auto !important;
+    padding: 14px 16px max(16px, env(safe-area-inset-bottom)) 16px !important;
+    background: #09090C !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
+    z-index: 10 !important;
 }
 
 @media (max-width: 768px) {
     .op-map-drawer {
         width: 100% !important;
         max-width: 100% !important;
-        height: 75vh !important;
+        height: 75dvh !important;
         top: auto !important;
         bottom: 0 !important;
         border-left: none !important;
         border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
-        border-radius: 20px 20px 0 0;
+        border-radius: 20px 20px 0 0 !important;
         transform: translateY(100%) !important;
     }
     .op-map-drawer.is-open {

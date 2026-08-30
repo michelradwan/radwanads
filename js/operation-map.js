@@ -30,6 +30,9 @@
             this.zoomSteps = [0.50, 0.60, 0.70, 0.80, 0.90, 1.00, 1.10, 1.20, 1.30, 1.40, 1.50, 1.60, 1.70, 1.80];
             this.panX = 0;
             this.panY = 0;
+            this.isPanningMap = false;
+            this.panStartPointer = { x: 0, y: 0 };
+            this.panStartCamera = { x: 0, y: 0 };
 
             // Histórico Undo / Redo para Movimentação e Auto-organização
             this.historyStack = [];
@@ -82,6 +85,29 @@
             const viewport = document.getElementById('operation-map-container');
             if (!viewport) return;
 
+            // 1. Pan do Canvas do Mapa (Arrastar espaço vazio move a câmera)
+            viewport.addEventListener('pointerdown', (e) => {
+                // Guard: Não inicia pan se o clique foi em um nó, botão, input, drawer ou minimap
+                const target = e.target;
+                if (target.closest('.op-map-node') || 
+                    target.closest('button') || 
+                    target.closest('input') || 
+                    target.closest('.op-map-drawer') || 
+                    target.closest('#op-map-minimap') ||
+                    target.closest('#op-map-feedback-banner')) {
+                    return;
+                }
+
+                if (e.button !== undefined && e.button !== 0 && e.pointerType === 'mouse') return;
+
+                this.isPanningMap = true;
+                this.panStartPointer = { x: e.clientX, y: e.clientY };
+                this.panStartCamera = { x: this.panX, y: this.panY };
+                viewport.classList.add('is-panning');
+
+                try { viewport.setPointerCapture(e.pointerId); } catch (err) {}
+            });
+
             // Zoom Ctrl + Wheel com Steps Exatos de 10%
             let wheelAccumulator = 0;
             viewport.addEventListener('wheel', (e) => {
@@ -100,10 +126,12 @@
                 }
             }, { passive: false });
 
-            // Movimento de Ponteiro Durante Drag
+            // Movimento de Ponteiro Durante Drag ou Pan
             window.addEventListener('pointermove', (e) => {
                 if (this.isDraggingNode && this.activeDragNodeId) {
                     this.handleNodeDragMove(e);
+                } else if (this.isPanningMap) {
+                    this.handleMapPanMove(e);
                 }
             });
 
@@ -111,17 +139,27 @@
                 if (this.isDraggingNode) {
                     this.handleNodeDragEnd();
                 }
+                if (this.isPanningMap) {
+                    this.isPanningMap = false;
+                    viewport.classList.remove('is-panning');
+                }
             };
 
             window.addEventListener('pointerup', handlePointerUp);
             window.addEventListener('pointercancel', handlePointerUp);
 
             window.addEventListener('resize', () => {
-                if (this.isMapVisible) this.recalculateLinks();
+                if (this.isMapVisible) {
+                    this.clampPan();
+                    this.recalculateLinks();
+                }
             });
 
             window.addEventListener('orientationchange', () => {
-                if (this.isMapVisible) setTimeout(() => this.recalculateLinks(), 250);
+                if (this.isMapVisible) setTimeout(() => {
+                    this.clampPan();
+                    this.recalculateLinks();
+                }, 250);
             });
 
             window.addEventListener('radwan:workspacechange', () => {
@@ -160,9 +198,66 @@
             });
         }
 
+        // ─── MAP PAN ENGINE COM CLAMP RÍGIDO (SEM EMPTY ABYSS) ───────────────────
+        handleMapPanMove(e) {
+            if (!this.isPanningMap) return;
+
+            const dx = e.clientX - this.panStartPointer.x;
+            const dy = e.clientY - this.panStartPointer.y;
+
+            this.panX = this.panStartCamera.x + dx;
+            this.panY = this.panStartCamera.y + dy;
+
+            this.clampPan();
+            this.applyWorldTransform();
+        }
+
+        clampPan() {
+            const viewport = document.getElementById('operation-map-container');
+            const nodesContainer = document.getElementById('op-map-nodes-container');
+            if (!viewport || !nodesContainer) return;
+
+            const vW = viewport.clientWidth;
+            const vH = viewport.clientHeight;
+            const gW = nodesContainer.scrollWidth * this.zoom;
+            const gH = nodesContainer.scrollHeight * this.zoom;
+
+            // Se o mapa cabe na tela, limita o movimento a uma pequena margem (±80px)
+            // Se o mapa for maior que a tela, permite inspecionar tudo com limite rígido
+            let minX, maxX, minY, maxY;
+
+            if (gW <= vW) {
+                const centerOffset = (vW - gW) / 2;
+                minX = centerOffset - 80;
+                maxX = centerOffset + 80;
+            } else {
+                minX = vW - gW - 60;
+                maxX = 60;
+            }
+
+            if (gH <= vH) {
+                const centerOffsetY = Math.max(0, (vH - gH) / 4);
+                minY = centerOffsetY - 60;
+                maxY = centerOffsetY + 60;
+            } else {
+                minY = vH - gH - 60;
+                maxY = 60;
+            }
+
+            this.panX = Math.min(maxX, Math.max(minX, this.panX));
+            this.panY = Math.min(maxY, Math.max(minY, this.panY));
+        }
+
+        applyWorldTransform() {
+            const world = document.getElementById('op-map-world');
+            if (world) {
+                world.style.transform = `translate3d(${Math.round(this.panX)}px, ${Math.round(this.panY)}px, 0) scale(${this.zoom})`;
+                world.style.transformOrigin = '0 0';
+            }
+        }
+
         // ─── ZOOM RIGOROSO EM STEPS DE 10% (50% A 180%) ───────────────────────────
         setZoom(newZoom) {
-            // Clampa no step exato mais próximo
             const target = Math.min(this.maxZoom, Math.max(this.minZoom, newZoom));
             let closestStep = this.zoomSteps[0];
             let minDiff = Infinity;
@@ -175,14 +270,11 @@
             }
 
             this.zoom = parseFloat(closestStep.toFixed(2));
-            const world = document.getElementById('op-map-world');
             const label = document.getElementById('op-map-zoom-label');
-            if (world) {
-                world.style.transform = `scale(${this.zoom})`;
-                world.style.transformOrigin = 'center top';
-            }
             if (label) label.textContent = `${Math.round(this.zoom * 100)}%`;
 
+            this.clampPan();
+            this.applyWorldTransform();
             this.updateZoomButtons();
             this.recalculateLinks();
         }
@@ -202,6 +294,8 @@
         }
 
         resetZoom() {
+            this.panX = 0;
+            this.panY = 0;
             this.setZoom(1.00);
         }
 
@@ -219,25 +313,20 @@
             if (!container || !nodes) return;
 
             const cRect = container.getBoundingClientRect();
-            const nRect = nodes.getBoundingClientRect();
-            
-            // Largura ideal de enquadramento
             const scaleX = (cRect.width - 48) / (nodes.scrollWidth || 1200);
             const idealZoom = Math.min(1.20, Math.max(this.minZoom, scaleX));
             
+            this.panX = 0;
+            this.panY = 0;
             this.setZoom(idealZoom);
             this.showFeedback('🎯 Enquadramento ajustado para a tela');
         }
 
         centerView() {
-            const container = document.getElementById('operation-map-container');
-            if (container) {
-                container.scrollTo({
-                    left: (container.scrollWidth - container.clientWidth) / 2,
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            }
+            this.panX = 0;
+            this.panY = 0;
+            this.clampPan();
+            this.applyWorldTransform();
             this.showFeedback('🔍 Câmera centralizada');
         }
 

@@ -3776,11 +3776,11 @@ class DashboardApp {
         if (type === 'error') icon = '🛑';
 
         toast.innerHTML = `
-            <span>${icon}</span>
+            <span class="toast-icon">${icon}</span>
             <div class="flex-1 min-w-0">
-                <p class="text-xs font-medium text-white">${escapeHTML(message)}</p>
+                <p class="text-xs font-medium toast-message">${escapeHTML(message)}</p>
             </div>
-            <button onclick="this.parentElement.remove()" class="text-gray-400 hover:text-white text-xs ml-2">✕</button>
+            <button onclick="this.parentElement.remove()" class="toast-close text-xs ml-2">✕</button>
         `;
 
         container.appendChild(toast);
