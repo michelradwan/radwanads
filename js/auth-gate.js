@@ -50,8 +50,12 @@
                 if (this.currentUser && this.currentWorkspace) {
                     // Usuário já possui sessão e workspace: entra no dashboard
                     this.revealDashboard();
+                } else if (this.currentUser && (!this.userWorkspaces || this.userWorkspaces.length === 0)) {
+                    // Usuário autenticado mas sem workspace ainda: onboarding
+                    this.splashScreen?.classList.add('is-hidden');
+                    this.showOnboarding();
                 } else {
-                    // Novo usuário ou sem sessão: abre card de login / cadastro
+                    // Novo visitante ou sem sessão: abre modal de login / cadastro
                     this.splashScreen?.classList.add('is-hidden');
                     this.authModal?.classList.remove('is-hidden');
                 }
@@ -184,6 +188,9 @@
             const errorEl = document.getElementById('onboarding-error-msg');
             if (errorEl) errorEl.classList.add('hidden');
 
+            const buttons = document.querySelectorAll('#onboarding-modal-screen button');
+            buttons.forEach(b => b.disabled = true);
+
             try {
                 const clientToken = localStorage.getItem('radwan_client_token') || '';
                 const headers = { 'Content-Type': 'application/json' };
@@ -199,6 +206,19 @@
                     })
                 });
                 const data = await res.json();
+
+                if (res.status === 401) {
+                    if (errorEl) {
+                        errorEl.textContent = 'Sua sessão expirou ou não foi encontrada. Faça login para continuar.';
+                        errorEl.classList.remove('hidden');
+                    }
+                    setTimeout(() => {
+                        this.onboardingModal?.classList.add('is-hidden');
+                        this.authModal?.classList.remove('is-hidden');
+                    }, 1200);
+                    return;
+                }
+
                 if (!res.ok) throw new Error(data.error || 'Falha ao criar workspace.');
 
                 this.currentWorkspace = data.workspace;
@@ -207,11 +227,13 @@
                 this.revealDashboard();
             } catch (err) {
                 if (errorEl) {
-                    errorEl.textContent = `Erro no onboarding: ${err.message}`;
+                    errorEl.textContent = `Não foi possível salvar sua escolha: ${err.message}`;
                     errorEl.classList.remove('hidden');
                 } else {
                     console.error('[Onboarding Error]', err.message);
                 }
+            } finally {
+                buttons.forEach(b => b.disabled = false);
             }
         }
 

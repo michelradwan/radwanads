@@ -12,10 +12,10 @@ module.exports = async (req, res) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
-    if (req.method === 'OPTIONS') return res.status(200).end();
-
-    const action = req.query.action || (req.body && req.body.action) || 'session';
-    const isProduction = process.env.NODE_ENV === 'production' || req.headers['x-forwarded-proto'] === 'https';
+    const query = req.query || {};
+    const body = req.body || {};
+    const action = query.action || body.action || (req.method === 'GET' ? 'session' : 'unknown');
+    const isProduction = process.env.NODE_ENV === 'production' || (req.headers && req.headers['x-forwarded-proto'] === 'https');
 
     try {
         // ─── 1. VERIFICAÇÃO DE SESSÃO ATIVA (SESSION / CHECK) ────────────────────
