@@ -261,6 +261,41 @@
             if (nameEl && this.currentWorkspace) {
                 nameEl.textContent = this.currentWorkspace.name;
             }
+
+            const listContainer = document.getElementById('workspace-list-container');
+            if (listContainer) {
+                if (this.userWorkspaces.length === 0) {
+                    listContainer.innerHTML = `
+                        <div class="px-3 py-2 text-[11px] text-[#6E6E73]">Nenhuma operação cadastrada</div>
+                    `;
+                } else {
+                    listContainer.innerHTML = this.userWorkspaces.map(ws => {
+                        const isCurrent = this.currentWorkspace && this.currentWorkspace.id === ws.id;
+                        return `
+                            <button type="button" onclick="window.authGate.switchWorkspace('${ws.id}')" 
+                                    class="w-full text-left px-2.5 py-1.5 text-xs rounded-lg flex items-center justify-between transition-colors ${isCurrent ? 'bg-white/[0.08] text-[#F5F5F7] font-bold' : 'text-[#A1A1A6] hover:bg-white/[0.04] hover:text-[#F5F5F7]'}">
+                                <span class="truncate">${ws.name}</span>
+                                ${isCurrent ? '<span class="text-[#FF2D2D] text-[10px]">●</span>' : ''}
+                            </button>
+                        `;
+                    }).join('');
+                }
+            }
+        }
+
+        switchWorkspace(workspaceId) {
+            const found = this.userWorkspaces.find(w => w.id === workspaceId);
+            if (found) {
+                this.currentWorkspace = found;
+                this.updateWorkspaceUI();
+                const menu = document.getElementById('workspace-dropdown-menu');
+                if (menu) menu.classList.add('hidden');
+                
+                // Reinicia sincronização com o contexto do novo workspace
+                if (window.dashboard && typeof window.dashboard.syncAllData === 'function') {
+                    window.dashboard.syncAllData();
+                }
+            }
         }
 
         async checkExistingSession() {
@@ -272,6 +307,7 @@
                         this.currentUser = data.user;
                         this.userWorkspaces = data.workspaces || [];
                         this.currentWorkspace = this.userWorkspaces[0] || null;
+                        this.updateWorkspaceUI();
                     }
                 }
             } catch (e) {

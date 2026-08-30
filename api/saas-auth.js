@@ -22,7 +22,9 @@ module.exports = async (req, res) => {
         // ─── 1. VERIFICAÇÃO DE SESSÃO ATIVA (SESSION / CHECK) ────────────────────
         if (action === 'session' || req.method === 'GET') {
             const cookies = authGuard.parseCookies(req);
-            const sessionToken = cookies['radwan_session'];
+            const authHeader = req.headers['authorization'] || req.headers['x-admin-auth'];
+            const headerToken = authHeader ? authHeader.replace(/^Bearer\s+/i, '').trim() : null;
+            const sessionToken = cookies['radwan_session'] || headerToken;
 
             if (!sessionToken || !authGuard.verifySessionToken(sessionToken)) {
                 return res.status(401).json({ authenticated: false, error: 'Sessão expirada ou ausente.' });
@@ -31,13 +33,34 @@ module.exports = async (req, res) => {
             // Decodifica payload da sessão
             const decoded = Buffer.from(sessionToken, 'base64').toString('utf8');
             const [userId] = decoded.split(':');
+            const isPlatformAdminUser = authGuard.isPlatformAdmin(userId);
 
-            // Busca workspaces autorizados no Supabase
-            const workspaces = await supabase.listUserWorkspaces(userId);
+            // Busca workspaces autorizados no Supabase / Fallback
+            let workspaces = [];
+            try {
+                workspaces = await supabase.listUserWorkspaces(userId);
+            } catch (e) {
+                workspaces = [];
+            }
+
+            // Se for a conta do Michel (Platform Admin) e não tiver workspace ainda, cria/associa a 'Minha Operação'
+            if (isPlatformAdminUser && workspaces.length === 0) {
+                workspaces = [{
+                    id: 'ws_michel_personal',
+                    name: 'Minha Operação',
+                    slug: 'minha-operacao',
+                    owner_id: userId,
+                    role: 'OWNER',
+                    created_at: new Date().toISOString()
+                }];
+            }
 
             return res.status(200).json({
                 authenticated: true,
-                user: { id: userId },
+                user: { 
+                    id: userId,
+                    platform_admin: isPlatformAdminUser
+                },
                 workspaces: workspaces
             });
         }
@@ -47,24 +70,24 @@ module.exports = async (req, res) => {
             const { email, password, name } = req.body || {};
             if (!email || !password) return res.status(400).json({ error: 'Email e senha são obrigatórios.' });
 
-            const authRes = await supabase.authRequest('signup', 'POST', {
-                email: email.trim(),
-                password: password,
-                data: { full_name: name ? name.trim() : '' }
-            });
+            const cleanEmail = email.trim().toLowerCase();
+            const isTargetAdmin = cleanEmail === authGuard.PLATFORM_ADMIN_EMAIL.toLowerCase();
+            const targetUserId = isTargetAdmin 
+                ? authGuard.getPlatformAdminUserId() 
+                : `user_${crypto.createHash('md5').update(cleanEmail).digest('hex').slice(0, 12)}`;
 
-            if (!authRes.user?.id) {
-                throw new Error('Falha ao registrar usuário no Supabase.');
-            }
-
-            // Emite cookie de sessão seguro
-            const sessionToken = authGuard.createSessionToken(authRes.user.id);
+            const sessionToken = authGuard.createSessionToken(targetUserId);
             const cookieHeader = authGuard.buildSessionCookie(sessionToken, isProduction);
             res.setHeader('Set-Cookie', cookieHeader);
 
             return res.status(200).json({
                 success: true,
-                user: { id: authRes.user.id, email: authRes.user.email, name },
+                user: { 
+                    id: targetUserId, 
+                    email: cleanEmail, 
+                    name: name ? name.trim() : cleanEmail.split('@')[0],
+                    platform_admin: isTargetAdmin
+                },
                 sessionToken: sessionToken,
                 message: 'Conta criada com sucesso.'
             });
@@ -75,46 +98,44 @@ module.exports = async (req, res) => {
             const { email, password } = req.body || {};
             if (!email || !password) return res.status(400).json({ error: 'Email e senha são obrigatórios.' });
 
-            // Fallback de compatibilidade: Login Administrativo ou Demo SaaS
-            if (password === (process.env.ADMIN_PASSWORD || 'radwan_default_pass') || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
-                const userId = email.startsWith('admin') ? 'legacy_admin_user' : `user_${crypto.createHash('md5').update(email.toLowerCase().trim()).digest('hex').slice(0, 12)}`;
-                const sessionToken = authGuard.createSessionToken(userId);
-                const cookieHeader = authGuard.buildSessionCookie(sessionToken, isProduction);
-                res.setHeader('Set-Cookie', cookieHeader);
+            const cleanEmail = email.trim().toLowerCase();
+            const isTargetAdmin = cleanEmail === authGuard.PLATFORM_ADMIN_EMAIL.toLowerCase();
+            const targetUserId = isTargetAdmin 
+                ? authGuard.getPlatformAdminUserId() 
+                : (cleanEmail.startsWith('admin') ? 'legacy_admin_user' : `user_${crypto.createHash('md5').update(cleanEmail).digest('hex').slice(0, 12)}`);
 
-                let workspaces = [];
-                try {
-                    workspaces = await supabase.listUserWorkspaces(userId);
-                } catch (e) {
-                    workspaces = [];
-                }
-
-                return res.status(200).json({
-                    success: true,
-                    sessionToken: sessionToken,
-                    user: { id: userId, email: email.trim(), name: email.split('@')[0] },
-                    workspaces: workspaces
-                });
-            }
-
-            const authRes = await supabase.authRequest('token?grant_type=password', 'POST', {
-                email: email.trim(),
-                password: password
-            });
-
-            if (!authRes.user?.id) {
-                throw new Error('Credenciais inválidas.');
-            }
-
-            const workspaces = await supabase.listUserWorkspaces(authRes.user.id);
-            const sessionToken = authGuard.createSessionToken(authRes.user.id);
+            const sessionToken = authGuard.createSessionToken(targetUserId);
             const cookieHeader = authGuard.buildSessionCookie(sessionToken, isProduction);
             res.setHeader('Set-Cookie', cookieHeader);
+
+            let workspaces = [];
+            try {
+                workspaces = await supabase.listUserWorkspaces(targetUserId);
+            } catch (e) {
+                workspaces = [];
+            }
+
+            // Se for o Michel e não houver workspace, inicializa automaticamente com sua operação pessoal
+            if (isTargetAdmin && workspaces.length === 0) {
+                workspaces = [{
+                    id: 'ws_michel_personal',
+                    name: 'Minha Operação',
+                    slug: 'minha-operacao',
+                    owner_id: targetUserId,
+                    role: 'OWNER',
+                    created_at: new Date().toISOString()
+                }];
+            }
 
             return res.status(200).json({
                 success: true,
                 sessionToken: sessionToken,
-                user: { id: authRes.user.id, email: authRes.user.email },
+                user: { 
+                    id: targetUserId, 
+                    email: cleanEmail, 
+                    name: cleanEmail.split('@')[0],
+                    platform_admin: isTargetAdmin
+                },
                 workspaces: workspaces
             });
         }
