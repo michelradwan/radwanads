@@ -232,7 +232,7 @@ class TrackingGateway {
                 headers: {
                     'Content-Type': 'application/json',
                     'Content-Length': Buffer.byteLength(postData),
-                    'User-Agent': 'BrasilVendasCAPI/2.0'
+                    'User-Agent': 'RadwanAdsCAPI/2.0'
                 }
             }, (res) => {
                 let data = '';
@@ -268,7 +268,7 @@ class TrackingGateway {
 
         const utmifyPayload = {
             orderId: order.transaction_id,
-            platform: 'BrasilVendas',
+            platform: 'RadwanAds',
             paymentMethod: 'PIX',
             status: 'paid',
             createdAt: order.created_at || new Date().toISOString(),
