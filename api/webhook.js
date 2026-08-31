@@ -1,15 +1,17 @@
 // ==============================================================================
-// VERCEL SERVERLESS BACKEND - WEBHOOK DUTTYFY / GATEWAY PIX (SERVER-SIDE CAPI)
-// Zero Untracked Sales • Instant Meta CAPI Sync • Strict Idempotency
+// VERCEL SERVERLESS BACKEND - UNIVERSAL WEBHOOK & CAPI INGESTION ENGINE
+// Suporte Nativo: Kiwify, Hotmart, Monetizze, Eduzz, Braip, Shopify, Yampi, etc.
+// Zero Untracked Sales • Instant Meta CAPI Sync • Real-Time Event Dispatch
 // ==============================================================================
 
 const trackingGateway = require('./tracking-gateway.js');
+const { parseWebhookPayload } = require('../lib/webhook-parser.js');
 const { storage } = require('../lib/storage-adapter.js');
 
 module.exports = async (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Webhook-Secret');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Webhook-Secret, X-Shopify-Topic, hottok');
 
     if (req.method === 'OPTIONS') {
         return res.status(200).end();
@@ -18,8 +20,9 @@ module.exports = async (req, res) => {
     if (req.method === 'GET') {
         return res.status(200).json({
             status: 'ONLINE',
-            service: 'BrasilVendas Webhook & Meta CAPI Engine',
-            version: '2.0.0',
+            service: 'Radwan Ads Universal Webhook & Meta CAPI Engine',
+            version: '2.5.0',
+            supported_platforms: ['Kiwify', 'Hotmart', 'Monetizze', 'Eduzz', 'Braip', 'Shopify', 'Yampi', 'Cartpanda', 'Generic'],
             timestamp: new Date().toISOString()
         });
     }
@@ -30,55 +33,88 @@ module.exports = async (req, res) => {
 
     try {
         const body = req.body || {};
-        console.log('[Webhook Received]', JSON.stringify(body));
+        const headers = req.headers || {};
+        const query = req.query || {};
 
-        // Normalização flexível do ID da transação
-        const txId = body.transactionId || body.transaction_id || body.id || (body.data && (body.data.transactionId || body.data.id));
-        const rawStatus = (body.status || body.event || (body.data && body.data.status) || '').toLowerCase();
-        const amount = body.amount || body.value || (body.data && (body.data.amount || body.data.value));
+        console.log('[Universal Webhook Ingest]', JSON.stringify({ query, bodySummary: typeof body === 'object' ? Object.keys(body) : body }));
 
-        if (!txId) {
-            return res.status(400).json({ success: false, message: 'transaction_id ausente no payload do webhook' });
+        // 1. Normalização via Universal Parser
+        const parsed = parseWebhookPayload(body, headers, query);
+        const { platform, event, orderData, isPaid, isRefunded, isChargeback } = parsed;
+
+        if (!orderData || !orderData.transaction_id) {
+            return res.status(400).json({ success: false, message: 'Não foi possível identificar o transaction_id do webhook' });
         }
 
-        // Verifica se o evento é de pagamento aprovado
-        const isPaid = ['paid', 'approved', 'pago', 'completed', 'transaction.paid', 'payment.approved'].some(s => rawStatus.includes(s));
+        const txId = orderData.transaction_id;
 
-        // Preview Guard: Em Preview, webhooks reais são suprimidos para evitar contaminação
+        // 2. Preview Guard: Suprime disparos em Preview para evitar dados falsos na produção Meta
         const isPreview = process.env.VERCEL_ENV === 'preview' || process.env.PREVIEW_MODE === 'true';
         const isTestEvent = Boolean(body.sandbox || body.is_test || String(txId).startsWith('TEST_') || String(txId).startsWith('preview_'));
 
         if (isPreview && !isTestEvent && isPaid) {
-            console.log(`[Webhook Preview Guard] Evento de produção real (${txId}) ignorado no ambiente Preview para evitar poluição.`);
+            console.log(`[Webhook Preview Guard] Evento real (${platform} - ${txId}) ignorado no ambiente Preview.`);
             return res.status(200).json({
                 success: true,
                 preview_mode: true,
-                skipped: true,
-                message: 'Ambiente Preview: Webhook de produção real ignorado com segurança.',
+                platform,
+                message: 'Ambiente Preview: Webhook recebido mas execução suprimida com segurança.',
                 transaction_id: txId
             });
         }
 
+        // 3. Salva/Atualiza o pedido no banco com atribuição durável (UTMs / FBC / FBP)
+        const savedOrder = await trackingGateway.saveOrderWithAttribution({
+            ...orderData,
+            platform_source: platform,
+            raw_event: event
+        });
+
+        // 4. Salva no buffer de Eventos em Tempo Real para o Dashboard Live Stream
+        try {
+            const liveEvent = {
+                id: `evt_${Date.now()}_${txId}`,
+                transaction_id: txId,
+                platform,
+                event_type: isPaid ? 'PURCHASE' : (isRefunded ? 'REFUND' : (isChargeback ? 'CHARGEBACK' : 'PENDING')),
+                amount: orderData.amount,
+                customer_name: orderData.customer?.name || 'Cliente',
+                attribution: orderData.attribution || {},
+                timestamp: new Date().toISOString()
+            };
+            await storage.set('actions', `LIVE_EVENT_${liveEvent.id}`, { result: liveEvent });
+        } catch (evtErr) {
+            console.warn('[Live Event Buffer Warn]', evtErr.message);
+        }
+
+        // 5. Se o status for PAGO / APROVADO, dispara Meta CAPI
         if (isPaid) {
-            console.log(`[Webhook] Processando pagamento confirmado para transação: ${txId}`);
-            const result = await trackingGateway.processPaymentConfirmed(txId, amount);
-            
+            console.log(`[Webhook] Pagamento Confirmado (${platform}) para transação: ${txId}. Disparando Meta CAPI...`);
+            const processResult = await trackingGateway.processPaymentConfirmed(txId, orderData.amount);
+
             return res.status(200).json({
                 success: true,
-                message: 'Pagamento processado com sucesso e sincronizado via Meta CAPI',
+                platform,
+                event: 'PURCHASE_CONFIRMED',
                 transaction_id: txId,
-                meta_capi: result.results.meta_capi
+                amount: orderData.amount,
+                meta_capi: processResult.results.meta_capi,
+                message: `Pagamento (${platform}) processado e sincronizado com sucesso.`
             });
         }
 
+        // 6. Eventos não pagos (Boletos gerados, PIX pendente, reembolsos, etc.)
         return res.status(200).json({
             success: true,
-            message: `Evento recebido (status: ${rawStatus}), sem ação necessária.`,
-            transaction_id: txId
+            platform,
+            event: event || 'RECEIVED',
+            transaction_id: txId,
+            status: orderData.status,
+            message: `Evento de ${platform} registrado no tracking com sucesso.`
         });
 
     } catch (error) {
-        console.error('[Webhook Processing Error]', error);
+        console.error('[Universal Webhook Error]', error);
         return res.status(500).json({ success: false, error: error.message });
     }
 };
