@@ -177,22 +177,27 @@
                 </div>
             </div>
 
-            <!-- PASSO 3: Conexão Meta & Finalização -->
+            <!-- PASSO 3: Conexão Meta & Webhook de Vendas -->
             <div id="onb-step-3" class="space-y-4 hidden text-center">
-                <div class="p-4 rounded-xl bg-[#15151A] border border-white/[0.08] space-y-2 text-left">
+                <div class="p-4 rounded-xl bg-[#15151A] border border-white/[0.08] space-y-3 text-left">
                     <div class="flex items-center gap-2">
-                        <span class="text-lg">🔑</span>
-                        <h4 class="font-bold text-xs text-[#F5F5F7]">Conectar Meta Ads</h4>
+                        <span class="text-lg">🔗</span>
+                        <h4 class="font-bold text-xs text-[#F5F5F7]">Sua URL Universal de Webhook</h4>
                     </div>
-                    <p class="text-[11px] text-[#A1A1A6] leading-relaxed">Conecte sua conta Meta agora para carregar campanhas e métricas em tempo real, ou configure mais tarde nas configurações da operação.</p>
+                    <p class="text-[11px] text-[#A1A1A6] leading-relaxed">Copie sua URL e cole nas plataformas (Kiwify, Hotmart, Monetizze, Eduzz, Shopify) para rastrear vendas em tempo real:</p>
+                    
+                    <div class="flex items-center gap-2 bg-[#0E0E12] border border-white/[0.1] rounded-xl p-2.5">
+                        <input type="text" readonly value="https://radwanads.vercel.app/api/webhook" id="onb-webhook-url" class="bg-transparent text-[11px] text-[#F5F5F7] font-mono flex-1 outline-none">
+                        <button type="button" onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); this.textContent='Copiado!';" class="btn btn-secondary py-1 px-2.5 text-[10.5px]">Copiar</button>
+                    </div>
                 </div>
 
                 <div class="space-y-2 pt-1">
                     <button type="button" onclick="window.dashboard.openTokenModal(); window.authGate.finishOnboarding();" class="btn btn-primary w-full py-2.5 text-xs font-bold justify-center rounded-xl">
-                        <span>🔑 Conectar Meta Agora</span>
+                        <span>🔑 Conectar Meta Ads Agora</span>
                     </button>
                     <button type="button" onclick="window.authGate.finishOnboarding()" class="w-full text-center py-2 text-xs text-[#A1A1A6] hover:text-[#F5F5F7] transition-colors">
-                        Configurar depois e abrir dashboard →
+                        Ir direto para o painel →
                     </button>
                 </div>
             </div>
