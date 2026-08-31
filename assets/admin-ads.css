@@ -168,6 +168,53 @@ html.light {
     --apple-switch-thumb-shadow: 0 2px 6px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.06);
 }
 
+/* ==============================================================================
+   LIGHT MODE — HARDCODED TAILWIND CLASS OVERRIDES (PORCELAIN PURGE)
+   Remaps dark-mode bg/text/border classes to light equivalents.
+   SCOPE: html.light ONLY — Dark Mode remains PIXEL-IDENTICAL.
+   ============================================================================== */
+
+/* ─── DARK BACKGROUNDS → PORCELAIN SURFACES ────────────────────────────────── */
+html.light .bg-\[\#050506\]   { background-color: #F7F7F8 !important; }
+html.light .bg-\[\#09090C\]   { background-color: #F5F5F7 !important; }
+html.light .bg-\[\#0A0A0C\]   { background-color: #FFFFFF !important; }
+html.light .bg-\[\#0D0D11\]   { background-color: #F7F7F8 !important; }
+html.light .bg-\[\#0D0D12\]   { background-color: #F7F7F8 !important; }
+html.light .bg-\[\#0E0E12\]   { background-color: #F7F7F8 !important; }
+html.light .bg-\[\#0F0F12\]   { background-color: #F9F9FA !important; }
+html.light .bg-\[\#101014\]   { background-color: #FFFFFF !important; }
+html.light .bg-\[\#111115\]   { background-color: #FFFFFF !important; }
+html.light .bg-\[\#121217\]   { background-color: #FAFAFB !important; }
+html.light .bg-\[\#121A15\]   { background-color: #F0FAF4 !important; }
+html.light .bg-\[\#141418\]   { background-color: #FAFAFB !important; }
+html.light .bg-\[\#15151A\]   { background-color: #FAFAFB !important; }
+html.light .bg-\[\#16161C\]   { background-color: #FAFAFB !important; }
+html.light .bg-\[\#1A1215\]   { background-color: #FFF5F5 !important; }
+html.light .bg-\[\#1C1C22\]   { background-color: #F2F2F4 !important; }
+
+/* ─── DARK TEXT → LEGIBLE DARK-ON-LIGHT ────────────────────────────────────── */
+html.light .text-\[\#F5F5F7\] { color: #111113 !important; }
+html.light .text-\[\#A1A1A6\] { color: #616166 !important; }
+html.light .text-\[\#6E6E73\] { color: #8E8E95 !important; }
+
+/* ─── INVISIBLE WHITE BORDERS → VISIBLE PORCELAIN BORDERS ──────────────────── */
+html.light .border-white\/\[0\.04\] { border-color: #EEEEF0 !important; }
+html.light .border-white\/\[0\.05\] { border-color: #EEEEF0 !important; }
+html.light .border-white\/\[0\.06\] { border-color: #E8E8EC !important; }
+html.light .border-white\/\[0\.07\] { border-color: #E3E3E7 !important; }
+html.light .border-white\/\[0\.08\] { border-color: #E3E3E7 !important; }
+html.light .border-white\/\[0\.1\]  { border-color: #D3D3D8 !important; }
+
+/* ─── WHITE/ALPHA BACKGROUNDS → PORCELAIN-TINTED ───────────────────────────── */
+html.light [class*="bg-white\/\[0.0"]  { background-color: rgba(0,0,0,0.02) !important; }
+html.light [class*="bg-white\/\[0.1"]  { background-color: rgba(0,0,0,0.04) !important; }
+
+/* ─── PLACEHOLDER TEXT → LEGIBLE IN LIGHT MODE ─────────────────────────────── */
+html.light .placeholder-\[\#6E6E73\]::placeholder { color: #B4B4BA !important; }
+
+/* ─── DIVIDERS WITH RGBA WHITE → VISIBLE GRAY ─────────────────────────────── */
+html.light [class*="divide-white\/"] > * + * { border-color: #E3E3E7 !important; }
+
 /* Transição cirúrgica para propriedades de cor e fundo na troca de tema */
 body, 
 .status-strip, 
