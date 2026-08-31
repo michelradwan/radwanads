@@ -22,13 +22,14 @@
             this.isTracingFlow = false;
             this.traceStepIndex = 0;
 
-            // Controle de Espaçamento entre Colunas (Compacto | Padrão | Amplo | Máximo)
+            // Controle de Espaçamento: colGap (entre colunas) + nodeGap (entre nós na mesma coluna)
             this.spacingLevel = 'default';
             this.spacingConfig = {
-                compact: { gap: '12px', label: 'Compacto' },
-                default: { gap: '24px', label: 'Padrão' },
-                wide:    { gap: '48px', label: 'Amplo' },
-                max:     { gap: '80px', label: 'Máximo' }
+                //                  col gap   node gap
+                compact: { colGap: '12px',  nodeGap: '8px',  label: 'Compacto' },
+                default: { colGap: '24px',  nodeGap: '12px', label: 'Padrão'   },
+                wide:    { colGap: '56px',  nodeGap: '28px', label: 'Amplo'    },
+                max:     { colGap: '100px', nodeGap: '52px', label: 'Máximo'   }
             };
             this.traceInterval = null;
 
@@ -348,23 +349,37 @@
             this.showFeedback('🔍 Câmera centralizada');
         }
 
-        // ─── CONTROLE DE ESPAÇAMENTO ENTRE COLUNAS ────────────────────────────────
+        // ─── CONTROLE DE ESPAÇAMENTO BIDIRECIONAL ─────────────────────────────────
         /**
-         * Modifica EXCLUSIVAMENTE o gap entre as colunas do nodes-container.
-         * NÃO altera zoom, scale, font-size ou tamanho dos nodes.
+         * Controla DOIS eixos simultaneamente:
+         *  1. colGap  → distância horizontal entre colunas de fases
+         *  2. nodeGap → distância vertical entre nós dentro da mesma coluna
+         * NÃO altera zoom, scale, font-size ou tamanho dos nós.
          */
         setSpacing(level) {
             if (!this.spacingConfig[level]) return;
 
             this.spacingLevel = level;
             const cfg = this.spacingConfig[level];
+            const ease = 'transition: gap 300ms cubic-bezier(0.16, 1, 0.3, 1), row-gap 300ms cubic-bezier(0.16, 1, 0.3, 1)';
 
-            // Aplica gap diretamente no container via inline style
+            // 1. Gap horizontal entre colunas (flex container)
             const container = document.getElementById('op-map-nodes-container');
             if (container) {
-                container.style.transition = 'gap 280ms cubic-bezier(0.16, 1, 0.3, 1)';
-                container.style.gap = cfg.gap;
+                container.style.transition = 'gap 300ms cubic-bezier(0.16, 1, 0.3, 1)';
+                container.style.columnGap = cfg.colGap;
             }
+
+            // 2. Gap vertical entre nós dentro de cada coluna
+            const nodeCols = document.querySelectorAll(
+                '#nodes-col-acquisition, #nodes-col-tracking, #nodes-col-conversion, #nodes-col-revenue, #nodes-col-intelligence'
+            );
+            nodeCols.forEach(col => {
+                col.style.transition = 'gap 300ms cubic-bezier(0.16, 1, 0.3, 1)';
+                col.style.display = 'flex';
+                col.style.flexDirection = 'column';
+                col.style.gap = cfg.nodeGap;
+            });
 
             // Atualiza label do popover
             const valueLabel = document.getElementById('op-map-spacing-value-label');
@@ -374,11 +389,9 @@
             const options = document.querySelectorAll('.spacing-option-btn');
             options.forEach(btn => {
                 const isActive = btn.dataset.spacing === level;
-                // Reset
                 btn.classList.remove('bg-white/[0.05]', 'border', 'border-white/[0.08]', 'text-[#F5F5F7]');
                 btn.classList.add('text-[#A1A1A6]', 'hover:bg-white/[0.06]', 'hover:text-[#F5F5F7]');
                 const check = btn.querySelector('.spacing-check');
-
                 if (isActive) {
                     btn.classList.remove('text-[#A1A1A6]', 'hover:bg-white/[0.06]', 'hover:text-[#F5F5F7]');
                     btn.classList.add('bg-white/[0.05]', 'border', 'border-white/[0.08]', 'text-[#F5F5F7]');
@@ -388,10 +401,10 @@
                 }
             });
 
-            // Recalcula links depois que o layout se ajustou
-            setTimeout(() => this.recalculateLinks(), 300);
+            // Recalcula links após layout se ajustar (delay = duração da transição)
+            setTimeout(() => this.recalculateLinks(), 320);
 
-            this.showFeedback(`↔ Espaçamento: ${cfg.label}`);
+            this.showFeedback(`↔ Espaçamento: ${cfg.label} — colunas ${cfg.colGap}, nós ${cfg.nodeGap}`);
             this.closeSpacingPopover();
         }
 
