@@ -1446,5 +1446,20 @@
             });
         });
     </script>
+
+    <!-- ── SESSION REDIRECT: se já logado, vai direto pro dashboard ── -->
+    <script>
+        (function() {
+            try {
+                // Checa cookie radwan_session
+                const hasCookie = document.cookie.split(';').some(c => c.trim().startsWith('radwan_session='));
+                // Checa localStorage (fallback usado pelo auth-gate.js)
+                const hasLocalStorage = !!localStorage.getItem('radwan_session') || !!localStorage.getItem('radwan_user');
+                if (hasCookie || hasLocalStorage) {
+                    window.location.replace('/admin-ads');
+                }
+            } catch(e) {}
+        })();
+    </script>
 </body>
 </html>
