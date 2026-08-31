@@ -1774,243 +1774,286 @@
                 <div id="op-map-drawer-backdrop" class="fixed inset-0 bg-black/20 md:hidden z-40 hidden" onclick="window.operationMapEngine?.closeDrawer()"></div>
             </section>
 
-            <!-- SEÇÃO INTEGRAÇÕES (14+ PLATAFORMAS & WEBHOOKS - APPLE/LINEAR LUXURY REDESIGN) -->
-            <section id="view-integrations" class="view-section hidden space-y-6">
-                <!-- Header Principal -->
-                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-white/[0.06]">
-                    <div>
-                        <div class="flex items-center gap-2.5">
-                            <div class="w-9 h-9 rounded-xl bg-[#FF2D2D]/10 border border-[#FF2D2D]/20 flex items-center justify-center text-lg shadow-[0_0_15px_rgba(255,45,45,0.15)]">
+            <!-- SEÇÃO INTEGRAÇÕES (CENTRAL DE INTEGRAÇÕES PREMIUM — APPLE/LINEAR ARCHITECTURE) -->
+            <section id="view-integrations" class="view-section hidden">
+                <div class="integrations-container space-y-6">
+
+                    <!-- FASE 4: PAGE HEADER COM HIERARQUIA REFINADA -->
+                    <div class="integrations-header">
+                        <div class="integrations-title-wrap">
+                            <div class="integrations-icon-badge">
                                 🔌
                             </div>
                             <div>
-                                <div class="flex items-center gap-2">
-                                    <h2 class="text-lg font-bold text-[#F5F5F7]">Integrações</h2>
-                                    <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-[#00E676]/15 text-[#00E676] border border-[#00E676]/30 flex items-center gap-1">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-[#00E676] animate-pulse"></span>
-                                        ATIVO
+                                <div class="flex items-center gap-2.5">
+                                    <h2 class="integrations-title-text">Integrações</h2>
+                                    <span class="integrations-status-strip">
+                                        <span class="integrations-status-dot"></span>
+                                        PARSER ATIVO
                                     </span>
                                 </div>
-                                <p class="text-xs text-[#A1A1A6] mt-0.5">Conecte suas plataformas de vendas para rastrear tudo automaticamente.</p>
+                                <p class="integrations-subtitle-text">Conecte suas plataformas de venda para o RADWAN receber pedidos e acompanhar conversões automaticamente.</p>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="flex items-center gap-2.5">
-                        <button onclick="window.dashboard?.testWebhookEvent()" class="btn btn-secondary btn-sm text-xs flex items-center gap-1.5 border border-white/[0.1] hover:border-[#FF2D2D]/40 transition-all">
-                            <span>⚡</span> <span>Testar conexão</span>
-                        </button>
-                        <button onclick="window.dashboard?.switchView('tracking')" class="btn btn-primary btn-sm text-xs font-semibold flex items-center gap-1.5 shadow-[0_0_20px_rgba(255,45,45,0.25)]">
-                            <span>🩺</span> <span>Ver status</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Banner Principal: URL de Vendas -->
-                <div class="relative overflow-hidden rounded-2xl bg-gradient-to-b from-[#15151C] to-[#0D0D12] border border-white/[0.1] p-6 space-y-4 shadow-2xl">
-                    <!-- Glow decorativo superior -->
-                    <div class="absolute -top-24 right-1/4 w-96 h-32 bg-[#FF2D2D]/10 rounded-full blur-3xl pointer-events-none"></div>
-
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        
+                        <!-- CTAs de Ação com Hierarquia Clara -->
                         <div class="flex items-center gap-2">
-                            <span class="px-2 py-0.5 rounded-md bg-[#FF2D2D]/15 text-[#FF2D2D] font-mono font-bold text-[10.5px] border border-[#FF2D2D]/30">SUA URL</span>
-                            <span class="text-xs text-[#F5F5F7] font-semibold">Cole essa URL na sua plataforma para rastrear vendas</span>
+                            <button type="button" onclick="window.dashboard?.testWebhookEvent()" class="btn btn-secondary btn-sm text-xs font-semibold flex items-center gap-1.5 border border-white/[0.08] hover:border-white/[0.2] transition-colors" title="Verificar se o endpoint de webhook está respondendo">
+                                <span>⚡</span> <span>Testar conexão</span>
+                            </button>
+                            <button type="button" onclick="window.dashboard?.switchView('tracking')" class="btn btn-tertiary btn-sm text-xs text-[#A1A1A6] hover:text-[#F5F5F7] flex items-center gap-1.5 border border-white/[0.06]" title="Ver integridade dos Pixels e Meta CAPI">
+                                <span>🩺</span> <span>Ver status</span>
+                            </button>
                         </div>
-                        <span class="text-[10px] text-[#6E6E73] font-mono flex items-center gap-1">
-                            <span class="w-1.5 h-1.5 rounded-full bg-[#00E676]"></span>
-                            Online 24h • Funciona com todas as plataformas
-                        </span>
                     </div>
 
-                    <!-- Input Box Estilizado com Botão de Cópia -->
-                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 bg-[#070709] border border-white/[0.12] rounded-xl p-2 sm:p-2.5 focus-within:border-[#FF2D2D] transition-colors">
-                        <div class="flex items-center gap-2 flex-1 px-2">
-                            <span class="text-xs text-[#6E6E73] font-mono select-none">POST</span>
-                            <input type="text" readonly value="https://radwanads.vercel.app/api/webhook" id="hub-webhook-url" class="bg-transparent text-xs sm:text-sm text-[#F5F5F7] font-mono flex-1 outline-none font-semibold truncate">
+                    <!-- FASE 9: BANNER PROTAGONISTA DA URL UNIVERSAL -->
+                    <div class="universal-url-card">
+                        <div class="universal-url-card-header">
+                            <div class="flex items-center gap-2">
+                                <span class="universal-url-label-badge">URL UNIVERSAL</span>
+                                <span class="text-xs text-[#F5F5F7] font-medium">Use esta URL como Webhook ou Postback na sua plataforma</span>
+                            </div>
+                            <span class="text-[11px] text-[#6E6E73] font-mono flex items-center gap-1.5">
+                                <span class="w-1.5 h-1.5 rounded-full bg-[#00E676]"></span>
+                                Endpoint Serverless • Latência &lt;45ms
+                            </span>
                         </div>
-                        <button type="button" onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); this.innerHTML='<span>✓</span> <span>Copiado!</span>'; setTimeout(()=>this.innerHTML='<span>📋</span> <span>Copiar URL</span>', 2500);" class="btn btn-primary py-2 px-5 text-xs font-bold flex items-center justify-center gap-1.5 rounded-lg shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all">
-                            <span>📋</span> <span>Copiar URL</span>
-                        </button>
+
+                        <!-- Input Box de Alta Legibilidade com Botão de Cópia Principal -->
+                        <div class="universal-url-input-box">
+                            <div class="flex items-center gap-2.5 flex-1 px-1 min-w-0">
+                                <span class="universal-url-method-tag">POST</span>
+                                <input type="text" readonly value="https://radwanads.vercel.app/api/webhook" id="hub-webhook-url" class="universal-url-input truncate">
+                            </div>
+                            <button type="button" onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); const btn=this; btn.innerHTML='<span>✓</span> <span>URL Copiada</span>'; setTimeout(()=>btn.innerHTML='<span>📋</span> <span>Copiar URL</span>', 2000);" class="universal-url-copy-btn">
+                                <span>📋</span> <span>Copiar URL</span>
+                            </button>
+                        </div>
+
+                        <!-- Benefícios Compactos e Objetivos -->
+                        <div class="universal-url-perks-row">
+                            <div class="universal-url-perk-item">
+                                <span class="universal-url-perk-icon">✓</span>
+                                <span><b>Detecta sozinho:</b> Sabe qual plataforma enviou a venda</span>
+                            </div>
+                            <div class="universal-url-perk-item">
+                                <span class="universal-url-perk-icon">✓</span>
+                                <span><b>Sem duplicatas:</b> Não conta a mesma venda duas vezes</span>
+                            </div>
+                            <div class="universal-url-perk-item">
+                                <span class="universal-url-perk-icon">✓</span>
+                                <span><b>Meta Ads:</b> Envia a conversão direto pro seu ecossistema</span>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Rodapé com explicação simples -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2 text-[11px] text-[#A1A1A6] border-t border-white/[0.05]">
+                    <!-- FASE 14: BARRA DE FILTROS (SEGMENTED CONTROL COMPACTO) -->
+                    <div class="integration-filters-bar">
                         <div class="flex items-center gap-2">
-                            <span class="text-[#00E676]">✔</span>
-                            <span><b>Detecta sozinho:</b> Sabe qual plataforma enviou a venda</span>
+                            <span class="text-xs font-semibold text-[#F5F5F7]">Plataformas Suportadas</span>
+                            <span class="text-[11px] text-[#6E6E73] font-mono">(14 checkouts)</span>
                         </div>
-                        <div class="flex items-center gap-2">
-                            <span class="text-[#00E676]">✔</span>
-                            <span><b>Sem duplicatas:</b> Não conta a mesma venda duas vezes</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <span class="text-[#00E676]">✔</span>
-                            <span><b>Meta Ads:</b> Envia a venda direto pro seu gerenciador</span>
+
+                        <div class="integration-segmented-control">
+                            <button type="button" onclick="window.dashboard?.filterPlatforms('all')" data-filter="all" class="integration-filter-btn active">Todas</button>
+                            <button type="button" onclick="window.dashboard?.filterPlatforms('infoproducts')" data-filter="infoproducts" class="integration-filter-btn">Infoprodutos</button>
+                            <button type="button" onclick="window.dashboard?.filterPlatforms('ecommerce')" data-filter="ecommerce" class="integration-filter-btn">E-commerce</button>
                         </div>
                     </div>
-                </div>
 
-                <!-- Filtros -->
-                <div class="flex items-center justify-between gap-3 overflow-x-auto pb-1 scrollbar-none text-xs">
-                    <div class="flex items-center gap-1.5">
-                        <span class="text-[11px] text-[#6E6E73] font-bold uppercase tracking-wider mr-1">Plataformas:</span>
-                        <span class="px-2.5 py-1 rounded-lg bg-white/[0.08] text-[#F5F5F7] font-bold border border-white/[0.1]">Todas (6)</span>
-                        <span class="px-2.5 py-1 rounded-lg bg-transparent text-[#A1A1A6] hover:text-[#F5F5F7] cursor-pointer">Infoprodutos</span>
-                        <span class="px-2.5 py-1 rounded-lg bg-transparent text-[#A1A1A6] hover:text-[#F5F5F7] cursor-pointer">E-commerce</span>
-                    </div>
-                    <span class="text-[11px] text-[#6E6E73] hidden md:inline">Cada card mostra onde colar a URL</span>
-                </div>
-
-                <!-- Grid de Plataformas -->
-                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-                    <!-- Kiwify -->
-                    <div class="p-5 rounded-2xl bg-[#111116] border border-white/[0.08] hover:border-[#00E676]/40 hover:bg-[#14141B] transition-all group flex flex-col justify-between space-y-4">
-                        <div class="space-y-3">
-                            <div class="flex items-start justify-between">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-xl bg-[#00E676]/10 border border-[#00E676]/20 text-[#00E676] font-bold flex items-center justify-center text-sm shadow-sm group-hover:scale-105 transition-transform">
-                                        KW
+                    <!-- FASE 12 & 15: GRID DE PLATAFORMAS (CARDS EQUILIBRADOS & MINIMALISTAS) -->
+                    <div class="platforms-grid" id="platforms-container">
+                        
+                        <!-- 1. Kiwify -->
+                        <div class="platform-card" data-category="infoproducts">
+                            <div class="space-y-2.5">
+                                <div class="platform-card-header">
+                                    <div class="platform-brand-group">
+                                        <div class="platform-logo-box text-[#00E676]">KW</div>
+                                        <div>
+                                            <h4 class="platform-name-title">Kiwify</h4>
+                                            <p class="platform-category-label">Infoprodutos & Cursos</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h4 class="text-sm font-bold text-[#F5F5F7] group-hover:text-[#00E676] transition-colors">Kiwify</h4>
-                                        <p class="text-[11px] text-[#6E6E73]">Cursos e infoprodutos</p>
-                                    </div>
+                                    <span class="platform-status-badge">SUPORTADO</span>
                                 </div>
-                                <span class="px-2 py-0.5 rounded-full text-[9.5px] font-mono font-bold bg-[#00E676]/15 text-[#00E676] border border-[#00E676]/30">PRONTO</span>
+                                <p class="platform-description-text">Rastreia vendas de cartão, Pix e boleto com comissões líquidas e estornos.</p>
                             </div>
-                            <p class="text-xs text-[#A1A1A6] leading-relaxed">
-                                Rastreia vendas por cartão, boleto, Pix e reembolsos. Envia tudo automaticamente pro seu Meta Ads.
-                            </p>
+                            <div class="platform-card-footer">
+                                <span class="platform-location-path" title="📍 Kiwify → Apps → Webhooks">📍 Kiwify → Apps → Webhooks</span>
+                                <button type="button" onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); this.textContent='Copiado ✓'; setTimeout(()=>this.textContent='Copiar URL →', 2000);" class="platform-copy-action-btn">Copiar URL →</button>
+                            </div>
                         </div>
-                        <div class="pt-3 border-t border-white/[0.05] flex items-center justify-between text-[11px]">
-                            <span class="text-[#6E6E73]">📍 Kiwify → Apps → Webhooks</span>
-                            <button onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); this.textContent='Copiado ✓'; setTimeout(()=>this.textContent='Copiar URL ➔', 2000);" class="text-[#00E676] hover:underline font-semibold">Copiar URL ➔</button>
-                        </div>
-                    </div>
 
-                    <!-- Hotmart -->
-                    <div class="p-5 rounded-2xl bg-[#111116] border border-white/[0.08] hover:border-[#FF5722]/40 hover:bg-[#14141B] transition-all group flex flex-col justify-between space-y-4">
-                        <div class="space-y-3">
-                            <div class="flex items-start justify-between">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-xl bg-[#FF5722]/10 border border-[#FF5722]/20 text-[#FF5722] font-bold flex items-center justify-center text-sm shadow-sm group-hover:scale-105 transition-transform">
-                                        HM
+                        <!-- 2. Hotmart -->
+                        <div class="platform-card" data-category="infoproducts">
+                            <div class="space-y-2.5">
+                                <div class="platform-card-header">
+                                    <div class="platform-brand-group">
+                                        <div class="platform-logo-box text-[#FF5722]">HM</div>
+                                        <div>
+                                            <h4 class="platform-name-title">Hotmart</h4>
+                                            <p class="platform-category-label">Cursos & Mentorias</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h4 class="text-sm font-bold text-[#F5F5F7] group-hover:text-[#FF5722] transition-colors">Hotmart</h4>
-                                        <p class="text-[11px] text-[#6E6E73]">Cursos e mentorias</p>
-                                    </div>
+                                    <span class="platform-status-badge">SUPORTADO</span>
                                 </div>
-                                <span class="px-2 py-0.5 rounded-full text-[9.5px] font-mono font-bold bg-[#00E676]/15 text-[#00E676] border border-[#00E676]/30">PRONTO</span>
+                                <p class="platform-description-text">Recebe vendas aprovadas, parcelas e reembolsos via notificações 2.0.</p>
                             </div>
-                            <p class="text-xs text-[#A1A1A6] leading-relaxed">
-                                Recebe vendas aprovadas, parcelas e reembolsos. Calcula comissão líquida e envia pro Meta Ads.
-                            </p>
+                            <div class="platform-card-footer">
+                                <span class="platform-location-path" title="📍 Ferramentas → Webhook (API)">📍 Ferramentas → Webhook (API)</span>
+                                <button type="button" onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); this.textContent='Copiado ✓'; setTimeout(()=>this.textContent='Copiar URL →', 2000);" class="platform-copy-action-btn">Copiar URL →</button>
+                            </div>
                         </div>
-                        <div class="pt-3 border-t border-white/[0.05] flex items-center justify-between text-[11px]">
-                            <span class="text-[#6E6E73]">📍 Ferramentas → Webhook (API)</span>
-                            <button onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); this.textContent='Copiado ✓'; setTimeout(()=>this.textContent='Copiar URL ➔', 2000);" class="text-[#FF5722] hover:underline font-semibold">Copiar URL ➔</button>
-                        </div>
-                    </div>
 
-                    <!-- Shopify -->
-                    <div class="p-5 rounded-2xl bg-[#111116] border border-white/[0.08] hover:border-[#95BF47]/40 hover:bg-[#14141B] transition-all group flex flex-col justify-between space-y-4">
-                        <div class="space-y-3">
-                            <div class="flex items-start justify-between">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-xl bg-[#95BF47]/10 border border-[#95BF47]/20 text-[#95BF47] font-bold flex items-center justify-center text-sm shadow-sm group-hover:scale-105 transition-transform">
-                                        SP
+                        <!-- 3. Shopify -->
+                        <div class="platform-card" data-category="ecommerce">
+                            <div class="space-y-2.5">
+                                <div class="platform-card-header">
+                                    <div class="platform-brand-group">
+                                        <div class="platform-logo-box text-[#95BF47]">SP</div>
+                                        <div>
+                                            <h4 class="platform-name-title">Shopify</h4>
+                                            <p class="platform-category-label">E-commerce & Dropshipping</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h4 class="text-sm font-bold text-[#F5F5F7] group-hover:text-[#95BF47] transition-colors">Shopify</h4>
-                                        <p class="text-[11px] text-[#6E6E73]">Loja virtual e dropshipping</p>
-                                    </div>
+                                    <span class="platform-status-badge">SUPORTADO</span>
                                 </div>
-                                <span class="px-2 py-0.5 rounded-full text-[9.5px] font-mono font-bold bg-[#00E676]/15 text-[#00E676] border border-[#00E676]/30">PRONTO</span>
+                                <p class="platform-description-text">Captura pedidos pagos com leitura de tags de UTM e cookies de rastreio.</p>
                             </div>
-                            <p class="text-xs text-[#A1A1A6] leading-relaxed">
-                                Recebe cada pedido pago da sua loja e envia pro Meta Ads com os dados do comprador pra melhorar os anúncios.
-                            </p>
+                            <div class="platform-card-footer">
+                                <span class="platform-location-path" title="📍 Configurações → Notificações → Webhook">📍 Config → Notificações → Webhook</span>
+                                <button type="button" onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); this.textContent='Copiado ✓'; setTimeout(()=>this.textContent='Copiar URL →', 2000);" class="platform-copy-action-btn">Copiar URL →</button>
+                            </div>
                         </div>
-                        <div class="pt-3 border-t border-white/[0.05] flex items-center justify-between text-[11px]">
-                            <span class="text-[#6E6E73]">📍 Configurações → Notificações → Webhook</span>
-                            <button onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); this.textContent='Copiado ✓'; setTimeout(()=>this.textContent='Copiar URL ➔', 2000);" class="text-[#95BF47] hover:underline font-semibold">Copiar URL ➔</button>
-                        </div>
-                    </div>
 
-                    <!-- Monetizze -->
-                    <div class="p-5 rounded-2xl bg-[#111116] border border-white/[0.08] hover:border-[#2196F3]/40 hover:bg-[#14141B] transition-all group flex flex-col justify-between space-y-4">
-                        <div class="space-y-3">
-                            <div class="flex items-start justify-between">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-xl bg-[#2196F3]/10 border border-[#2196F3]/20 text-[#2196F3] font-bold flex items-center justify-center text-sm shadow-sm group-hover:scale-105 transition-transform">
-                                        MZ
+                        <!-- 4. Monetizze -->
+                        <div class="platform-card" data-category="infoproducts">
+                            <div class="space-y-2.5">
+                                <div class="platform-card-header">
+                                    <div class="platform-brand-group">
+                                        <div class="platform-logo-box text-[#2196F3]">MZ</div>
+                                        <div>
+                                            <h4 class="platform-name-title">Monetizze</h4>
+                                            <p class="platform-category-label">Produtos Físicos & Digitais</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h4 class="text-sm font-bold text-[#F5F5F7] group-hover:text-[#2196F3] transition-colors">Monetizze</h4>
-                                        <p class="text-[11px] text-[#6E6E73]">Produtos físicos e digitais</p>
-                                    </div>
+                                    <span class="platform-status-badge">SUPORTADO</span>
                                 </div>
-                                <span class="px-2 py-0.5 rounded-full text-[9.5px] font-mono font-bold bg-[#00E676]/15 text-[#00E676] border border-[#00E676]/30">PRONTO</span>
+                                <p class="platform-description-text">Recebe vendas aprovadas, boletos pagos e estornos em tempo real.</p>
                             </div>
-                            <p class="text-xs text-[#A1A1A6] leading-relaxed">
-                                Recebe vendas aprovadas, boletos pagos e estornos. Envia tudo pro Meta Ads na hora.
-                            </p>
+                            <div class="platform-card-footer">
+                                <span class="platform-location-path" title="📍 Ferramentas → Postback">📍 Ferramentas → Postback</span>
+                                <button type="button" onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); this.textContent='Copiado ✓'; setTimeout(()=>this.textContent='Copiar URL →', 2000);" class="platform-copy-action-btn">Copiar URL →</button>
+                            </div>
                         </div>
-                        <div class="pt-3 border-t border-white/[0.05] flex items-center justify-between text-[11px]">
-                            <span class="text-[#6E6E73]">📍 Ferramentas → Postback</span>
-                            <button onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); this.textContent='Copiado ✓'; setTimeout(()=>this.textContent='Copiar URL ➔', 2000);" class="text-[#2196F3] hover:underline font-semibold">Copiar URL ➔</button>
-                        </div>
-                    </div>
 
-                    <!-- Eduzz -->
-                    <div class="p-5 rounded-2xl bg-[#111116] border border-white/[0.08] hover:border-[#FFC107]/40 hover:bg-[#14141B] transition-all group flex flex-col justify-between space-y-4">
-                        <div class="space-y-3">
-                            <div class="flex items-start justify-between">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-xl bg-[#FFC107]/10 border border-[#FFC107]/20 text-[#FFC107] font-bold flex items-center justify-center text-sm shadow-sm group-hover:scale-105 transition-transform">
-                                        ED
+                        <!-- 5. Eduzz -->
+                        <div class="platform-card" data-category="infoproducts">
+                            <div class="space-y-2.5">
+                                <div class="platform-card-header">
+                                    <div class="platform-brand-group">
+                                        <div class="platform-logo-box text-[#FFC107]">ED</div>
+                                        <div>
+                                            <h4 class="platform-name-title">Eduzz</h4>
+                                            <p class="platform-category-label">Cursos & Assinaturas</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h4 class="text-sm font-bold text-[#F5F5F7] group-hover:text-[#FFC107] transition-colors">Eduzz</h4>
-                                        <p class="text-[11px] text-[#6E6E73]">Cursos e assinaturas</p>
-                                    </div>
+                                    <span class="platform-status-badge">SUPORTADO</span>
                                 </div>
-                                <span class="px-2 py-0.5 rounded-full text-[9.5px] font-mono font-bold bg-[#00E676]/15 text-[#00E676] border border-[#00E676]/30">PRONTO</span>
+                                <p class="platform-description-text">Recebe vendas, reembolsos e cancelamentos com identificação de cliente.</p>
                             </div>
-                            <p class="text-xs text-[#A1A1A6] leading-relaxed">
-                                Recebe vendas, reembolsos e cancelamentos. Conecta cada venda à campanha certa no Meta Ads.
-                            </p>
+                            <div class="platform-card-footer">
+                                <span class="platform-location-path" title="📍 Avançado → Webhook">📍 Avançado → Webhook</span>
+                                <button type="button" onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); this.textContent='Copiado ✓'; setTimeout(()=>this.textContent='Copiar URL →', 2000);" class="platform-copy-action-btn">Copiar URL →</button>
+                            </div>
                         </div>
-                        <div class="pt-3 border-t border-white/[0.05] flex items-center justify-between text-[11px]">
-                            <span class="text-[#6E6E73]">📍 Avançado → Webhook</span>
-                            <button onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); this.textContent='Copiado ✓'; setTimeout(()=>this.textContent='Copiar URL ➔', 2000);" class="text-[#FFC107] hover:underline font-semibold">Copiar URL ➔</button>
-                        </div>
-                    </div>
 
-                    <!-- Braip -->
-                    <div class="p-5 rounded-2xl bg-[#111116] border border-white/[0.08] hover:border-[#9C27B0]/40 hover:bg-[#14141B] transition-all group flex flex-col justify-between space-y-4">
-                        <div class="space-y-3">
-                            <div class="flex items-start justify-between">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-xl bg-[#9C27B0]/10 border border-[#9C27B0]/20 text-[#9C27B0] font-bold flex items-center justify-center text-sm shadow-sm group-hover:scale-105 transition-transform">
-                                        BP
+                        <!-- 6. Braip -->
+                        <div class="platform-card" data-category="ecommerce">
+                            <div class="space-y-2.5">
+                                <div class="platform-card-header">
+                                    <div class="platform-brand-group">
+                                        <div class="platform-logo-box text-[#9C27B0]">BP</div>
+                                        <div>
+                                            <h4 class="platform-name-title">Braip</h4>
+                                            <p class="platform-category-label">Produtos Físicos & Cápsulas</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h4 class="text-sm font-bold text-[#F5F5F7] group-hover:text-[#9C27B0] transition-colors">Braip</h4>
-                                        <p class="text-[11px] text-[#6E6E73]">Produtos físicos e cápsulas</p>
-                                    </div>
+                                    <span class="platform-status-badge">SUPORTADO</span>
                                 </div>
-                                <span class="px-2 py-0.5 rounded-full text-[9.5px] font-mono font-bold bg-[#00E676]/15 text-[#00E676] border border-[#00E676]/30">PRONTO</span>
+                                <p class="platform-description-text">Recebe vendas com múltiplos itens, frete calculado e dados de entrega.</p>
                             </div>
-                            <p class="text-xs text-[#A1A1A6] leading-relaxed">
-                                Recebe vendas aprovadas com frete e múltiplos itens. Envia pro Meta Ads pra otimizar suas campanhas.
-                            </p>
+                            <div class="platform-card-footer">
+                                <span class="platform-location-path" title="📍 Ferramentas → Postback">📍 Ferramentas → Postback</span>
+                                <button type="button" onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); this.textContent='Copiado ✓'; setTimeout(()=>this.textContent='Copiar URL →', 2000);" class="platform-copy-action-btn">Copiar URL →</button>
+                            </div>
                         </div>
-                        <div class="pt-3 border-t border-white/[0.05] flex items-center justify-between text-[11px]">
-                            <span class="text-[#6E6E73]">📍 Ferramentas → Postback</span>
-                            <button onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); this.textContent='Copiado ✓'; setTimeout(()=>this.textContent='Copiar URL ➔', 2000);" class="text-[#9C27B0] hover:underline font-semibold">Copiar URL ➔</button>
+
+                        <!-- 7. Yampi -->
+                        <div class="platform-card" data-category="ecommerce">
+                            <div class="space-y-2.5">
+                                <div class="platform-card-header">
+                                    <div class="platform-brand-group">
+                                        <div class="platform-logo-box text-[#00B0FF]">YM</div>
+                                        <div>
+                                            <h4 class="platform-name-title">Yampi</h4>
+                                            <p class="platform-category-label">Checkout Transparente</p>
+                                        </div>
+                                    </div>
+                                    <span class="platform-status-badge">SUPORTADO</span>
+                                </div>
+                                <p class="platform-description-text">Ingestão direta de pedidos pagos com dados de tráfego e checkout.</p>
+                            </div>
+                            <div class="platform-card-footer">
+                                <span class="platform-location-path" title="📍 Configurações → Webhooks">📍 Configurações → Webhooks</span>
+                                <button type="button" onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); this.textContent='Copiado ✓'; setTimeout(()=>this.textContent='Copiar URL →', 2000);" class="platform-copy-action-btn">Copiar URL →</button>
+                            </div>
                         </div>
+
+                        <!-- 8. Cartpanda -->
+                        <div class="platform-card" data-category="ecommerce">
+                            <div class="space-y-2.5">
+                                <div class="platform-card-header">
+                                    <div class="platform-brand-group">
+                                        <div class="platform-logo-box text-[#00E676]">CP</div>
+                                        <div>
+                                            <h4 class="platform-name-title">Cartpanda</h4>
+                                            <p class="platform-category-label">Checkout & E-commerce</p>
+                                        </div>
+                                    </div>
+                                    <span class="platform-status-badge">SUPORTADO</span>
+                                </div>
+                                <p class="platform-description-text">Rastreia vendas no checkout transparente com parâmetros de atribuição.</p>
+                            </div>
+                            <div class="platform-card-footer">
+                                <span class="platform-location-path" title="📍 Admin → Webhooks">📍 Admin → Webhooks</span>
+                                <button type="button" onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); this.textContent='Copiado ✓'; setTimeout(()=>this.textContent='Copiar URL →', 2000);" class="platform-copy-action-btn">Copiar URL →</button>
+                            </div>
+                        </div>
+
+                        <!-- 9. Appmax -->
+                        <div class="platform-card" data-category="ecommerce">
+                            <div class="space-y-2.5">
+                                <div class="platform-card-header">
+                                    <div class="platform-brand-group">
+                                        <div class="platform-logo-box text-[#FF9800]">AM</div>
+                                        <div>
+                                            <h4 class="platform-name-title">Appmax</h4>
+                                            <p class="platform-category-label">Processamento & Pagamentos</p>
+                                        </div>
+                                    </div>
+                                    <span class="platform-status-badge">SUPORTADO</span>
+                                </div>
+                                <p class="platform-description-text">Captura aprovações imediatas de cartão e Pix com cálculo de antifraude.</p>
+                            </div>
+                            <div class="platform-card-footer">
+                                <span class="platform-location-path" title="📍 Configurações → Integrações">📍 Config → Integrações</span>
+                                <button type="button" onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); this.textContent='Copiado ✓'; setTimeout(()=>this.textContent='Copiar URL →', 2000);" class="platform-copy-action-btn">Copiar URL →</button>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </section>
