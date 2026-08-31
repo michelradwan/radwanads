@@ -1719,135 +1719,244 @@
                 <div id="op-map-drawer-backdrop" class="fixed inset-0 bg-black/20 md:hidden z-40 hidden" onclick="window.operationMapEngine?.closeDrawer()"></div>
             </section>
 
-            <!-- SEÇÃO INTEGRAÇÕES (14+ PLATAFORMAS & WEBHOOKS) -->
+            <!-- SEÇÃO INTEGRAÇÕES (14+ PLATAFORMAS & WEBHOOKS - APPLE/LINEAR LUXURY REDESIGN) -->
             <section id="view-integrations" class="view-section hidden space-y-6">
-                <!-- Header -->
-                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 pb-2 border-b border-white/[0.06]">
+                <!-- Header Principal com Stats Rápidos -->
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-white/[0.06]">
                     <div>
-                        <div class="flex items-center gap-2">
-                            <span class="text-xl">🔌</span>
-                            <h2 class="text-base font-bold text-[#F5F5F7]">Hub de Integrações & Webhooks</h2>
-                            <span class="badge badge-active text-[10px]">14 Plataformas Suportadas</span>
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-9 h-9 rounded-xl bg-[#FF2D2D]/10 border border-[#FF2D2D]/20 flex items-center justify-center text-lg shadow-[0_0_15px_rgba(255,45,45,0.15)]">
+                                🔌
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <h2 class="text-lg font-bold text-[#F5F5F7]">Hub Universal de Integrações</h2>
+                                    <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-[#00E676]/15 text-[#00E676] border border-[#00E676]/30 flex items-center gap-1">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-[#00E676] animate-pulse"></span>
+                                        CAPI v21.0 ATIVO
+                                    </span>
+                                </div>
+                                <p class="text-xs text-[#A1A1A6] mt-0.5">Rastreamento server-side com Meta Conversions API e deduplicação inteligente com 14 plataformas.</p>
+                            </div>
                         </div>
-                        <p class="text-xs text-[#A1A1A6] mt-0.5">Receba eventos de conversão e envie automaticamente para a Meta Graph CAPI.</p>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <button onclick="window.dashboard?.testWebhookEvent()" class="btn btn-secondary btn-sm text-xs flex items-center gap-1.5">
+                    
+                    <div class="flex items-center gap-2.5">
+                        <button onclick="window.dashboard?.testWebhookEvent()" class="btn btn-secondary btn-sm text-xs flex items-center gap-1.5 border border-white/[0.1] hover:border-[#FF2D2D]/40 transition-all">
                             <span>⚡</span> <span>Disparar Evento Teste</span>
                         </button>
-                    </div>
-                </div>
-
-                <!-- Card da URL Universal de Webhook -->
-                <div class="p-5 rounded-2xl bg-gradient-to-r from-[#121217] to-[#181822] border border-[#FF2D2D]/30 space-y-3 relative overflow-hidden">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-2">
-                            <span class="w-2.5 h-2.5 rounded-full bg-[#00E676] animate-pulse"></span>
-                            <span class="text-xs font-bold uppercase tracking-wider text-[#F5F5F7]">Sua URL Universal de Webhook</span>
-                        </div>
-                        <span class="text-[10px] text-[#A1A1A6] font-mono">POST • JSON / x-www-form-urlencoded</span>
-                    </div>
-                    <div class="flex items-center gap-2 bg-[#08080A] border border-white/[0.1] rounded-xl p-3">
-                        <input type="text" readonly value="https://radwanads.vercel.app/api/webhook" id="hub-webhook-url" class="bg-transparent text-xs text-[#F5F5F7] font-mono flex-1 outline-none">
-                        <button type="button" onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); this.textContent='Copiado!'; setTimeout(()=>this.textContent='Copiar URL', 2000);" class="btn btn-primary py-1.5 px-4 text-xs font-bold">
-                            Copiar URL
+                        <button onclick="window.dashboard?.switchView('tracking')" class="btn btn-primary btn-sm text-xs font-semibold flex items-center gap-1.5 shadow-[0_0_20px_rgba(255,45,45,0.25)]">
+                            <span>🩺</span> <span>Ver Saúde do CAPI</span>
                         </button>
                     </div>
-                    <p class="text-[11px] text-[#A1A1A6]">
-                        Cole essa mesma URL em qualquer plataforma (Kiwify, Hotmart, Monetizze, Eduzz, Shopify, Braip, Yampi, etc). O RADWAN ADS identifica o formato automaticamente.
-                    </p>
                 </div>
 
-                <!-- Grid de Plataformas Suportadas -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <!-- Kiwify -->
-                    <div class="p-4 rounded-xl bg-[#111116] border border-white/[0.07] space-y-2.5 hover:border-white/[0.15] transition-all">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-2.5">
-                                <div class="w-8 h-8 rounded-lg bg-[#00E676]/10 text-[#00E676] font-bold flex items-center justify-center text-xs">KW</div>
-                                <div>
-                                    <h4 class="text-xs font-bold text-[#F5F5F7]">Kiwify</h4>
-                                    <p class="text-[10px] text-[#6E6E73]">Vendas, Reembolsos, PIX</p>
-                                </div>
-                            </div>
-                            <span class="badge badge-active text-[9.5px]">Nativo</span>
+                <!-- Banner Principal: Webhook Universal (Hero Glow Card) -->
+                <div class="relative overflow-hidden rounded-2xl bg-gradient-to-b from-[#15151C] to-[#0D0D12] border border-white/[0.1] p-6 space-y-4 shadow-2xl">
+                    <!-- Glow decorativo superior -->
+                    <div class="absolute -top-24 right-1/4 w-96 h-32 bg-[#FF2D2D]/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2 py-0.5 rounded-md bg-[#FF2D2D]/15 text-[#FF2D2D] font-mono font-bold text-[10.5px] border border-[#FF2D2D]/30">URL UNIVERSAL</span>
+                            <span class="text-xs text-[#F5F5F7] font-semibold">Endpoint Único de Ingestão de Vendas</span>
                         </div>
-                        <p class="text-[11px] text-[#A1A1A6]">Configurações > Webhooks > Adicionar Webhook com a URL acima.</p>
+                        <span class="text-[10px] text-[#6E6E73] font-mono flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#00E676]"></span>
+                            Latência Média: &lt; 45ms • Serverless Zero-Downtime
+                        </span>
+                    </div>
+
+                    <!-- Input Box Estilizado com Botão de Cópia -->
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 bg-[#070709] border border-white/[0.12] rounded-xl p-2 sm:p-2.5 focus-within:border-[#FF2D2D] transition-colors">
+                        <div class="flex items-center gap-2 flex-1 px-2">
+                            <span class="text-xs text-[#6E6E73] font-mono select-none">POST</span>
+                            <input type="text" readonly value="https://radwanads.vercel.app/api/webhook" id="hub-webhook-url" class="bg-transparent text-xs sm:text-sm text-[#F5F5F7] font-mono flex-1 outline-none font-semibold truncate">
+                        </div>
+                        <button type="button" onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); this.innerHTML='<span>✓</span> <span>Copiado!</span>'; setTimeout(()=>this.innerHTML='<span>📋</span> <span>Copiar URL</span>', 2500);" class="btn btn-primary py-2 px-5 text-xs font-bold flex items-center justify-center gap-1.5 rounded-lg shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all">
+                            <span>📋</span> <span>Copiar URL</span>
+                        </button>
+                    </div>
+
+                    <!-- Rodapé informativo do card -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2 text-[11px] text-[#A1A1A6] border-t border-white/[0.05]">
+                        <div class="flex items-center gap-2">
+                            <span class="text-[#00E676]">✔</span>
+                            <span><b>Auto-Detecção:</b> Parser identifica a plataforma pelo payload</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-[#00E676]">✔</span>
+                            <span><b>Deduplicação:</b> Evita duplicação de compras na Meta</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-[#00E676]">✔</span>
+                            <span><b>Meta CAPI Sync:</b> Disparo direto com token da sua conta</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Categorias de Plataformas (Chips Filtráveis) -->
+                <div class="flex items-center justify-between gap-3 overflow-x-auto pb-1 scrollbar-none text-xs">
+                    <div class="flex items-center gap-1.5">
+                        <span class="text-[11px] text-[#6E6E73] font-bold uppercase tracking-wider mr-1">Plataformas:</span>
+                        <span class="px-2.5 py-1 rounded-lg bg-white/[0.08] text-[#F5F5F7] font-bold border border-white/[0.1]">Todas (14)</span>
+                        <span class="px-2.5 py-1 rounded-lg bg-transparent text-[#A1A1A6] hover:text-[#F5F5F7] cursor-pointer">Infoprodutos</span>
+                        <span class="px-2.5 py-1 rounded-lg bg-transparent text-[#A1A1A6] hover:text-[#F5F5F7] cursor-pointer">E-commerce</span>
+                        <span class="px-2.5 py-1 rounded-lg bg-transparent text-[#A1A1A6] hover:text-[#F5F5F7] cursor-pointer">Gateways</span>
+                    </div>
+                    <span class="text-[11px] text-[#6E6E73] font-mono hidden md:inline">Prontas para colar o webhook</span>
+                </div>
+
+                <!-- Grid de Plataformas (Cards Apple/Linear Grade) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                    <!-- Kiwify -->
+                    <div class="p-5 rounded-2xl bg-[#111116] border border-white/[0.08] hover:border-[#00E676]/40 hover:bg-[#14141B] transition-all group flex flex-col justify-between space-y-4">
+                        <div class="space-y-3">
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-xl bg-[#00E676]/10 border border-[#00E676]/20 text-[#00E676] font-bold flex items-center justify-center text-sm shadow-sm group-hover:scale-105 transition-transform">
+                                        KW
+                                    </div>
+                                    <div>
+                                        <h4 class="text-sm font-bold text-[#F5F5F7] group-hover:text-[#00E676] transition-colors">Kiwify</h4>
+                                        <p class="text-[11px] text-[#6E6E73]">Infoprodutos & Assinaturas</p>
+                                    </div>
+                                </div>
+                                <span class="px-2 py-0.5 rounded-full text-[9.5px] font-mono font-bold bg-[#00E676]/15 text-[#00E676] border border-[#00E676]/30">NATIVO</span>
+                            </div>
+                            <p class="text-xs text-[#A1A1A6] leading-relaxed">
+                                Suporta vendas de cartão, boletos gerados/pagos, PIX instantâneo e reembolsos com envio imediato ao Meta CAPI.
+                            </p>
+                        </div>
+                        <div class="pt-3 border-t border-white/[0.05] flex items-center justify-between text-[11px]">
+                            <span class="text-[#6E6E73]">Kiwify > Apps > Webhooks</span>
+                            <button onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); alert('URL do Webhook copiada!');" class="text-[#00E676] hover:underline font-semibold">Copiar URL ➔</button>
+                        </div>
                     </div>
 
                     <!-- Hotmart -->
-                    <div class="p-4 rounded-xl bg-[#111116] border border-white/[0.07] space-y-2.5 hover:border-white/[0.15] transition-all">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-2.5">
-                                <div class="w-8 h-8 rounded-lg bg-[#FF5722]/10 text-[#FF5722] font-bold flex items-center justify-center text-xs">HM</div>
-                                <div>
-                                    <h4 class="text-xs font-bold text-[#F5F5F7]">Hotmart</h4>
-                                    <p class="text-[10px] text-[#6E6E73]">Webhook v2 & Legacy</p>
+                    <div class="p-5 rounded-2xl bg-[#111116] border border-white/[0.08] hover:border-[#FF5722]/40 hover:bg-[#14141B] transition-all group flex flex-col justify-between space-y-4">
+                        <div class="space-y-3">
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-xl bg-[#FF5722]/10 border border-[#FF5722]/20 text-[#FF5722] font-bold flex items-center justify-center text-sm shadow-sm group-hover:scale-105 transition-transform">
+                                        HM
+                                    </div>
+                                    <div>
+                                        <h4 class="text-sm font-bold text-[#F5F5F7] group-hover:text-[#FF5722] transition-colors">Hotmart</h4>
+                                        <p class="text-[11px] text-[#6E6E73]">Webhook 2.0 & Legacy</p>
+                                    </div>
                                 </div>
+                                <span class="px-2 py-0.5 rounded-full text-[9.5px] font-mono font-bold bg-[#00E676]/15 text-[#00E676] border border-[#00E676]/30">NATIVO</span>
                             </div>
-                            <span class="badge badge-active text-[9.5px]">Nativo</span>
+                            <p class="text-xs text-[#A1A1A6] leading-relaxed">
+                                Extração de comissões líquidas, suporte a parcelamento, recuperação de carrinho e eventos de checkout internacional.
+                            </p>
                         </div>
-                        <p class="text-[11px] text-[#A1A1A6]">Ferramentas > Webhook (API) > Configurar URL única.</p>
+                        <div class="pt-3 border-t border-white/[0.05] flex items-center justify-between text-[11px]">
+                            <span class="text-[#6E6E73]">Ferramentas > Webhook (API)</span>
+                            <button onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); alert('URL do Webhook copiada!');" class="text-[#FF5722] hover:underline font-semibold">Copiar URL ➔</button>
+                        </div>
                     </div>
 
                     <!-- Shopify -->
-                    <div class="p-4 rounded-xl bg-[#111116] border border-white/[0.07] space-y-2.5 hover:border-white/[0.15] transition-all">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-2.5">
-                                <div class="w-8 h-8 rounded-lg bg-[#95BF47]/10 text-[#95BF47] font-bold flex items-center justify-center text-xs">SP</div>
-                                <div>
-                                    <h4 class="text-xs font-bold text-[#F5F5F7]">Shopify</h4>
-                                    <p class="text-[10px] text-[#6E6E73]">Orders/Paid + _fbp / _fbc</p>
+                    <div class="p-5 rounded-2xl bg-[#111116] border border-white/[0.08] hover:border-[#95BF47]/40 hover:bg-[#14141B] transition-all group flex flex-col justify-between space-y-4">
+                        <div class="space-y-3">
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-xl bg-[#95BF47]/10 border border-[#95BF47]/20 text-[#95BF47] font-bold flex items-center justify-center text-sm shadow-sm group-hover:scale-105 transition-transform">
+                                        SP
+                                    </div>
+                                    <div>
+                                        <h4 class="text-sm font-bold text-[#F5F5F7] group-hover:text-[#95BF47] transition-colors">Shopify</h4>
+                                        <p class="text-[11px] text-[#6E6E73]">E-commerce Global</p>
+                                    </div>
                                 </div>
+                                <span class="px-2 py-0.5 rounded-full text-[9.5px] font-mono font-bold bg-[#00E676]/15 text-[#00E676] border border-[#00E676]/30">NATIVO</span>
                             </div>
-                            <span class="badge badge-active text-[9.5px]">Nativo</span>
+                            <p class="text-xs text-[#A1A1A6] leading-relaxed">
+                                Ingestão do webhook <code>orders/paid</code> com leitura de <code>note_attributes</code> para cookies <code>_fbp</code> e <code>_fbc</code>.
+                            </p>
                         </div>
-                        <p class="text-[11px] text-[#A1A1A6]">Settings > Notifications > Webhooks > Order Creation / Payment.</p>
+                        <div class="pt-3 border-t border-white/[0.05] flex items-center justify-between text-[11px]">
+                            <span class="text-[#6E6E73]">Settings > Notifications > Webhook</span>
+                            <button onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); alert('URL do Webhook copiada!');" class="text-[#95BF47] hover:underline font-semibold">Copiar URL ➔</button>
+                        </div>
                     </div>
 
                     <!-- Monetizze -->
-                    <div class="p-4 rounded-xl bg-[#111116] border border-white/[0.07] space-y-2.5 hover:border-white/[0.15] transition-all">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-2.5">
-                                <div class="w-8 h-8 rounded-lg bg-[#2196F3]/10 text-[#2196F3] font-bold flex items-center justify-center text-xs">MZ</div>
-                                <div>
-                                    <h4 class="text-xs font-bold text-[#F5F5F7]">Monetizze</h4>
-                                    <p class="text-[10px] text-[#6E6E73]">Postback / Webhook</p>
+                    <div class="p-5 rounded-2xl bg-[#111116] border border-white/[0.08] hover:border-[#2196F3]/40 hover:bg-[#14141B] transition-all group flex flex-col justify-between space-y-4">
+                        <div class="space-y-3">
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-xl bg-[#2196F3]/10 border border-[#2196F3]/20 text-[#2196F3] font-bold flex items-center justify-center text-sm shadow-sm group-hover:scale-105 transition-transform">
+                                        MZ
+                                    </div>
+                                    <div>
+                                        <h4 class="text-sm font-bold text-[#F5F5F7] group-hover:text-[#2196F3] transition-colors">Monetizze</h4>
+                                        <p class="text-[11px] text-[#6E6E73]">Físicos & Digitais</p>
+                                    </div>
                                 </div>
+                                <span class="px-2 py-0.5 rounded-full text-[9.5px] font-mono font-bold bg-[#00E676]/15 text-[#00E676] border border-[#00E676]/30">NATIVO</span>
                             </div>
-                            <span class="badge badge-active text-[9.5px]">Nativo</span>
+                            <p class="text-xs text-[#A1A1A6] leading-relaxed">
+                                Postback instantâneo de transações aprovadas, boletos impressos, pagamentos confirmados e estornos.
+                            </p>
                         </div>
-                        <p class="text-[11px] text-[#A1A1A6]">Ferramentas > Postback > Adicionar URL do RADWAN ADS.</p>
+                        <div class="pt-3 border-t border-white/[0.05] flex items-center justify-between text-[11px]">
+                            <span class="text-[#6E6E73]">Ferramentas > Postback</span>
+                            <button onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); alert('URL do Webhook copiada!');" class="text-[#2196F3] hover:underline font-semibold">Copiar URL ➔</button>
+                        </div>
                     </div>
 
                     <!-- Eduzz -->
-                    <div class="p-4 rounded-xl bg-[#111116] border border-white/[0.07] space-y-2.5 hover:border-white/[0.15] transition-all">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-2.5">
-                                <div class="w-8 h-8 rounded-lg bg-[#FFC107]/10 text-[#FFC107] font-bold flex items-center justify-center text-xs">ED</div>
-                                <div>
-                                    <h4 class="text-xs font-bold text-[#F5F5F7]">Eduzz</h4>
-                                    <p class="text-[10px] text-[#6E6E73]">Nutror & Fatura Paga</p>
+                    <div class="p-5 rounded-2xl bg-[#111116] border border-white/[0.08] hover:border-[#FFC107]/40 hover:bg-[#14141B] transition-all group flex flex-col justify-between space-y-4">
+                        <div class="space-y-3">
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-xl bg-[#FFC107]/10 border border-[#FFC107]/20 text-[#FFC107] font-bold flex items-center justify-center text-sm shadow-sm group-hover:scale-105 transition-transform">
+                                        ED
+                                    </div>
+                                    <div>
+                                        <h4 class="text-sm font-bold text-[#F5F5F7] group-hover:text-[#FFC107] transition-colors">Eduzz</h4>
+                                        <p class="text-[11px] text-[#6E6E73]">Nutror & Cursos</p>
+                                    </div>
                                 </div>
+                                <span class="px-2 py-0.5 rounded-full text-[9.5px] font-mono font-bold bg-[#00E676]/15 text-[#00E676] border border-[#00E676]/30">NATIVO</span>
                             </div>
-                            <span class="badge badge-active text-[9.5px]">Nativo</span>
+                            <p class="text-xs text-[#A1A1A6] leading-relaxed">
+                                Integração com faturas geradas, pagas, reembolsos e cancelamentos com atribuição direta a campanhas.
+                            </p>
                         </div>
-                        <p class="text-[11px] text-[#A1A1A6]">Avançado > Webhook > Cadastrar nova URL.</p>
+                        <div class="pt-3 border-t border-white/[0.05] flex items-center justify-between text-[11px]">
+                            <span class="text-[#6E6E73]">Avançado > Webhook</span>
+                            <button onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); alert('URL do Webhook copiada!');" class="text-[#FFC107] hover:underline font-semibold">Copiar URL ➔</button>
+                        </div>
                     </div>
 
                     <!-- Braip -->
-                    <div class="p-4 rounded-xl bg-[#111116] border border-white/[0.07] space-y-2.5 hover:border-white/[0.15] transition-all">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-2.5">
-                                <div class="w-8 h-8 rounded-lg bg-[#9C27B0]/10 text-[#9C27B0] font-bold flex items-center justify-center text-xs">BP</div>
-                                <div>
-                                    <h4 class="text-xs font-bold text-[#F5F5F7]">Braip</h4>
-                                    <p class="text-[10px] text-[#6E6E73]">Postback Transações</p>
+                    <div class="p-5 rounded-2xl bg-[#111116] border border-white/[0.08] hover:border-[#9C27B0]/40 hover:bg-[#14141B] transition-all group flex flex-col justify-between space-y-4">
+                        <div class="space-y-3">
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-xl bg-[#9C27B0]/10 border border-[#9C27B0]/20 text-[#9C27B0] font-bold flex items-center justify-center text-sm shadow-sm group-hover:scale-105 transition-transform">
+                                        BP
+                                    </div>
+                                    <div>
+                                        <h4 class="text-sm font-bold text-[#F5F5F7] group-hover:text-[#9C27B0] transition-colors">Braip</h4>
+                                        <p class="text-[11px] text-[#6E6E73]">Produtos Físicos & Cápsulas</p>
+                                    </div>
                                 </div>
+                                <span class="px-2 py-0.5 rounded-full text-[9.5px] font-mono font-bold bg-[#00E676]/15 text-[#00E676] border border-[#00E676]/30">NATIVO</span>
                             </div>
-                            <span class="badge badge-active text-[9.5px]">Nativo</span>
+                            <p class="text-xs text-[#A1A1A6] leading-relaxed">
+                                Suporte a postback de compras aprovadas com cálculo de frete, múltiplos itens de pedido e rastreio de SRC.
+                            </p>
                         </div>
-                        <p class="text-[11px] text-[#A1A1A6]">Ferramentas > Postback > Criar Configuração.</p>
+                        <div class="pt-3 border-t border-white/[0.05] flex items-center justify-between text-[11px]">
+                            <span class="text-[#6E6E73]">Ferramentas > Postback</span>
+                            <button onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); alert('URL do Webhook copiada!');" class="text-[#9C27B0] hover:underline font-semibold">Copiar URL ➔</button>
+                        </div>
                     </div>
                 </div>
             </section>
