@@ -21,6 +21,15 @@
             this.isDiagnoseMode = false;
             this.isTracingFlow = false;
             this.traceStepIndex = 0;
+
+            // Controle de Espaçamento entre Colunas (Compacto | Padrão | Amplo | Máximo)
+            this.spacingLevel = 'default';
+            this.spacingConfig = {
+                compact: { gap: '12px', label: 'Compacto' },
+                default: { gap: '24px', label: 'Padrão' },
+                wide:    { gap: '48px', label: 'Amplo' },
+                max:     { gap: '80px', label: 'Máximo' }
+            };
             this.traceInterval = null;
 
             // Câmera Pan & Zoom Rigoroso (Steps de 10%: 50% a 180%)
@@ -192,10 +201,19 @@
                     } else if (this.isDraggingNode) {
                         this.cancelDragWithSpring();
                     } else {
+                        this.closeSpacingPopover();
                         this.closeDrawer();
                     }
                 }
             });
+
+            // Fecha popover de espaçamento ao clicar fora
+            document.addEventListener('pointerdown', (e) => {
+                const wrapper = document.getElementById('op-map-spacing-wrapper');
+                if (wrapper && !wrapper.contains(e.target)) {
+                    this.closeSpacingPopover();
+                }
+            }, true);
         }
 
         // ─── MAP PAN ENGINE COM CLAMP RÍGIDO (SEM EMPTY ABYSS) ───────────────────
@@ -328,6 +346,88 @@
             this.clampPan();
             this.applyWorldTransform();
             this.showFeedback('🔍 Câmera centralizada');
+        }
+
+        // ─── CONTROLE DE ESPAÇAMENTO ENTRE COLUNAS ────────────────────────────────
+        /**
+         * Modifica EXCLUSIVAMENTE o gap entre as colunas do nodes-container.
+         * NÃO altera zoom, scale, font-size ou tamanho dos nodes.
+         */
+        setSpacing(level) {
+            if (!this.spacingConfig[level]) return;
+
+            this.spacingLevel = level;
+            const cfg = this.spacingConfig[level];
+
+            // Aplica gap diretamente no container via inline style
+            const container = document.getElementById('op-map-nodes-container');
+            if (container) {
+                container.style.transition = 'gap 280ms cubic-bezier(0.16, 1, 0.3, 1)';
+                container.style.gap = cfg.gap;
+            }
+
+            // Atualiza label do popover
+            const valueLabel = document.getElementById('op-map-spacing-value-label');
+            if (valueLabel) valueLabel.textContent = cfg.label;
+
+            // Atualiza visual de cada opção no popover
+            const options = document.querySelectorAll('.spacing-option-btn');
+            options.forEach(btn => {
+                const isActive = btn.dataset.spacing === level;
+                // Reset
+                btn.classList.remove('bg-white/[0.05]', 'border', 'border-white/[0.08]', 'text-[#F5F5F7]');
+                btn.classList.add('text-[#A1A1A6]', 'hover:bg-white/[0.06]', 'hover:text-[#F5F5F7]');
+                const check = btn.querySelector('.spacing-check');
+
+                if (isActive) {
+                    btn.classList.remove('text-[#A1A1A6]', 'hover:bg-white/[0.06]', 'hover:text-[#F5F5F7]');
+                    btn.classList.add('bg-white/[0.05]', 'border', 'border-white/[0.08]', 'text-[#F5F5F7]');
+                    if (check) check.classList.remove('hidden');
+                } else {
+                    if (check) check.classList.add('hidden');
+                }
+            });
+
+            // Recalcula links depois que o layout se ajustou
+            setTimeout(() => this.recalculateLinks(), 300);
+
+            this.showFeedback(`↔ Espaçamento: ${cfg.label}`);
+            this.closeSpacingPopover();
+        }
+
+        toggleSpacingPopover() {
+            const popover = document.getElementById('op-map-spacing-popover');
+            if (!popover) return;
+            const isHidden = popover.classList.contains('hidden');
+            if (isHidden) {
+                popover.classList.remove('hidden');
+                // Micro-animação de entrada
+                popover.style.opacity = '0';
+                popover.style.transform = 'translateY(-6px) scale(0.97)';
+                popover.style.transition = 'opacity 160ms ease, transform 160ms cubic-bezier(0.16, 1, 0.3, 1)';
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        popover.style.opacity = '1';
+                        popover.style.transform = 'translateY(0) scale(1)';
+                    });
+                });
+            } else {
+                this.closeSpacingPopover();
+            }
+        }
+
+        closeSpacingPopover() {
+            const popover = document.getElementById('op-map-spacing-popover');
+            if (popover && !popover.classList.contains('hidden')) {
+                popover.style.opacity = '0';
+                popover.style.transform = 'translateY(-4px) scale(0.98)';
+                setTimeout(() => {
+                    popover.classList.add('hidden');
+                    popover.style.opacity = '';
+                    popover.style.transform = '';
+                    popover.style.transition = '';
+                }, 150);
+            }
         }
 
         // ─── AUTO-ORGANIZAR & RESTAURAR LAYOUT ────────────────────────────────────

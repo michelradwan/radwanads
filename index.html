@@ -1515,6 +1515,94 @@
 
                         <div class="w-[1px] h-5 bg-white/[0.08] mx-0.5"></div>
 
+                        <!-- Controle de Espaçamento entre Colunas -->
+                        <div class="relative" id="op-map-spacing-wrapper">
+                            <button type="button" id="op-map-spacing-btn"
+                                onclick="window.operationMapEngine?.toggleSpacingPopover()"
+                                class="btn btn-secondary btn-sm text-xs py-1 px-2.5 text-[#A1A1A6] hover:text-[#F5F5F7] flex items-center gap-1.5"
+                                title="Controlar espaçamento entre grupos de nós">
+                                <span class="text-sm leading-none">↔</span>
+                                <span class="hidden sm:inline font-medium">Espaçamento</span>
+                            </button>
+
+                            <!-- Popover Premium de Espaçamento -->
+                            <div id="op-map-spacing-popover"
+                                class="hidden absolute top-full right-0 mt-2 z-50 w-52 rounded-xl border border-white/[0.1] bg-[#0D0D12]/95 backdrop-blur-xl shadow-2xl p-3 select-none"
+                                style="box-shadow: 0 8px 32px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.06);">
+                                <!-- Título -->
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-[10px] font-bold uppercase tracking-widest text-[#6E6E73]">Espaçamento</span>
+                                    <span id="op-map-spacing-value-label" class="text-[10px] font-mono font-bold text-[#FF2D2D]">Padrão</span>
+                                </div>
+
+                                <!-- Opções com snapping visual -->
+                                <div class="flex flex-col gap-1" id="op-map-spacing-options">
+                                    <button type="button" data-spacing="compact"
+                                        onclick="window.operationMapEngine?.setSpacing('compact')"
+                                        class="spacing-option-btn flex items-center justify-between w-full px-3 py-2 rounded-lg text-xs font-medium transition-all hover:bg-white/[0.06] text-[#A1A1A6] hover:text-[#F5F5F7]">
+                                        <span class="flex items-center gap-2">
+                                            <span class="text-[10px] font-mono text-[#6E6E73] w-12 text-left">Compacto</span>
+                                            <span class="flex gap-[2px] items-center">
+                                                <span class="w-1 h-3 rounded-sm bg-current opacity-60"></span>
+                                                <span class="w-1 h-3 rounded-sm bg-current opacity-60"></span>
+                                                <span class="w-1 h-3 rounded-sm bg-current opacity-60"></span>
+                                            </span>
+                                        </span>
+                                        <span class="spacing-check hidden text-[#FF2D2D]">✓</span>
+                                    </button>
+
+                                    <button type="button" data-spacing="default"
+                                        onclick="window.operationMapEngine?.setSpacing('default')"
+                                        class="spacing-option-btn flex items-center justify-between w-full px-3 py-2 rounded-lg text-xs font-medium transition-all bg-white/[0.05] border border-white/[0.08] text-[#F5F5F7]">
+                                        <span class="flex items-center gap-2">
+                                            <span class="text-[10px] font-mono w-12 text-left">Padrão</span>
+                                            <span class="flex gap-[5px] items-center">
+                                                <span class="w-1 h-3 rounded-sm bg-current opacity-60"></span>
+                                                <span class="w-1 h-3 rounded-sm bg-current opacity-60"></span>
+                                                <span class="w-1 h-3 rounded-sm bg-current opacity-60"></span>
+                                            </span>
+                                        </span>
+                                        <span class="spacing-check text-[#FF2D2D]">✓</span>
+                                    </button>
+
+                                    <button type="button" data-spacing="wide"
+                                        onclick="window.operationMapEngine?.setSpacing('wide')"
+                                        class="spacing-option-btn flex items-center justify-between w-full px-3 py-2 rounded-lg text-xs font-medium transition-all hover:bg-white/[0.06] text-[#A1A1A6] hover:text-[#F5F5F7]">
+                                        <span class="flex items-center gap-2">
+                                            <span class="text-[10px] font-mono w-12 text-left">Amplo</span>
+                                            <span class="flex gap-[9px] items-center">
+                                                <span class="w-1 h-3 rounded-sm bg-current opacity-60"></span>
+                                                <span class="w-1 h-3 rounded-sm bg-current opacity-60"></span>
+                                                <span class="w-1 h-3 rounded-sm bg-current opacity-60"></span>
+                                            </span>
+                                        </span>
+                                        <span class="spacing-check hidden text-[#FF2D2D]">✓</span>
+                                    </button>
+
+                                    <button type="button" data-spacing="max"
+                                        onclick="window.operationMapEngine?.setSpacing('max')"
+                                        class="spacing-option-btn flex items-center justify-between w-full px-3 py-2 rounded-lg text-xs font-medium transition-all hover:bg-white/[0.06] text-[#A1A1A6] hover:text-[#F5F5F7]">
+                                        <span class="flex items-center gap-2">
+                                            <span class="text-[10px] font-mono w-12 text-left">Máximo</span>
+                                            <span class="flex gap-[14px] items-center">
+                                                <span class="w-1 h-3 rounded-sm bg-current opacity-60"></span>
+                                                <span class="w-1 h-3 rounded-sm bg-current opacity-60"></span>
+                                                <span class="w-1 h-3 rounded-sm bg-current opacity-60"></span>
+                                            </span>
+                                        </span>
+                                        <span class="spacing-check hidden text-[#FF2D2D]">✓</span>
+                                    </button>
+                                </div>
+
+                                <!-- Divisor e dica -->
+                                <div class="mt-3 pt-2.5 border-t border-white/[0.06]">
+                                    <p class="text-[9.5px] text-[#6E6E73] leading-relaxed">Ajusta o espaço entre colunas. Não altera zoom, fontes ou tamanho dos nós.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w-[1px] h-5 bg-white/[0.08] mx-0.5"></div>
+
                         <!-- Lock Layout Toggle -->
                         <button type="button" id="op-map-lock-btn" onclick="window.operationMapEngine?.toggleLockLayout()" class="btn-icon w-7 h-7 text-xs text-[#A1A1A6] hover:text-[#F5F5F7]" title="Bloquear posições dos nós">🔓</button>
 
