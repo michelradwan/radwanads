@@ -371,14 +371,24 @@
             }
 
             // 2. Gap vertical entre nós dentro de cada coluna
+            // IMPORTANTE: space-y-3 do Tailwind usa margin-top via > * + *
+            // Precisamos zerá-lo explicitamente nos filhos e usar só o flex gap
             const nodeCols = document.querySelectorAll(
                 '#nodes-col-acquisition, #nodes-col-tracking, #nodes-col-conversion, #nodes-col-revenue, #nodes-col-intelligence'
             );
             nodeCols.forEach(col => {
+                // Torna a coluna um flex container vertical com gap controlado
                 col.style.transition = 'gap 300ms cubic-bezier(0.16, 1, 0.3, 1)';
                 col.style.display = 'flex';
                 col.style.flexDirection = 'column';
                 col.style.gap = cfg.nodeGap;
+
+                // Zera o margin-top que space-y-3 injeta nos filhos
+                // para que APENAS o gap flex controle o espaço
+                Array.from(col.children).forEach((child, i) => {
+                    child.style.transition = 'margin-top 300ms cubic-bezier(0.16, 1, 0.3, 1)';
+                    child.style.marginTop = '0';
+                });
             });
 
             // Atualiza label do popover
@@ -988,8 +998,26 @@
                     if (!this.isDraggingNode) this.setHoveredNode(null);
                 });
 
+                // Zera margin-top do space-y-3 neste nó desde a inserção
+                nodeEl.style.marginTop = '0';
                 col.appendChild(nodeEl);
             });
+
+            // Reaplicar o spacing ativo após re-render do DOM
+            if (this.spacingLevel && this.spacingLevel !== 'default') {
+                // Aplica na próxima frame para garantir que os nós já foram inseridos
+                requestAnimationFrame(() => this.setSpacing(this.spacingLevel));
+            } else {
+                // Mesmo no padrão, garantir flex + gap limpo nas colunas
+                const cols = document.querySelectorAll(
+                    '#nodes-col-acquisition, #nodes-col-tracking, #nodes-col-conversion, #nodes-col-revenue, #nodes-col-intelligence'
+                );
+                cols.forEach(col => {
+                    col.style.display = 'flex';
+                    col.style.flexDirection = 'column';
+                    col.style.gap = '12px';
+                });
+            }
         }
 
         // ─── FÍSICA ELÁSTICA: DRAG 1:1, RUBBER-BAND & SPRING RETURN ──────────────
