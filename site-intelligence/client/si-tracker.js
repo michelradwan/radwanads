@@ -126,7 +126,7 @@
         const payload = JSON.stringify({ events: eventQueue.splice(0, eventQueue.length) });
 
         try {
-            const endpointUrl = (window.location.protocol === 'file:') ? 'https://brasilvendas.vercel.app' + ENDPOINT : ENDPOINT;
+            const endpointUrl = (window.location.protocol === 'file:') ? 'https://radwanads.vercel.app' + ENDPOINT : ENDPOINT;
             if (navigator.sendBeacon) {
                 const blob = new Blob([payload], { type: 'application/json' });
                 navigator.sendBeacon(endpointUrl, blob);

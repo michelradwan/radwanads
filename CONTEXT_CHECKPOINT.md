@@ -8,7 +8,7 @@
 * **Branch:** `main` (Up to date com `origin/main`)
 * **Último Commit:** `9908d56` — *fix(insights): canonical insight model, strict purchase deduplication, AdsActionStats parser, weighted aggregation and complete historical Meta fields*
 * **Commit Anterior:** `8e8e76c` — *feat(metrics): complete metrics registry, customizable column manager drawer, native presets and saved views*
-* **Ambiente de Produção Ativo:** `https://brasilvendas.vercel.app/admin-ads`
+* **Ambiente de Produção Ativo:** `https://radwanads.vercel.app/admin-ads`
 
 ---
 
