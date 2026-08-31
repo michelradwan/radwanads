@@ -137,67 +137,99 @@
          3. ONBOARDING GUIADO (PRÁTICO & ESSENCIAL)
          =================================================================== -->
     <div id="onboarding-modal-screen" class="is-hidden fixed inset-0 z-[9999] bg-[#050506]/95 backdrop-blur-md flex items-center justify-center p-4">
-        <div class="w-full max-w-md bg-[#0E0E12] border border-white/[0.08] rounded-2xl p-6 sm:p-8 space-y-6 shadow-2xl relative">
+        <div class="w-full max-w-lg bg-[#0E0E12] border border-white/[0.1] rounded-2xl p-6 sm:p-8 space-y-5 shadow-2xl relative">
+            <!-- Barra de Progresso Superior -->
+            <div class="flex items-center justify-between pb-3 border-b border-white/[0.06]">
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-[#FF2D2D] animate-pulse"></span>
+                    <span class="text-xs font-bold text-[#F5F5F7]">Guia de Configuração Rápida</span>
+                </div>
+                <button type="button" onclick="window.authGate.finishOnboarding()" class="text-[11px] text-[#A1A1A6] hover:text-[#F5F5F7] transition-colors">
+                    Pular Tutorial ✕
+                </button>
+            </div>
+
             <!-- Header do Onboarding -->
-            <div class="text-center space-y-1.5">
-                <div class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-white/[0.04] mb-1">
+            <div class="text-center space-y-1">
+                <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-white/[0.04] mb-1">
                     <span class="text-2xl" id="onb-header-icon">🚀</span>
                 </div>
-                <h3 class="text-lg font-bold text-[#F5F5F7]" id="onb-header-title">Como você vai usar o RADWAN ADS?</h3>
-                <p class="text-xs text-[#A1A1A6]" id="onb-header-desc">Vamos configurar sua primeira operação em poucos passos.</p>
+                <h3 class="text-base sm:text-lg font-bold text-[#F5F5F7]" id="onb-header-title">Como você vai usar o RADWAN ADS?</h3>
+                <p class="text-xs text-[#A1A1A6]" id="onb-header-desc">Configuração passo a passo para sua operação rodar 100%.</p>
             </div>
 
             <!-- PASSO 1: Seleção de Perfil (Solo vs Gestor) -->
             <div id="onb-step-1" class="space-y-3">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <button type="button" onclick="window.authGate.selectUsageType('solo')" class="p-4 rounded-xl bg-[#15151A] border border-white/[0.08] hover:border-[#FF2D2D] text-left transition-all group">
-                        <span class="text-xl block mb-2">🏪</span>
+                        <span class="text-2xl block mb-2">🏪</span>
                         <h4 class="font-bold text-xs text-[#F5F5F7] group-hover:text-[#FF2D2D]">Minha Operação</h4>
-                        <p class="text-[10.5px] text-[#6E6E73] mt-1">Gerencio meu próprio e-commerce ou infoproduto.</p>
+                        <p class="text-[10.5px] text-[#6E6E73] mt-1">Para quem vende seus próprios produtos (e-commerce ou infoproduto).</p>
                     </button>
 
                     <button type="button" onclick="window.authGate.selectUsageType('agency')" class="p-4 rounded-xl bg-[#15151A] border border-white/[0.08] hover:border-[#FF2D2D] text-left transition-all group">
-                        <span class="text-xl block mb-2">👥</span>
+                        <span class="text-2xl block mb-2">👥</span>
                         <h4 class="font-bold text-xs text-[#F5F5F7] group-hover:text-[#FF2D2D]">Gerencio Clientes</h4>
-                        <p class="text-[10.5px] text-[#6E6E73] mt-1">Sou gestor ou agência com múltiplos clientes.</p>
+                        <p class="text-[10.5px] text-[#6E6E73] mt-1">Para gestores de tráfego ou agências com múltiplas contas.</p>
                     </button>
                 </div>
             </div>
 
             <!-- PASSO 2: Nome da Operação -->
             <div id="onb-step-2" class="space-y-4 hidden">
+                <div class="p-3.5 rounded-xl bg-[#14141A] border border-white/[0.06] space-y-1 text-xs">
+                    <p class="font-bold text-[#F5F5F7]">💡 O que é uma Operação?</p>
+                    <p class="text-[#A1A1A6] text-[11px]">É o espaço onde suas métricas, campanhas e vendas dessa loja ou cliente ficam organizadas de forma 100% isolada.</p>
+                </div>
                 <div class="space-y-1.5">
-                    <label class="block text-[11px] font-bold text-[#A1A1A6]">Nome da Primeira Operação</label>
+                    <label class="block text-[11px] font-bold text-[#A1A1A6]">Nome do seu Projeto / Loja</label>
                     <input type="text" id="onb-workspace-name-input" placeholder="Ex: Minha Loja Principal" class="w-full bg-[#15151A] border border-white/[0.1] rounded-xl px-3.5 py-2.5 text-xs text-[#F5F5F7] placeholder-[#6E6E73] focus:outline-none focus:border-[#FF2D2D]">
-                    <p class="text-[10px] text-[#6E6E73]">Você poderá renomear ou adicionar outras operações a qualquer momento.</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <button type="button" onclick="window.authGate.goToOnboardingStep(1)" class="btn btn-secondary flex-1 py-2 text-xs">Voltar</button>
-                    <button type="button" onclick="window.authGate.submitWorkspaceCreation()" class="btn btn-primary flex-1 py-2 text-xs font-bold">Continuar</button>
+                    <button type="button" onclick="window.authGate.submitWorkspaceCreation()" class="btn btn-primary flex-1 py-2 text-xs font-bold">Continuar ➔</button>
                 </div>
             </div>
 
-            <!-- PASSO 3: Conexão Meta & Webhook de Vendas -->
-            <div id="onb-step-3" class="space-y-4 hidden text-center">
-                <div class="p-4 rounded-xl bg-[#15151A] border border-white/[0.08] space-y-3 text-left">
-                    <div class="flex items-center gap-2">
-                        <span class="text-lg">🔗</span>
-                        <h4 class="font-bold text-xs text-[#F5F5F7]">Sua URL Universal de Webhook</h4>
+            <!-- PASSO 3: Conexão Meta Ads & Webhooks -->
+            <div id="onb-step-3" class="space-y-4 hidden">
+                <!-- Checklist de Configuração Fácil -->
+                <div class="space-y-2.5">
+                    <!-- Item 1: Token Meta -->
+                    <div class="p-3.5 rounded-xl bg-[#15151A] border border-white/[0.08] flex items-start justify-between gap-3">
+                        <div class="space-y-1 text-left">
+                            <div class="flex items-center gap-2">
+                                <span class="text-sm">1️⃣</span>
+                                <h4 class="font-bold text-xs text-[#F5F5F7]">Conectar Meta Ads (Obrigatório)</h4>
+                            </div>
+                            <p class="text-[11px] text-[#A1A1A6]">Gera a leitura em tempo real de campanhas, gastos, cliques e ROAS.</p>
+                        </div>
+                        <button type="button" onclick="window.dashboard.openTokenModal()" class="btn btn-secondary py-1 px-3 text-[10.5px] flex-shrink-0">
+                            🔑 Inserir Token
+                        </button>
                     </div>
-                    <p class="text-[11px] text-[#A1A1A6] leading-relaxed">Copie sua URL e cole nas plataformas (Kiwify, Hotmart, Monetizze, Eduzz, Shopify) para rastrear vendas em tempo real:</p>
-                    
-                    <div class="flex items-center gap-2 bg-[#0E0E12] border border-white/[0.1] rounded-xl p-2.5">
-                        <input type="text" readonly value="https://radwanads.vercel.app/api/webhook" id="onb-webhook-url" class="bg-transparent text-[11px] text-[#F5F5F7] font-mono flex-1 outline-none">
-                        <button type="button" onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); this.textContent='Copiado!';" class="btn btn-secondary py-1 px-2.5 text-[10.5px]">Copiar</button>
+
+                    <!-- Item 2: Webhook Universal -->
+                    <div class="p-3.5 rounded-xl bg-[#15151A] border border-white/[0.08] space-y-2 text-left">
+                        <div class="flex items-center gap-2">
+                            <span class="text-sm">2️⃣</span>
+                            <h4 class="font-bold text-xs text-[#F5F5F7]">Copiar URL Universal de Vendas</h4>
+                        </div>
+                        <p class="text-[11px] text-[#A1A1A6]">Cole essa URL na sua plataforma (Kiwify, Hotmart, Shopify, etc):</p>
+                        
+                        <div class="flex items-center gap-2 bg-[#0A0A0E] border border-white/[0.1] rounded-lg p-2">
+                            <input type="text" readonly value="https://radwanads.vercel.app/api/webhook" class="bg-transparent text-[10.5px] text-[#F5F5F7] font-mono flex-1 outline-none">
+                            <button type="button" onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); this.textContent='Copiado!';" class="btn btn-secondary py-1 px-2.5 text-[10.5px]">Copiar</button>
+                        </div>
                     </div>
                 </div>
 
-                <div class="space-y-2 pt-1">
-                    <button type="button" onclick="window.dashboard.openTokenModal(); window.authGate.finishOnboarding();" class="btn btn-primary w-full py-2.5 text-xs font-bold justify-center rounded-xl">
-                        <span>🔑 Conectar Meta Ads Agora</span>
+                <div class="space-y-2 pt-2 border-t border-white/[0.06]">
+                    <button type="button" onclick="window.authGate.finishOnboarding()" class="btn btn-primary w-full py-2.5 text-xs font-bold justify-center rounded-xl">
+                        <span>🚀 Concluir e Acessar o Painel</span>
                     </button>
-                    <button type="button" onclick="window.authGate.finishOnboarding()" class="w-full text-center py-2 text-xs text-[#A1A1A6] hover:text-[#F5F5F7] transition-colors">
-                        Ir direto para o painel →
+                    <button type="button" onclick="window.authGate.finishOnboarding()" class="w-full text-center py-1 text-[11px] text-[#6E6E73] hover:text-[#A1A1A6]">
+                        Configurar depois nas Configurações
                     </button>
                 </div>
             </div>
@@ -1990,37 +2022,41 @@
 
     <!-- MODAIS, DRAWERS E TOASTS -->
 
-    <!-- Modal Restaurar Operação (Apple Grade / Radwan Ads) -->
+    <!-- Modal Restaurar Operação (Apple Grade / Radwan Ads - Reset Total) -->
     <div id="reset-operation-modal" class="modal-overlay hidden">
         <div class="modal-content max-w-md p-6 space-y-4">
             <div class="flex items-center justify-between border-b border-white/[0.07] pb-3">
                 <div class="flex items-center space-x-2.5">
-                    <span class="w-8 h-8 rounded-lg bg-[#FF453A]/15 text-[#FF453A] flex items-center justify-center font-bold text-base">⚠️</span>
+                    <span class="w-9 h-9 rounded-xl bg-[#FF453A]/15 text-[#FF453A] flex items-center justify-center font-bold text-lg border border-[#FF453A]/30">⚠️</span>
                     <div>
-                        <h3 class="font-bold text-[#F5F5F7] text-base">Restaurar Operação Atual</h3>
-                        <p class="text-[10.5px] text-[#A1A1A6]">Ação de limpeza e reinicialização de dados</p>
+                        <h3 class="font-bold text-[#F5F5F7] text-base">Restaurar Tudo do Zero</h3>
+                        <p class="text-[10.5px] text-[#A1A1A6]">Reset de fábrica completo da sua operação</p>
                     </div>
                 </div>
                 <button onclick="document.getElementById('reset-operation-modal').classList.add('hidden')" class="btn-icon text-gray-400 hover:text-white">✕</button>
             </div>
 
             <div class="p-3.5 rounded-xl bg-[#1A1215] border border-[#FF453A]/25 space-y-2 text-xs">
-                <p class="font-bold text-[#FF453A]">Atenção: O que acontecerá ao restaurar?</p>
+                <p class="font-bold text-[#FF453A]">O que será apagado e restaurado:</p>
                 <ul class="space-y-1.5 text-[11px] text-[#F5F5F7] list-disc list-inside">
-                    <li>Seu cache local de métricas e gráficos será limpo.</li>
-                    <li>Sua conta Meta será mantida conectada, mas os dados serão recarregados do zero.</li>
-                    <li>Os logs locais desta operação serão reiniciados.</li>
+                    <li><b>Tokens e Contas Meta:</b> Desconecta a conta de anúncios da operação.</li>
+                    <li><b>Histórico de Vendas & Webhooks:</b> Zera todos os pedidos e eventos de webhook.</li>
+                    <li><b>Regras de Automação:</b> Reseta orçamentos e inteligência para o padrão.</li>
+                    <li><b>Setup Inicial:</b> O assistente passo a passo será reaberto para reconfigurar.</li>
                 </ul>
             </div>
 
-            <p class="text-[11px] text-[#A1A1A6]">
-                Para confirmar a restauração completa da operação <b id="reset-operation-name-label" class="text-[#F5F5F7]">Minha Operação</b>, clique no botão abaixo:
-            </p>
+            <div class="space-y-2">
+                <label class="block text-[11px] text-[#A1A1A6]">
+                    Digite <b class="text-[#FF453A] font-mono">ZERAR</b> para confirmar:
+                </label>
+                <input type="text" id="reset-confirm-input" placeholder="Digite ZERAR" oninput="document.getElementById('btn-confirm-reset').disabled = (this.value.trim().toUpperCase() !== 'ZERAR')" class="w-full bg-[#15151A] border border-white/[0.1] rounded-xl px-3.5 py-2.5 text-xs text-[#F5F5F7] font-mono focus:outline-none focus:border-[#FF453A]">
+            </div>
 
             <div class="flex items-center justify-end space-x-2 pt-3 border-t border-white/[0.05]">
                 <button type="button" onclick="document.getElementById('reset-operation-modal').classList.add('hidden')" class="btn btn-secondary text-xs">Cancelar</button>
-                <button type="button" onclick="window.dashboard.executeResetOperation()" class="btn btn-primary bg-[#FF453A] hover:bg-[#FF3B30] border-[#FF453A] text-xs font-bold">
-                    <span>↺ Sim, Restaurar Tudo</span>
+                <button type="button" id="btn-confirm-reset" disabled onclick="window.dashboard.executeResetOperation()" class="btn btn-primary bg-[#FF453A] hover:bg-[#FF3B30] disabled:opacity-40 disabled:pointer-events-none border-[#FF453A] text-xs font-bold py-2.5 px-4 rounded-xl">
+                    <span>↺ Restaurar Tudo do Zero</span>
                 </button>
             </div>
         </div>

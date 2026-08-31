@@ -218,7 +218,7 @@ class DashboardApp {
         const modal = document.getElementById('reset-operation-modal');
         if (modal) modal.classList.add('hidden');
 
-        // Limpa caches locais
+        // 1. Limpa caches de memória
         this.cachedCampaigns = [];
         this.cachedInsights.clear();
         this.previousPeriodInsights.clear();
@@ -226,18 +226,26 @@ class DashboardApp {
         this.cachedAdSets = [];
         this.cachedAds = [];
 
-        // Limpa storage de histórico específico do navegador
+        // 2. Limpa dados de tokens Meta e customizações
         try {
+            localStorage.removeItem('radwan_custom_token');
+            localStorage.removeItem('meta_user_token');
             localStorage.removeItem('radwan_custom_views');
             localStorage.removeItem('radwan_saved_orders');
+            localStorage.removeItem('radwan_autopilot_rules');
+            localStorage.removeItem('radwan_decision_logs');
         } catch(e) {}
 
         if (typeof this.showToast === 'function') {
-            this.showToast('Operação restaurada com sucesso! Recarregando dados...', 'success');
+            this.showToast('Operação zerada! Abrindo assistente de configuração...', 'success');
         }
 
-        // Força sincronização limpa do zero
-        await this.syncAllData();
+        // 3. Abre o Assistente de Configuração Passo a Passo
+        setTimeout(() => {
+            if (window.authGate && typeof window.authGate.showOnboarding === 'function') {
+                window.authGate.showOnboarding();
+            }
+        }, 300);
     }
 
     // ─── NAVEGAÇÃO ENTRE ABAS ────────────────────────────────────────────────
