@@ -205,6 +205,41 @@ class DashboardApp {
         });
     }
 
+    openResetOperationModal() {
+        const modal = document.getElementById('reset-operation-modal');
+        const label = document.getElementById('reset-operation-name-label');
+        if (label && window.authGate?.currentWorkspace?.name) {
+            label.textContent = window.authGate.currentWorkspace.name;
+        }
+        if (modal) modal.classList.remove('hidden');
+    }
+
+    async executeResetOperation() {
+        const modal = document.getElementById('reset-operation-modal');
+        if (modal) modal.classList.add('hidden');
+
+        // Limpa caches locais
+        this.cachedCampaigns = [];
+        this.cachedInsights.clear();
+        this.previousPeriodInsights.clear();
+        this.cachedOrders = [];
+        this.cachedAdSets = [];
+        this.cachedAds = [];
+
+        // Limpa storage de histórico específico do navegador
+        try {
+            localStorage.removeItem('radwan_custom_views');
+            localStorage.removeItem('radwan_saved_orders');
+        } catch(e) {}
+
+        if (typeof this.showToast === 'function') {
+            this.showToast('Operação restaurada com sucesso! Recarregando dados...', 'success');
+        }
+
+        // Força sincronização limpa do zero
+        await this.syncAllData();
+    }
+
     // ─── NAVEGAÇÃO ENTRE ABAS ────────────────────────────────────────────────
 
     switchView(viewName) {

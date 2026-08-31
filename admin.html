@@ -1444,7 +1444,30 @@
                         </div>
                         <button onclick="window.dashboard.openTokenModal()" class="btn btn-secondary btn-sm text-xs">Atualizar Token</button>
                     </div>
-                    <p class="text-xs text-[#A1A1A6]">Gerencie o token de acesso à Graph API da Meta para atualização autônoma e leitura de métricas da conta.</p>
+                    <p class="text-xs text-[#A1A1A6]">Gerencie o token de acesso à Graph API da Meta para atualização autônoma e leitura de métricas da sua conta.</p>
+                </div>
+
+                <!-- Painel: ZONA DE CONTROLE & RESTAURAÇÃO TOTAL (ESTÉTICA APPLE/RADWAN) -->
+                <div class="panel space-y-4 border border-[#FF453A]/20 bg-gradient-to-r from-[#141012] to-[#121217]">
+                    <div class="flex items-center justify-between border-b border-white/[0.05] pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="text-base">⚠️</span>
+                            <div>
+                                <h3 class="text-sm font-bold text-[#FF453A]">Zona de Risco • Restaurar Operação</h3>
+                                <p class="text-[11px] text-[#A1A1A6]">Zere os dados locais, limpe o histórico de sincronização ou desconecte a conta com segurança.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-xl bg-[#09090C] border border-white/[0.06]">
+                        <div class="space-y-0.5">
+                            <p class="text-xs font-bold text-[#F5F5F7]">Restaurar dados desta operação</p>
+                            <p class="text-[11px] text-[#6E6E73]">Apaga cache local de campanhas, pedidos simulados, logs e reinicia a leitura limpa do zero.</p>
+                        </div>
+                        <button type="button" onclick="window.dashboard.openResetOperationModal()" class="btn btn-tertiary text-xs text-[#FF453A] border border-[#FF453A]/30 hover:bg-[#FF453A]/10 font-semibold px-4 py-2 flex-shrink-0">
+                            <span>↺</span> <span>Restaurar Operação</span>
+                        </button>
+                    </div>
                 </div>
             </section>
 
@@ -1966,6 +1989,42 @@
     </div>
 
     <!-- MODAIS, DRAWERS E TOASTS -->
+
+    <!-- Modal Restaurar Operação (Apple Grade / Radwan Ads) -->
+    <div id="reset-operation-modal" class="modal-overlay hidden">
+        <div class="modal-content max-w-md p-6 space-y-4">
+            <div class="flex items-center justify-between border-b border-white/[0.07] pb-3">
+                <div class="flex items-center space-x-2.5">
+                    <span class="w-8 h-8 rounded-lg bg-[#FF453A]/15 text-[#FF453A] flex items-center justify-center font-bold text-base">⚠️</span>
+                    <div>
+                        <h3 class="font-bold text-[#F5F5F7] text-base">Restaurar Operação Atual</h3>
+                        <p class="text-[10.5px] text-[#A1A1A6]">Ação de limpeza e reinicialização de dados</p>
+                    </div>
+                </div>
+                <button onclick="document.getElementById('reset-operation-modal').classList.add('hidden')" class="btn-icon text-gray-400 hover:text-white">✕</button>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-[#1A1215] border border-[#FF453A]/25 space-y-2 text-xs">
+                <p class="font-bold text-[#FF453A]">Atenção: O que acontecerá ao restaurar?</p>
+                <ul class="space-y-1.5 text-[11px] text-[#F5F5F7] list-disc list-inside">
+                    <li>Seu cache local de métricas e gráficos será limpo.</li>
+                    <li>Sua conta Meta será mantida conectada, mas os dados serão recarregados do zero.</li>
+                    <li>Os logs locais desta operação serão reiniciados.</li>
+                </ul>
+            </div>
+
+            <p class="text-[11px] text-[#A1A1A6]">
+                Para confirmar a restauração completa da operação <b id="reset-operation-name-label" class="text-[#F5F5F7]">Minha Operação</b>, clique no botão abaixo:
+            </p>
+
+            <div class="flex items-center justify-end space-x-2 pt-3 border-t border-white/[0.05]">
+                <button type="button" onclick="document.getElementById('reset-operation-modal').classList.add('hidden')" class="btn btn-secondary text-xs">Cancelar</button>
+                <button type="button" onclick="window.dashboard.executeResetOperation()" class="btn btn-primary bg-[#FF453A] hover:bg-[#FF3B30] border-[#FF453A] text-xs font-bold">
+                    <span>↺ Sim, Restaurar Tudo</span>
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- Modal Gerenciador de Operações / Workspaces -->
     <div id="workspace-manager-modal" class="modal-overlay hidden">
