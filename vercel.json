@@ -3,6 +3,9 @@
   "trailingSlash": false,
   "rewrites": [
     { "source": "/", "destination": "/landing.html" },
+    { "source": "/login", "destination": "/index.html" },
+    { "source": "/app", "destination": "/index.html" },
+    { "source": "/admin", "destination": "/index.html" },
     { "source": "/admin-ads", "destination": "/index.html" },
     { "source": "/ads", "destination": "/index.html" },
     { "source": "/dashboard", "destination": "/index.html" }

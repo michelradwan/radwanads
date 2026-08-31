@@ -48,96 +48,87 @@
     </script>
 </head>
 <body class="min-h-screen antialiased flex flex-col selection:bg-[#FF2D2D] selection:text-white" style="background-color: var(--bg-main); color: var(--text-primary);">
-
-    <!-- ===================================================================
-         1. SPLASH SCREEN MINIMALISTA (BOTÃO EXCLUSIVO DE ENTRADA RADWAN ADS)
-         =================================================================== -->
-    <div id="splash-screen">
-        <button id="btn-start-radwan" class="radwan-launch-btn" type="button" aria-label="Iniciar RADWAN">
-            <!-- Borda Externa e Halo de Glow -->
-            <span class="radwan-launch-glow"></span>
-            
-            <!-- Hotspots de Energia Vermelha (Centro Superior e Inferior) -->
-            <span class="radwan-launch-hotspot hotspot-top"></span>
-            <span class="radwan-launch-hotspot hotspot-bottom"></span>
-            
-            <!-- Moldura Interna Metálica / Vidro Escuro -->
-            <span class="radwan-launch-rim"></span>
-            
-            <!-- Reflexo Diagonal Glass Ultra Suave -->
-            <span class="radwan-launch-shine"></span>
-            
-            <!-- Linha de Scan Subliminar -->
-            <span class="radwan-launch-scan"></span>
-
-            <!-- Texto Centralizado em Caixa Alta (Apple Aesthetic) -->
-            <span class="radwan-launch-label">INICIAR RADWAN</span>
-        </button>
-    </div>
-
-    <!-- ===================================================================
-         2. MODAL DE AUTENTICAÇÃO SAAS (SUPABASE AUTH / GOOGLE / EMAIL)
-         =================================================================== -->
-    <div id="auth-modal-screen" class="is-hidden">
-        <div class="auth-card space-y-5">
-            <div class="text-center space-y-1.5">
-                <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl mb-1 overflow-hidden">
-                    <img src="assets/logo-radwan-ads.png" alt="RADWAN ADS" class="w-12 h-12 object-contain">
-                </div>
-                <h2 id="auth-card-title" class="text-base font-bold tracking-tight text-[#F5F5F7]">Acessar o RADWAN ADS</h2>
-                <p class="text-[11px] text-[#A1A1A6]">Console Operacional de Performance</p>
-            </div>
-
-            <!-- Botão Google OAuth Real -->
-            <button type="button" onclick="window.authGate.loginWithGoogle()" class="btn-google">
-                <svg class="w-4 h-4" viewBox="0 0 24 24">
-                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
-                </svg>
-                <span>Continuar com o Google</span>
-            </button>
-
-            <div class="relative flex items-center justify-center">
-                <div class="border-t border-white/[0.08] w-full"></div>
-                <span class="bg-[#0E0E12] px-3 text-[10px] text-[#6E6E73] uppercase font-bold tracking-wider relative">ou</span>
-            </div>
-
-            <!-- Formulário Email + Senha -->
-            <form id="saas-auth-form" onsubmit="window.authGate.handleAuthSubmit(event)" class="space-y-3.5">
-                <div id="auth-name-container" class="hidden">
-                    <label class="block text-[10.5px] font-bold text-[#A1A1A6] mb-1">Seu Nome</label>
-                    <input type="text" id="auth-name-input" placeholder="Ex: Michel Radwan" class="w-full bg-[#15151A] border border-white/[0.1] rounded-xl px-3 py-2 text-xs text-[#F5F5F7] placeholder-[#6E6E73] focus:outline-none focus:border-[#FF2D2D]">
-                </div>
-
-                <div>
-                    <label class="block text-[10.5px] font-bold text-[#A1A1A6] mb-1">Email</label>
-                    <input type="email" id="auth-email-input" placeholder="seu@email.com" required class="w-full bg-[#15151A] border border-white/[0.1] rounded-xl px-3 py-2 text-xs text-[#F5F5F7] placeholder-[#6E6E73] focus:outline-none focus:border-[#FF2D2D]">
-                </div>
-
-                <div id="auth-password-container">
-                    <label class="block text-[10.5px] font-bold text-[#A1A1A6] mb-1">Senha</label>
-                    <input type="password" id="auth-password-input" placeholder="••••••••" class="w-full bg-[#15151A] border border-white/[0.1] rounded-xl px-3 py-2 text-xs text-[#F5F5F7] placeholder-[#6E6E73] focus:outline-none focus:border-[#FF2D2D]">
-                </div>
-
-                <div id="auth-error-msg" class="text-xs text-[#FF453A] bg-[#FF453A]/10 border border-[#FF453A]/20 p-2.5 rounded-lg hidden"></div>
-
-                <button type="submit" id="auth-submit-btn" class="btn btn-primary w-full py-2.5 text-xs font-bold justify-center rounded-xl">
-                    Entrar
-                </button>
-
-                <div id="auth-login-options" class="flex items-center justify-between text-[11px] pt-1">
-                    <button type="button" data-auth-switch="signup" class="text-[#A1A1A6] hover:text-[#F5F5F7] transition-colors">Criar uma conta</button>
-                    <button type="button" data-auth-switch="reset" class="text-[#6E6E73] hover:text-[#A1A1A6] transition-colors">Esqueci minha senha</button>
-                </div>
-
-                <div id="auth-back-option" class="text-center text-[11px] pt-1">
-                    <button type="button" data-auth-switch="login" class="text-[#A1A1A6] hover:text-[#F5F5F7] transition-colors">Já tenho uma conta • Fazer login</button>
-                </div>
-            </form>
-        </div>
-    </div>
+ 
+     <!-- ===================================================================
+          TELA DE AUTENTICAÇÃO SAAS (LOGIN / CADASTRO EMPRESARIAL / SUPABASE)
+          =================================================================== -->
+     <div id="auth-modal-screen" class="fixed inset-0 z-[9999] bg-[#050506] flex items-center justify-center p-4 overflow-y-auto">
+         <div class="auth-card space-y-5 my-auto max-w-md w-full">
+             <div class="text-center space-y-1.5">
+                 <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl mb-1 overflow-hidden">
+                     <img src="assets/logo-radwan-ads.png" alt="RADWAN ADS" class="w-12 h-12 object-contain">
+                 </div>
+                 <h2 id="auth-card-title" class="text-base font-bold tracking-tight text-[#F5F5F7]">Acessar o RADWAN ADS</h2>
+                 <p id="auth-card-sub" class="text-[11px] text-[#A1A1A6]">Console Institucional de Performance & Escala</p>
+             </div>
+ 
+             <!-- Botão Google OAuth Real -->
+             <button type="button" onclick="window.authGate.loginWithGoogle()" class="btn-google">
+                 <svg class="w-4 h-4" viewBox="0 0 24 24">
+                     <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                     <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                     <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                     <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                 </svg>
+                 <span>Continuar com o Google</span>
+             </button>
+ 
+             <div class="relative flex items-center justify-center">
+                 <div class="border-t border-white/[0.08] w-full"></div>
+                 <span class="bg-[#0E0E12] px-3 text-[10px] text-[#6E6E73] uppercase font-bold tracking-wider relative">ou</span>
+             </div>
+ 
+             <!-- Formulário Email + Senha -->
+             <form id="saas-auth-form" onsubmit="window.authGate.handleAuthSubmit(event)" class="space-y-3">
+                 <div id="auth-name-container" class="hidden space-y-1">
+                     <label class="block text-[10.5px] font-bold text-[#A1A1A6]">Nome Completo *</label>
+                     <input type="text" id="auth-name-input" placeholder="Ex: Michel Radwan" class="w-full bg-[#15151A] border border-white/[0.1] rounded-xl px-3 py-2 text-xs text-[#F5F5F7] placeholder-[#6E6E73] focus:outline-none focus:border-[#FF2D2D]">
+                 </div>
+ 
+                 <div id="auth-signup-extra-fields" class="hidden space-y-3">
+                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                         <div>
+                             <label class="block text-[10.5px] font-bold text-[#A1A1A6] mb-1">WhatsApp / Telefone *</label>
+                             <input type="tel" id="auth-phone-input" placeholder="(11) 99999-9999" class="w-full bg-[#15151A] border border-white/[0.1] rounded-xl px-3 py-2 text-xs text-[#F5F5F7] placeholder-[#6E6E73] focus:outline-none focus:border-[#FF2D2D]">
+                         </div>
+                         <div>
+                             <label class="block text-[10.5px] font-bold text-[#A1A1A6] mb-1">CPF ou CNPJ</label>
+                             <input type="text" id="auth-doc-input" placeholder="000.000.000-00" class="w-full bg-[#15151A] border border-white/[0.1] rounded-xl px-3 py-2 text-xs text-[#F5F5F7] placeholder-[#6E6E73] focus:outline-none focus:border-[#FF2D2D]">
+                         </div>
+                     </div>
+                     <div>
+                         <label class="block text-[10.5px] font-bold text-[#A1A1A6] mb-1">Nome da Empresa / Operação</label>
+                         <input type="text" id="auth-company-input" placeholder="Ex: Radwan Performance" class="w-full bg-[#15151A] border border-white/[0.1] rounded-xl px-3 py-2 text-xs text-[#F5F5F7] placeholder-[#6E6E73] focus:outline-none focus:border-[#FF2D2D]">
+                     </div>
+                 </div>
+ 
+                 <div>
+                     <label class="block text-[10.5px] font-bold text-[#A1A1A6] mb-1">E-mail Profissional *</label>
+                     <input type="email" id="auth-email-input" placeholder="seu@email.com" required class="w-full bg-[#15151A] border border-white/[0.1] rounded-xl px-3 py-2 text-xs text-[#F5F5F7] placeholder-[#6E6E73] focus:outline-none focus:border-[#FF2D2D]">
+                 </div>
+ 
+                 <div id="auth-password-container">
+                     <label class="block text-[10.5px] font-bold text-[#A1A1A6] mb-1">Senha *</label>
+                     <input type="password" id="auth-password-input" placeholder="••••••••" class="w-full bg-[#15151A] border border-white/[0.1] rounded-xl px-3 py-2 text-xs text-[#F5F5F7] placeholder-[#6E6E73] focus:outline-none focus:border-[#FF2D2D]">
+                 </div>
+ 
+                 <div id="auth-error-msg" class="text-xs text-[#FF453A] bg-[#FF453A]/10 border border-[#FF453A]/20 p-2.5 rounded-lg hidden"></div>
+ 
+                 <button type="submit" id="auth-submit-btn" class="btn btn-primary w-full py-2.5 text-xs font-bold justify-center rounded-xl">
+                     Entrar
+                 </button>
+ 
+                 <div id="auth-login-options" class="flex items-center justify-between text-[11px] pt-1">
+                     <button type="button" data-auth-switch="signup" class="text-[#A1A1A6] hover:text-[#F5F5F7] transition-colors">Criar uma conta</button>
+                     <button type="button" data-auth-switch="reset" class="text-[#6E6E73] hover:text-[#A1A1A6] transition-colors">Esqueci minha senha</button>
+                 </div>
+ 
+                 <div id="auth-back-option" class="text-center text-[11px] pt-1 hidden">
+                     <button type="button" data-auth-switch="login" class="text-[#A1A1A6] hover:text-[#F5F5F7] transition-colors">Já tenho uma conta • Fazer login</button>
+                 </div>
+             </form>
+         </div>
+     </div>
 
     <!-- ===================================================================
          3. ONBOARDING GUIADO (PRIMEIRA VEZ)

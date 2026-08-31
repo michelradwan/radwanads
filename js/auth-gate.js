@@ -65,8 +65,10 @@
         switchAuthMode(mode) {
             this.authMode = mode;
             const titleEl = document.getElementById('auth-card-title');
+            const subEl = document.getElementById('auth-card-sub');
             const submitBtn = document.getElementById('auth-submit-btn');
             const nameField = document.getElementById('auth-name-container');
+            const extraFields = document.getElementById('auth-signup-extra-fields');
             const passwordField = document.getElementById('auth-password-container');
             const loginOptions = document.getElementById('auth-login-options');
             const backOption = document.getElementById('auth-back-option');
@@ -76,22 +78,28 @@
 
             if (mode === 'signup') {
                 if (titleEl) titleEl.textContent = 'Criar sua conta';
+                if (subEl) subEl.textContent = 'Preencha seus dados reais para liberar o acesso';
                 if (submitBtn) submitBtn.textContent = 'Criar conta no RADWAN ADS';
                 if (nameField) nameField.classList.remove('hidden');
+                if (extraFields) extraFields.classList.remove('hidden');
                 if (passwordField) passwordField.classList.remove('hidden');
                 if (loginOptions) loginOptions.classList.add('hidden');
                 if (backOption) backOption.classList.remove('hidden');
             } else if (mode === 'reset') {
                 if (titleEl) titleEl.textContent = 'Recuperar senha';
+                if (subEl) subEl.textContent = 'Informe seu e-mail cadastrado';
                 if (submitBtn) submitBtn.textContent = 'Enviar link de recuperação';
                 if (nameField) nameField.classList.add('hidden');
+                if (extraFields) extraFields.classList.add('hidden');
                 if (passwordField) passwordField.classList.add('hidden');
                 if (loginOptions) loginOptions.classList.add('hidden');
                 if (backOption) backOption.classList.remove('hidden');
             } else {
                 if (titleEl) titleEl.textContent = 'Acessar o RADWAN ADS';
+                if (subEl) subEl.textContent = 'Console Institucional de Performance & Escala';
                 if (submitBtn) submitBtn.textContent = 'Entrar';
                 if (nameField) nameField.classList.add('hidden');
+                if (extraFields) extraFields.classList.add('hidden');
                 if (passwordField) passwordField.classList.remove('hidden');
                 if (loginOptions) loginOptions.classList.remove('hidden');
                 if (backOption) backOption.classList.add('hidden');
@@ -109,12 +117,15 @@
             }
         }
 
-        // ─── 3. SUBMISSÃO DE EMAIL + SENHA ───────────────────────────────────────
+        // ─── 3. SUBMISSÃO DE EMAIL + SENHA COM DADOS REAIS ──────────────────────
         async handleAuthSubmit(event) {
             event.preventDefault();
             const email = document.getElementById('auth-email-input')?.value?.trim();
             const password = document.getElementById('auth-password-input')?.value;
             const name = document.getElementById('auth-name-input')?.value?.trim();
+            const phone = document.getElementById('auth-phone-input')?.value?.trim();
+            const documentNum = document.getElementById('auth-doc-input')?.value?.trim();
+            const company = document.getElementById('auth-company-input')?.value?.trim();
             const submitBtn = document.getElementById('auth-submit-btn');
 
             if (!email) return this.showError('Por favor, informe seu email.');
@@ -124,11 +135,26 @@
                 if (submitBtn) submitBtn.disabled = true;
 
                 if (this.authMode === 'signup') {
+                    if (!name || name.split(' ').length < 2) {
+                        return this.showError('Por favor, informe seu nome e sobrenome completos.');
+                    }
+                    if (!phone) {
+                        return this.showError('Por favor, informe seu número de WhatsApp / Telefone.');
+                    }
+
                     const res = await fetch('/api/saas-auth', {
                         method: 'POST',
                         credentials: 'include',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ action: 'signup', email, password, name })
+                        body: JSON.stringify({ 
+                            action: 'signup', 
+                            email, 
+                            password, 
+                            name, 
+                            phone, 
+                            document: documentNum, 
+                            company 
+                        })
                     });
                     const data = await res.json();
                     if (!res.ok) throw new Error(data.error || 'Falha ao criar conta.');
@@ -359,6 +385,7 @@
                         this.userWorkspaces = data.workspaces || [];
                         this.currentWorkspace = this.userWorkspaces[0] || null;
                         this.updateWorkspaceUI();
+                        this.revealDashboard();
                     }
                 }
             } catch (e) {

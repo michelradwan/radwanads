@@ -65,16 +65,50 @@ module.exports = async (req, res) => {
             });
         }
 
-        // ─── 2. CADASTRO POR EMAIL / SENHA (SIGNUP) ──────────────────────────────
+        // ─── 2. CADASTRO POR EMAIL / SENHA (SIGNUP REAL & PROFISSIONAL) ──────────
         if (action === 'signup' && req.method === 'POST') {
-            const { email, password, name } = req.body || {};
-            if (!email || !password) return res.status(400).json({ error: 'Email e senha são obrigatórios.' });
+            const { email, password, name, phone, document, company } = req.body || {};
+            
+            if (!email || !password || !name) {
+                return res.status(400).json({ error: 'Nome completo, e-mail e senha são obrigatórios.' });
+            }
 
             const cleanEmail = email.trim().toLowerCase();
+            const cleanName = name.trim();
+            const cleanPhone = (phone || '').replace(/\D/g, '');
+            const cleanDoc = (document || '').replace(/\D/g, '');
+
+            if (cleanName.split(' ').length < 2) {
+                return res.status(400).json({ error: 'Por favor, informe seu nome e sobrenome completos.' });
+            }
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) {
+                return res.status(400).json({ error: 'Por favor, informe um endereço de e-mail válido.' });
+            }
+
+            if (password.length < 6) {
+                return res.status(400).json({ error: 'A senha deve conter no mínimo 6 caracteres.' });
+            }
+
             const isTargetAdmin = cleanEmail === authGuard.PLATFORM_ADMIN_EMAIL.toLowerCase();
             const targetUserId = isTargetAdmin 
                 ? authGuard.getPlatformAdminUserId() 
                 : `user_${crypto.createHash('md5').update(cleanEmail).digest('hex').slice(0, 12)}`;
+
+            // Persiste usuário no Supabase Postgres
+            try {
+                await supabase.supabaseClient?.from('users')?.upsert({
+                    id: targetUserId,
+                    email: cleanEmail,
+                    name: cleanName,
+                    phone: cleanPhone || null,
+                    document: cleanDoc || null,
+                    company: company ? String(company).trim() : null,
+                    created_at: new Date().toISOString()
+                });
+            } catch (supErr) {
+                console.warn('[Signup Supabase Sync Warning]', supErr.message);
+            }
 
             const sessionToken = authGuard.createSessionToken(targetUserId);
             const cookieHeader = authGuard.buildSessionCookie(sessionToken, isProduction);
@@ -85,11 +119,13 @@ module.exports = async (req, res) => {
                 user: { 
                     id: targetUserId, 
                     email: cleanEmail, 
-                    name: name ? name.trim() : cleanEmail.split('@')[0],
+                    name: cleanName,
+                    phone: cleanPhone,
+                    company: company || null,
                     platform_admin: isTargetAdmin
                 },
                 sessionToken: sessionToken,
-                message: 'Conta criada com sucesso.'
+                message: 'Conta empresarial criada com sucesso.'
             });
         }
 
