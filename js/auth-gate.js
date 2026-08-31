@@ -403,13 +403,26 @@
 
         async logout() {
             try {
-                await fetch('/api/saas-auth?action=logout', { method: 'POST' });
+                await fetch('/api/saas-auth?action=logout', { method: 'POST', credentials: 'include' });
             } catch (e) {}
-            window.location.reload();
+
+            // Limpa tokens do cliente e storage local
+            localStorage.removeItem('radwan_client_token');
+            localStorage.removeItem('radwan_session');
+            localStorage.removeItem('radwan_user');
+            sessionStorage.clear();
+
+            // Força expiração do cookie no navegador
+            document.cookie = 'radwan_session=; Max-Age=0; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax';
+
+            // Redireciona limpo para a tela de autenticação
+            window.location.replace('/app');
         }
     }
 
-    // Instanciação Global
+    // Instanciação Global e ponte com o Dashboard
     window.authGate = new SupabaseAuthGate();
+    if (!window.dashboard) window.dashboard = {};
+    window.dashboard.logout = () => window.authGate.logout();
 
 })();

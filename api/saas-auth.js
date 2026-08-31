@@ -95,19 +95,37 @@ module.exports = async (req, res) => {
                 ? authGuard.getPlatformAdminUserId() 
                 : `user_${crypto.createHash('md5').update(cleanEmail).digest('hex').slice(0, 12)}`;
 
-            // Persiste usuário no Supabase Postgres
+            // Gera hash criptográfico seguro PBKDF2 para a senha
+            const salt = crypto.randomBytes(16).toString('hex');
+            const passwordHash = crypto.pbkdf2Sync(password, salt, 100000, 64, 'sha512').toString('hex');
+            const storedPasswordRecord = `${salt}:${passwordHash}`;
+
+            // Salva credenciais no storage seguro
+            const { storage } = require('../lib/storage-adapter.js');
+            await storage.set('user_auth', cleanEmail, {
+                userId: targetUserId,
+                email: cleanEmail,
+                name: cleanName,
+                phone: cleanPhone,
+                company: company || null,
+                passwordHash: storedPasswordRecord,
+                createdAt: new Date().toISOString()
+            });
+
+            // Cria automaticamente o Workspace zerado e isolado para o novo cliente
+            const initialWorkspaceName = company ? String(company).trim() : `${cleanName.split(' ')[0]} Operação`;
+            let userWorkspace = null;
             try {
-                await supabase.supabaseClient?.from('users')?.upsert({
-                    id: targetUserId,
-                    email: cleanEmail,
-                    name: cleanName,
-                    phone: cleanPhone || null,
-                    document: cleanDoc || null,
-                    company: company ? String(company).trim() : null,
+                userWorkspace = await supabase.createWorkspace(targetUserId, initialWorkspaceName);
+            } catch (wsErr) {
+                userWorkspace = {
+                    id: `ws_${crypto.randomBytes(6).toString('hex')}`,
+                    name: initialWorkspaceName,
+                    slug: initialWorkspaceName.toLowerCase().replace(/[^a-z0-9]/g, '-'),
+                    owner_id: targetUserId,
+                    role: 'OWNER',
                     created_at: new Date().toISOString()
-                });
-            } catch (supErr) {
-                console.warn('[Signup Supabase Sync Warning]', supErr.message);
+                };
             }
 
             const sessionToken = authGuard.createSessionToken(targetUserId);
@@ -124,22 +142,77 @@ module.exports = async (req, res) => {
                     company: company || null,
                     platform_admin: isTargetAdmin
                 },
+                workspaces: [userWorkspace],
                 sessionToken: sessionToken,
                 message: 'Conta empresarial criada com sucesso.'
             });
         }
 
-        // ─── 3. LOGIN POR EMAIL / SENHA (LOGIN) ──────────────────────────────────
+        // ─── 3. LOGIN POR EMAIL / SENHA (LOGIN COM VERIFICAÇÃO CRIPTOGRÁFICA) ────
         if (action === 'login' && req.method === 'POST') {
             const { email, password } = req.body || {};
             if (!email || !password) return res.status(400).json({ error: 'Email e senha são obrigatórios.' });
 
             const cleanEmail = email.trim().toLowerCase();
             const isTargetAdmin = cleanEmail === authGuard.PLATFORM_ADMIN_EMAIL.toLowerCase();
-            const targetUserId = isTargetAdmin 
-                ? authGuard.getPlatformAdminUserId() 
-                : (cleanEmail.startsWith('admin') ? 'legacy_admin_user' : `user_${crypto.createHash('md5').update(cleanEmail).digest('hex').slice(0, 12)}`);
 
+            // 1. Validação de Administrador Master da Plataforma
+            if (isTargetAdmin) {
+                const isAdminPassValid = authGuard.verifyPassword(password);
+                if (!isAdminPassValid) {
+                    return res.status(401).json({ error: 'Senha incorreta para a conta de Administrador Master.' });
+                }
+                const targetUserId = authGuard.getPlatformAdminUserId();
+                const sessionToken = authGuard.createSessionToken(targetUserId);
+                const cookieHeader = authGuard.buildSessionCookie(sessionToken, isProduction);
+                res.setHeader('Set-Cookie', cookieHeader);
+
+                let workspaces = [];
+                try {
+                    workspaces = await supabase.listUserWorkspaces(targetUserId);
+                } catch (e) {
+                    workspaces = [];
+                }
+                if (workspaces.length === 0) {
+                    workspaces = [{
+                        id: 'ws_michel_personal',
+                        name: 'Minha Operação',
+                        slug: 'minha-operacao',
+                        owner_id: targetUserId,
+                        role: 'OWNER',
+                        created_at: new Date().toISOString()
+                    }];
+                }
+
+                return res.status(200).json({
+                    success: true,
+                    sessionToken: sessionToken,
+                    user: { 
+                        id: targetUserId, 
+                        email: cleanEmail, 
+                        name: 'Michel Radwan (Admin)',
+                        platform_admin: true
+                    },
+                    workspaces: workspaces
+                });
+            }
+
+            // 2. Validação para Usuários / Clientes do SaaS
+            const { storage } = require('../lib/storage-adapter.js');
+            const userRecord = await storage.get('user_auth', cleanEmail);
+
+            if (!userRecord || !userRecord.passwordHash) {
+                return res.status(401).json({ error: 'Nenhuma conta encontrada com este e-mail. Crie uma conta para começar.' });
+            }
+
+            const [salt, expectedHash] = userRecord.passwordHash.split(':');
+            const verifyHash = crypto.pbkdf2Sync(password, salt, 100000, 64, 'sha512').toString('hex');
+
+            if (verifyHash !== expectedHash) {
+                return res.status(401).json({ error: 'Senha incorreta. Tente novamente.' });
+            }
+
+            const targetUserId = userRecord.userId || `user_${crypto.createHash('md5').update(cleanEmail).digest('hex').slice(0, 12)}`;
             const sessionToken = authGuard.createSessionToken(targetUserId);
             const cookieHeader = authGuard.buildSessionCookie(sessionToken, isProduction);
             res.setHeader('Set-Cookie', cookieHeader);
@@ -151,15 +224,16 @@ module.exports = async (req, res) => {
                 workspaces = [];
             }
 
-            // Se for o Michel e não houver workspace, inicializa automaticamente com sua operação pessoal
-            if (isTargetAdmin && workspaces.length === 0) {
+            // Se o usuário ainda não tiver workspace cadastrado no Supabase, busca ou cria o padrão isolado
+            if (workspaces.length === 0) {
+                const defaultName = userRecord.company || `${userRecord.name.split(' ')[0]} Operação`;
                 workspaces = [{
-                    id: 'ws_michel_personal',
-                    name: 'Minha Operação',
-                    slug: 'minha-operacao',
+                    id: `ws_${crypto.createHash('md5').update(targetUserId).digest('hex').slice(0, 12)}`,
+                    name: defaultName,
+                    slug: defaultName.toLowerCase().replace(/[^a-z0-9]/g, '-'),
                     owner_id: targetUserId,
                     role: 'OWNER',
-                    created_at: new Date().toISOString()
+                    created_at: userRecord.createdAt || new Date().toISOString()
                 }];
             }
 
@@ -169,8 +243,8 @@ module.exports = async (req, res) => {
                 user: { 
                     id: targetUserId, 
                     email: cleanEmail, 
-                    name: cleanEmail.split('@')[0],
-                    platform_admin: isTargetAdmin
+                    name: userRecord.name || cleanEmail.split('@')[0],
+                    platform_admin: false
                 },
                 workspaces: workspaces
             });
