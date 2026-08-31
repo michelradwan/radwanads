@@ -1456,7 +1456,7 @@
                 // Checa localStorage (fallback usado pelo auth-gate.js)
                 const hasLocalStorage = !!localStorage.getItem('radwan_session') || !!localStorage.getItem('radwan_user');
                 if (hasCookie || hasLocalStorage) {
-                    window.location.replace('/admin-ads');
+                    window.location.replace('/app');
                 }
             } catch(e) {}
         })();
