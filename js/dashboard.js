@@ -4240,12 +4240,8 @@ class CommandMenuEngine {
 // Instância Singleton e Inicialização Segura com Auth Gate
 window.dashboard = new DashboardApp();
 document.addEventListener('DOMContentLoaded', async () => {
-    if (window.authGate && typeof window.authGate.init === 'function') {
-        const isAuth = await window.authGate.init();
-        if (isAuth) {
-            window.dashboard.init();
-        }
-    } else {
-        window.dashboard.init();
+    // Se o usuário não está autenticado no AuthGate, NÃO inicializa e NÃO revela o dashboard
+    if (window.authGate && typeof window.authGate.checkExistingSession === 'function') {
+        await window.authGate.checkExistingSession();
     }
 });

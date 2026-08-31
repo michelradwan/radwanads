@@ -20,7 +20,6 @@
             this.authMode = 'login'; // 'login' | 'signup' | 'reset'
 
             this.initEvents();
-            this.checkExistingSession();
         }
 
         initEvents() {
