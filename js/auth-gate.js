@@ -76,17 +76,17 @@
             if (errorEl) errorEl.classList.add('hidden');
 
             if (mode === 'signup') {
-                if (titleEl) titleEl.textContent = 'Criar sua conta';
-                if (subEl) subEl.textContent = 'Preencha seus dados reais para liberar o acesso';
-                if (submitBtn) submitBtn.textContent = 'Criar conta no RADWAN ADS';
+                if (titleEl) titleEl.textContent = 'Crie sua conta grátis';
+                if (subEl) subEl.textContent = 'Leva menos de 1 minuto. Preencha seus dados abaixo.';
+                if (submitBtn) submitBtn.textContent = 'Criar minha conta';
                 if (nameField) nameField.classList.remove('hidden');
                 if (extraFields) extraFields.classList.remove('hidden');
                 if (passwordField) passwordField.classList.remove('hidden');
                 if (loginOptions) loginOptions.classList.add('hidden');
                 if (backOption) backOption.classList.remove('hidden');
             } else if (mode === 'reset') {
-                if (titleEl) titleEl.textContent = 'Recuperar senha';
-                if (subEl) subEl.textContent = 'Informe seu e-mail cadastrado';
+                if (titleEl) titleEl.textContent = 'Esqueceu sua senha?';
+                if (subEl) subEl.textContent = 'Sem problemas. Informe seu e-mail que a gente resolve.';
                 if (submitBtn) submitBtn.textContent = 'Enviar link de recuperação';
                 if (nameField) nameField.classList.add('hidden');
                 if (extraFields) extraFields.classList.add('hidden');
@@ -94,8 +94,8 @@
                 if (loginOptions) loginOptions.classList.add('hidden');
                 if (backOption) backOption.classList.remove('hidden');
             } else {
-                if (titleEl) titleEl.textContent = 'Acessar o RADWAN ADS';
-                if (subEl) subEl.textContent = 'Console Institucional de Performance & Escala';
+                if (titleEl) titleEl.textContent = 'Entrar no RADWAN ADS';
+                if (subEl) subEl.textContent = 'Seus anúncios, vendas e métricas em um só lugar.';
                 if (submitBtn) submitBtn.textContent = 'Entrar';
                 if (nameField) nameField.classList.add('hidden');
                 if (extraFields) extraFields.classList.add('hidden');
@@ -112,7 +112,7 @@
                 const redirectUri = `${window.location.origin}/`;
                 window.location.href = `${supabaseUrl}/auth/v1/authorize?provider=google&redirect_to=${encodeURIComponent(redirectUri)}`;
             } catch (err) {
-                this.showError('Não foi possível iniciar o login com o Google.');
+                this.showError('Não foi possível conectar com o Google. Tente novamente.');
             }
         }
 
@@ -127,18 +127,18 @@
             const company = document.getElementById('auth-company-input')?.value?.trim();
             const submitBtn = document.getElementById('auth-submit-btn');
 
-            if (!email) return this.showError('Por favor, informe seu email.');
-            if (this.authMode !== 'reset' && !password) return this.showError('Por favor, informe sua senha.');
+            if (!email) return this.showError('Informe seu e-mail para continuar.');
+            if (this.authMode !== 'reset' && !password) return this.showError('Informe sua senha para continuar.');
 
             try {
                 if (submitBtn) submitBtn.disabled = true;
 
                 if (this.authMode === 'signup') {
                     if (!name || name.split(' ').length < 2) {
-                        return this.showError('Por favor, informe seu nome e sobrenome completos.');
+                        return this.showError('Informe seu nome completo (nome e sobrenome).');
                     }
                     if (!phone) {
-                        return this.showError('Por favor, informe seu número de WhatsApp / Telefone.');
+                        return this.showError('Informe um número de WhatsApp ou telefone.');
                     }
 
                     const res = await fetch('/api/saas-auth', {
@@ -156,8 +156,10 @@
                         })
                     });
                     const data = await res.json();
-                    if (!res.ok) throw new Error(data.error || 'Falha ao criar conta.');
+                    if (!res.ok) throw new Error(data.error || 'Não foi possível criar sua conta. Tente novamente.');
 
+                    // Login bem-sucedido: remove flag de logout e salva sessão
+                    localStorage.removeItem('radwan_logged_out');
                     this.currentUser = data.user;
                     if (data.sessionToken) localStorage.setItem('radwan_client_token', data.sessionToken);
                     this.authModal?.classList.add('is-hidden');
@@ -170,8 +172,10 @@
                         body: JSON.stringify({ action: 'login', email, password })
                     });
                     const data = await res.json();
-                    if (!res.ok) throw new Error(data.error || 'Email ou senha incorretos.');
+                    if (!res.ok) throw new Error(data.error || 'E-mail ou senha incorretos.');
 
+                    // Login bem-sucedido: remove flag de logout e salva sessão
+                    localStorage.removeItem('radwan_logged_out');
                     this.currentUser = data.user;
                     if (data.sessionToken) localStorage.setItem('radwan_client_token', data.sessionToken);
                     this.userWorkspaces = data.workspaces || [];
@@ -191,8 +195,8 @@
                         body: JSON.stringify({ action: 'reset_password', email })
                     });
                     const data = await res.json();
-                    if (!res.ok) throw new Error(data.error || 'Falha ao solicitar reset.');
-                    this.showError('Se o email estiver cadastrado, um link seguro de recuperação foi enviado.');
+                    if (!res.ok) throw new Error(data.error || 'Não foi possível enviar o link. Tente novamente.');
+                    this.showError('Se esse e-mail estiver cadastrado, você receberá um link de recuperação.');
                     setTimeout(() => this.switchAuthMode('login'), 2000);
                 }
             } catch (err) {
@@ -223,21 +227,21 @@
             if (step3) step3.classList.toggle('hidden', step !== 3);
 
             if (step === 1) {
-                if (titleEl) titleEl.textContent = 'Como você vai usar o RADWAN ADS?';
-                if (descEl) descEl.textContent = 'Vamos configurar sua primeira operação em poucos passos.';
+                if (titleEl) titleEl.textContent = 'Como você vai usar o Radwan Ads?';
+                if (descEl) descEl.textContent = 'Escolha o que mais combina com você. Leva 30 segundos.';
                 if (iconEl) iconEl.textContent = '🚀';
             } else if (step === 2) {
-                if (titleEl) titleEl.textContent = 'Identificação da Operação';
-                if (descEl) descEl.textContent = 'Escolha um nome claro para o seu projeto ou cliente.';
+                if (titleEl) titleEl.textContent = 'Dê um nome pro seu projeto';
+                if (descEl) descEl.textContent = 'Pode ser o nome da sua loja, marca ou cliente.';
                 if (iconEl) iconEl.textContent = '🏷️';
                 const input = document.getElementById('onb-workspace-name-input');
                 if (input && !input.value) {
-                    input.value = this.selectedUsageType === 'agency' ? 'Primeiro Cliente' : 'Minha Operação';
+                    input.value = this.selectedUsageType === 'agency' ? 'Primeiro Cliente' : 'Minha Loja';
                 }
                 setTimeout(() => input?.focus(), 100);
             } else if (step === 3) {
-                if (titleEl) titleEl.textContent = 'Conexão Meta Ads';
-                if (descEl) descEl.textContent = 'Traga suas campanhas e métricas em tempo real.';
+                if (titleEl) titleEl.textContent = 'Quase pronto! Conecte suas ferramentas';
+                if (descEl) descEl.textContent = 'Faça isso agora ou depois nas Configurações.';
                 if (iconEl) iconEl.textContent = '🔑';
             }
         }
@@ -249,7 +253,7 @@
 
         async submitWorkspaceCreation() {
             const input = document.getElementById('onb-workspace-name-input');
-            const name = input?.value?.trim() || (this.selectedUsageType === 'agency' ? 'Primeiro Cliente' : 'Minha Operação');
+            const name = input?.value?.trim() || (this.selectedUsageType === 'agency' ? 'Primeiro Cliente' : 'Minha Loja');
             await this.completeOnboarding(this.selectedUsageType, name);
         }
 
@@ -271,14 +275,14 @@
                     headers: headers,
                     body: JSON.stringify({
                         action: 'create_workspace',
-                        name: workspaceName || (type === 'agency' ? 'Primeiro Cliente' : 'Minha Operação')
+                        name: workspaceName || (type === 'agency' ? 'Primeiro Cliente' : 'Minha Loja')
                     })
                 });
                 const data = await res.json();
 
                 if (res.status === 401) {
                     if (errorEl) {
-                        errorEl.textContent = 'Sua sessão expirou ou não foi encontrada. Faça login para continuar.';
+                        errorEl.textContent = 'Sua sessão expirou. Faça login novamente para continuar.';
                         errorEl.classList.remove('hidden');
                     }
                     setTimeout(() => {
@@ -288,7 +292,7 @@
                     return;
                 }
 
-                if (!res.ok) throw new Error(data.error || 'Falha ao criar workspace.');
+                if (!res.ok) throw new Error(data.error || 'Não foi possível criar o projeto. Tente novamente.');
 
                 this.currentWorkspace = data.workspace;
                 this.userWorkspaces.push(data.workspace);
@@ -298,7 +302,7 @@
                 this.goToOnboardingStep(3);
             } catch (err) {
                 if (errorEl) {
-                    errorEl.textContent = `Não foi possível salvar sua escolha: ${err.message}`;
+                    errorEl.textContent = `Ops, algo deu errado: ${err.message}`;
                     errorEl.classList.remove('hidden');
                 } else {
                     console.error('[Onboarding Error]', err.message);
@@ -342,7 +346,7 @@
             if (listContainer) {
                 if (this.userWorkspaces.length === 0) {
                     listContainer.innerHTML = `
-                        <div class="px-3 py-2 text-[11px] text-[#6E6E73]">Nenhuma operação cadastrada</div>
+                        <div class="px-3 py-2 text-[11px] text-[#6E6E73]">Nenhum projeto cadastrado</div>
                     `;
                 } else {
                     listContainer.innerHTML = this.userWorkspaces.map(ws => {
@@ -374,11 +378,16 @@
             }
         }
 
+        // ─── 6. VERIFICAÇÃO DE SESSÃO EXISTENTE (CHAMADA NO DOMCONTENTLOADED) ────
         async checkExistingSession() {
             try {
-                // Se o usuário acabou de clicar em Logout, não reautentica automaticamente
-                if (sessionStorage.getItem('radwan_logged_out') === 'true') {
-                    sessionStorage.removeItem('radwan_logged_out');
+                // ═══ CORREÇÃO DEFINITIVA DO BUG DE AUTO-RELOGIN ═══
+                // Usa localStorage (persiste entre abas e reloads) em vez de sessionStorage.
+                // A flag só é removida quando o usuário faz login explícito com sucesso.
+                if (localStorage.getItem('radwan_logged_out') === 'true') {
+                    // Usuário fez logout explícito. NÃO tenta reautenticar.
+                    // Mata qualquer cookie residual do lado do cliente também.
+                    document.cookie = 'radwan_session=; Max-Age=0; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax';
                     return;
                 }
 
@@ -396,7 +405,7 @@
                     }
                 }
             } catch (e) {
-                // Silencioso se não houver sessão ativa
+                // Sem sessão ativa — mostra splash normalmente
             }
         }
 
@@ -408,10 +417,14 @@
             }
         }
 
+        // ─── 7. LOGOUT DEFINITIVO (MORTE REAL DA SESSÃO) ─────────────────────────
         async logout() {
-            // Marca flag de logout explícito
-            sessionStorage.setItem('radwan_logged_out', 'true');
+            // 1. Marca flag persistente de logout no localStorage.
+            //    Essa flag SÓ é removida quando o usuário faz login de novo com sucesso.
+            //    Isso impede qualquer auto-relogin via cookie residual.
+            localStorage.setItem('radwan_logged_out', 'true');
 
+            // 2. Envia requisição ao servidor para expirar o cookie HttpOnly
             try {
                 await fetch('/api/saas-auth?action=logout', { 
                     method: 'POST', 
@@ -420,15 +433,17 @@
                 });
             } catch (e) {}
 
-            // Limpa tokens do cliente e storage local
+            // 3. Limpa todos os tokens e dados do cliente
             localStorage.removeItem('radwan_client_token');
             localStorage.removeItem('radwan_session');
             localStorage.removeItem('radwan_user');
+            localStorage.removeItem('radwan_custom_token');
+            localStorage.removeItem('meta_user_token');
 
-            // Força expiração do cookie no navegador
+            // 4. Força expiração do cookie no navegador (fallback)
             document.cookie = 'radwan_session=; Max-Age=0; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax';
 
-            // Redireciona para /app (onde a tela de login estará aberta e bloqueada)
+            // 5. Redireciona para /app (tela de login travada)
             window.location.href = '/app';
         }
     }

@@ -58,8 +58,8 @@
                  <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl mb-1 overflow-hidden">
                      <img src="assets/logo-radwan-ads.png" alt="RADWAN ADS" class="w-12 h-12 object-contain">
                  </div>
-                 <h2 id="auth-card-title" class="text-base font-bold tracking-tight text-[#F5F5F7]">Acessar o RADWAN ADS</h2>
-                 <p id="auth-card-sub" class="text-[11px] text-[#A1A1A6]">Console Institucional de Performance & Escala</p>
+                 <h2 id="auth-card-title" class="text-base font-bold tracking-tight text-[#F5F5F7]">Entrar no RADWAN ADS</h2>
+                 <p id="auth-card-sub" class="text-[11px] text-[#A1A1A6]">Seus anúncios, vendas e métricas em um só lugar.</p>
              </div>
  
              <!-- Botão Google OAuth Real -->
@@ -81,7 +81,7 @@
              <!-- Formulário Email + Senha -->
              <form id="saas-auth-form" onsubmit="window.authGate.handleAuthSubmit(event)" class="space-y-3">
                  <div id="auth-name-container" class="hidden space-y-1">
-                     <label class="block text-[10.5px] font-bold text-[#A1A1A6]">Nome Completo *</label>
+                     <label class="block text-[10.5px] font-bold text-[#A1A1A6]">Seu nome completo *</label>
                      <input type="text" id="auth-name-input" placeholder="Ex: Michel Radwan" class="w-full bg-[#15151A] border border-white/[0.1] rounded-xl px-3 py-2 text-xs text-[#F5F5F7] placeholder-[#6E6E73] focus:outline-none focus:border-[#FF2D2D]">
                  </div>
  
@@ -97,18 +97,18 @@
                          </div>
                      </div>
                      <div>
-                         <label class="block text-[10.5px] font-bold text-[#A1A1A6] mb-1">Nome da Empresa / Operação</label>
+                         <label class="block text-[10.5px] font-bold text-[#A1A1A6] mb-1">Nome da sua loja ou empresa</label>
                          <input type="text" id="auth-company-input" placeholder="Ex: Radwan Performance" class="w-full bg-[#15151A] border border-white/[0.1] rounded-xl px-3 py-2 text-xs text-[#F5F5F7] placeholder-[#6E6E73] focus:outline-none focus:border-[#FF2D2D]">
                      </div>
                  </div>
  
                  <div>
-                     <label class="block text-[10.5px] font-bold text-[#A1A1A6] mb-1">E-mail Profissional *</label>
+                     <label class="block text-[10.5px] font-bold text-[#A1A1A6] mb-1">Seu e-mail *</label>
                      <input type="email" id="auth-email-input" placeholder="seu@email.com" required class="w-full bg-[#15151A] border border-white/[0.1] rounded-xl px-3 py-2 text-xs text-[#F5F5F7] placeholder-[#6E6E73] focus:outline-none focus:border-[#FF2D2D]">
                  </div>
  
                  <div id="auth-password-container">
-                     <label class="block text-[10.5px] font-bold text-[#A1A1A6] mb-1">Senha *</label>
+                     <label class="block text-[10.5px] font-bold text-[#A1A1A6] mb-1">Sua senha *</label>
                      <input type="password" id="auth-password-input" placeholder="••••••••" class="w-full bg-[#15151A] border border-white/[0.1] rounded-xl px-3 py-2 text-xs text-[#F5F5F7] placeholder-[#6E6E73] focus:outline-none focus:border-[#FF2D2D]">
                  </div>
  
@@ -119,12 +119,12 @@
                  </button>
  
                  <div id="auth-login-options" class="flex items-center justify-between text-[11px] pt-1">
-                     <button type="button" data-auth-switch="signup" class="text-[#A1A1A6] hover:text-[#F5F5F7] transition-colors">Criar uma conta</button>
-                     <button type="button" data-auth-switch="reset" class="text-[#6E6E73] hover:text-[#A1A1A6] transition-colors">Esqueci minha senha</button>
+                     <button type="button" data-auth-switch="signup" class="text-[#A1A1A6] hover:text-[#F5F5F7] transition-colors">Não tenho conta</button>
+                     <button type="button" data-auth-switch="reset" class="text-[#6E6E73] hover:text-[#A1A1A6] transition-colors">Esqueci a senha</button>
                  </div>
  
                  <div id="auth-back-option" class="text-center text-[11px] pt-1 hidden">
-                     <button type="button" data-auth-switch="login" class="text-[#A1A1A6] hover:text-[#F5F5F7] transition-colors">Já tenho uma conta • Fazer login</button>
+                     <button type="button" data-auth-switch="login" class="text-[#A1A1A6] hover:text-[#F5F5F7] transition-colors">Já tenho conta · Entrar</button>
                  </div>
              </form>
          </div>
@@ -1485,19 +1485,19 @@
                         <div class="flex items-center gap-2">
                             <span class="text-base">⚠️</span>
                             <div>
-                                <h3 class="text-sm font-bold text-[#FF453A]">Zona de Risco • Restaurar Operação</h3>
-                                <p class="text-[11px] text-[#A1A1A6]">Zere os dados locais, limpe o histórico de sincronização ou desconecte a conta com segurança.</p>
+                                <h3 class="text-sm font-bold text-[#FF453A]">Começar do Zero</h3>
+                                <p class="text-[11px] text-[#A1A1A6]">Apaga tudo e recomeça a configuração do projeto como se fosse novo.</p>
                             </div>
                         </div>
                     </div>
                     
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-xl bg-[#09090C] border border-white/[0.06]">
                         <div class="space-y-0.5">
-                            <p class="text-xs font-bold text-[#F5F5F7]">Restaurar dados desta operação</p>
-                            <p class="text-[11px] text-[#6E6E73]">Apaga cache local de campanhas, pedidos simulados, logs e reinicia a leitura limpa do zero.</p>
+                            <p class="text-xs font-bold text-[#F5F5F7]">Restaurar tudo do zero</p>
+                            <p class="text-[11px] text-[#6E6E73]">Remove suas conexões, métricas salvas e configurações. Você vai precisar reconectar tudo depois.</p>
                         </div>
                         <button type="button" onclick="window.dashboard.openResetOperationModal()" class="btn btn-tertiary text-xs text-[#FF453A] border border-[#FF453A]/30 hover:bg-[#FF453A]/10 font-semibold px-4 py-2 flex-shrink-0">
-                            <span>↺</span> <span>Restaurar Operação</span>
+                            <span>↺</span> <span>Zerar tudo</span>
                         </button>
                     </div>
                 </div>
@@ -1776,7 +1776,7 @@
 
             <!-- SEÇÃO INTEGRAÇÕES (14+ PLATAFORMAS & WEBHOOKS - APPLE/LINEAR LUXURY REDESIGN) -->
             <section id="view-integrations" class="view-section hidden space-y-6">
-                <!-- Header Principal com Stats Rápidos -->
+                <!-- Header Principal -->
                 <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-white/[0.06]">
                     <div>
                         <div class="flex items-center gap-2.5">
@@ -1785,40 +1785,40 @@
                             </div>
                             <div>
                                 <div class="flex items-center gap-2">
-                                    <h2 class="text-lg font-bold text-[#F5F5F7]">Hub Universal de Integrações</h2>
+                                    <h2 class="text-lg font-bold text-[#F5F5F7]">Integrações</h2>
                                     <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-[#00E676]/15 text-[#00E676] border border-[#00E676]/30 flex items-center gap-1">
                                         <span class="w-1.5 h-1.5 rounded-full bg-[#00E676] animate-pulse"></span>
-                                        CAPI v21.0 ATIVO
+                                        ATIVO
                                     </span>
                                 </div>
-                                <p class="text-xs text-[#A1A1A6] mt-0.5">Rastreamento server-side com Meta Conversions API e deduplicação inteligente com 14 plataformas.</p>
+                                <p class="text-xs text-[#A1A1A6] mt-0.5">Conecte suas plataformas de vendas para rastrear tudo automaticamente.</p>
                             </div>
                         </div>
                     </div>
                     
                     <div class="flex items-center gap-2.5">
                         <button onclick="window.dashboard?.testWebhookEvent()" class="btn btn-secondary btn-sm text-xs flex items-center gap-1.5 border border-white/[0.1] hover:border-[#FF2D2D]/40 transition-all">
-                            <span>⚡</span> <span>Disparar Evento Teste</span>
+                            <span>⚡</span> <span>Testar conexão</span>
                         </button>
                         <button onclick="window.dashboard?.switchView('tracking')" class="btn btn-primary btn-sm text-xs font-semibold flex items-center gap-1.5 shadow-[0_0_20px_rgba(255,45,45,0.25)]">
-                            <span>🩺</span> <span>Ver Saúde do CAPI</span>
+                            <span>🩺</span> <span>Ver status</span>
                         </button>
                     </div>
                 </div>
 
-                <!-- Banner Principal: Webhook Universal (Hero Glow Card) -->
+                <!-- Banner Principal: URL de Vendas -->
                 <div class="relative overflow-hidden rounded-2xl bg-gradient-to-b from-[#15151C] to-[#0D0D12] border border-white/[0.1] p-6 space-y-4 shadow-2xl">
                     <!-- Glow decorativo superior -->
                     <div class="absolute -top-24 right-1/4 w-96 h-32 bg-[#FF2D2D]/10 rounded-full blur-3xl pointer-events-none"></div>
 
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                         <div class="flex items-center gap-2">
-                            <span class="px-2 py-0.5 rounded-md bg-[#FF2D2D]/15 text-[#FF2D2D] font-mono font-bold text-[10.5px] border border-[#FF2D2D]/30">URL UNIVERSAL</span>
-                            <span class="text-xs text-[#F5F5F7] font-semibold">Endpoint Único de Ingestão de Vendas</span>
+                            <span class="px-2 py-0.5 rounded-md bg-[#FF2D2D]/15 text-[#FF2D2D] font-mono font-bold text-[10.5px] border border-[#FF2D2D]/30">SUA URL</span>
+                            <span class="text-xs text-[#F5F5F7] font-semibold">Cole essa URL na sua plataforma para rastrear vendas</span>
                         </div>
                         <span class="text-[10px] text-[#6E6E73] font-mono flex items-center gap-1">
                             <span class="w-1.5 h-1.5 rounded-full bg-[#00E676]"></span>
-                            Latência Média: &lt; 45ms • Serverless Zero-Downtime
+                            Online 24h • Funciona com todas as plataformas
                         </span>
                     </div>
 
@@ -1833,36 +1833,35 @@
                         </button>
                     </div>
 
-                    <!-- Rodapé informativo do card -->
+                    <!-- Rodapé com explicação simples -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2 text-[11px] text-[#A1A1A6] border-t border-white/[0.05]">
                         <div class="flex items-center gap-2">
                             <span class="text-[#00E676]">✔</span>
-                            <span><b>Auto-Detecção:</b> Parser identifica a plataforma pelo payload</span>
+                            <span><b>Detecta sozinho:</b> Sabe qual plataforma enviou a venda</span>
                         </div>
                         <div class="flex items-center gap-2">
                             <span class="text-[#00E676]">✔</span>
-                            <span><b>Deduplicação:</b> Evita duplicação de compras na Meta</span>
+                            <span><b>Sem duplicatas:</b> Não conta a mesma venda duas vezes</span>
                         </div>
                         <div class="flex items-center gap-2">
                             <span class="text-[#00E676]">✔</span>
-                            <span><b>Meta CAPI Sync:</b> Disparo direto com token da sua conta</span>
+                            <span><b>Meta Ads:</b> Envia a venda direto pro seu gerenciador</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Categorias de Plataformas (Chips Filtráveis) -->
+                <!-- Filtros -->
                 <div class="flex items-center justify-between gap-3 overflow-x-auto pb-1 scrollbar-none text-xs">
                     <div class="flex items-center gap-1.5">
                         <span class="text-[11px] text-[#6E6E73] font-bold uppercase tracking-wider mr-1">Plataformas:</span>
-                        <span class="px-2.5 py-1 rounded-lg bg-white/[0.08] text-[#F5F5F7] font-bold border border-white/[0.1]">Todas (14)</span>
+                        <span class="px-2.5 py-1 rounded-lg bg-white/[0.08] text-[#F5F5F7] font-bold border border-white/[0.1]">Todas (6)</span>
                         <span class="px-2.5 py-1 rounded-lg bg-transparent text-[#A1A1A6] hover:text-[#F5F5F7] cursor-pointer">Infoprodutos</span>
                         <span class="px-2.5 py-1 rounded-lg bg-transparent text-[#A1A1A6] hover:text-[#F5F5F7] cursor-pointer">E-commerce</span>
-                        <span class="px-2.5 py-1 rounded-lg bg-transparent text-[#A1A1A6] hover:text-[#F5F5F7] cursor-pointer">Gateways</span>
                     </div>
-                    <span class="text-[11px] text-[#6E6E73] font-mono hidden md:inline">Prontas para colar o webhook</span>
+                    <span class="text-[11px] text-[#6E6E73] hidden md:inline">Cada card mostra onde colar a URL</span>
                 </div>
 
-                <!-- Grid de Plataformas (Cards Apple/Linear Grade) -->
+                <!-- Grid de Plataformas -->
                 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
                     <!-- Kiwify -->
                     <div class="p-5 rounded-2xl bg-[#111116] border border-white/[0.08] hover:border-[#00E676]/40 hover:bg-[#14141B] transition-all group flex flex-col justify-between space-y-4">
@@ -1874,18 +1873,18 @@
                                     </div>
                                     <div>
                                         <h4 class="text-sm font-bold text-[#F5F5F7] group-hover:text-[#00E676] transition-colors">Kiwify</h4>
-                                        <p class="text-[11px] text-[#6E6E73]">Infoprodutos & Assinaturas</p>
+                                        <p class="text-[11px] text-[#6E6E73]">Cursos e infoprodutos</p>
                                     </div>
                                 </div>
-                                <span class="px-2 py-0.5 rounded-full text-[9.5px] font-mono font-bold bg-[#00E676]/15 text-[#00E676] border border-[#00E676]/30">NATIVO</span>
+                                <span class="px-2 py-0.5 rounded-full text-[9.5px] font-mono font-bold bg-[#00E676]/15 text-[#00E676] border border-[#00E676]/30">PRONTO</span>
                             </div>
                             <p class="text-xs text-[#A1A1A6] leading-relaxed">
-                                Suporta vendas de cartão, boletos gerados/pagos, PIX instantâneo e reembolsos com envio imediato ao Meta CAPI.
+                                Rastreia vendas por cartão, boleto, Pix e reembolsos. Envia tudo automaticamente pro seu Meta Ads.
                             </p>
                         </div>
                         <div class="pt-3 border-t border-white/[0.05] flex items-center justify-between text-[11px]">
-                            <span class="text-[#6E6E73]">Kiwify > Apps > Webhooks</span>
-                            <button onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); alert('URL do Webhook copiada!');" class="text-[#00E676] hover:underline font-semibold">Copiar URL ➔</button>
+                            <span class="text-[#6E6E73]">📍 Kiwify → Apps → Webhooks</span>
+                            <button onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); this.textContent='Copiado ✓'; setTimeout(()=>this.textContent='Copiar URL ➔', 2000);" class="text-[#00E676] hover:underline font-semibold">Copiar URL ➔</button>
                         </div>
                     </div>
 
@@ -1899,18 +1898,18 @@
                                     </div>
                                     <div>
                                         <h4 class="text-sm font-bold text-[#F5F5F7] group-hover:text-[#FF5722] transition-colors">Hotmart</h4>
-                                        <p class="text-[11px] text-[#6E6E73]">Webhook 2.0 & Legacy</p>
+                                        <p class="text-[11px] text-[#6E6E73]">Cursos e mentorias</p>
                                     </div>
                                 </div>
-                                <span class="px-2 py-0.5 rounded-full text-[9.5px] font-mono font-bold bg-[#00E676]/15 text-[#00E676] border border-[#00E676]/30">NATIVO</span>
+                                <span class="px-2 py-0.5 rounded-full text-[9.5px] font-mono font-bold bg-[#00E676]/15 text-[#00E676] border border-[#00E676]/30">PRONTO</span>
                             </div>
                             <p class="text-xs text-[#A1A1A6] leading-relaxed">
-                                Extração de comissões líquidas, suporte a parcelamento, recuperação de carrinho e eventos de checkout internacional.
+                                Recebe vendas aprovadas, parcelas e reembolsos. Calcula comissão líquida e envia pro Meta Ads.
                             </p>
                         </div>
                         <div class="pt-3 border-t border-white/[0.05] flex items-center justify-between text-[11px]">
-                            <span class="text-[#6E6E73]">Ferramentas > Webhook (API)</span>
-                            <button onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); alert('URL do Webhook copiada!');" class="text-[#FF5722] hover:underline font-semibold">Copiar URL ➔</button>
+                            <span class="text-[#6E6E73]">📍 Ferramentas → Webhook (API)</span>
+                            <button onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); this.textContent='Copiado ✓'; setTimeout(()=>this.textContent='Copiar URL ➔', 2000);" class="text-[#FF5722] hover:underline font-semibold">Copiar URL ➔</button>
                         </div>
                     </div>
 
@@ -1924,18 +1923,18 @@
                                     </div>
                                     <div>
                                         <h4 class="text-sm font-bold text-[#F5F5F7] group-hover:text-[#95BF47] transition-colors">Shopify</h4>
-                                        <p class="text-[11px] text-[#6E6E73]">E-commerce Global</p>
+                                        <p class="text-[11px] text-[#6E6E73]">Loja virtual e dropshipping</p>
                                     </div>
                                 </div>
-                                <span class="px-2 py-0.5 rounded-full text-[9.5px] font-mono font-bold bg-[#00E676]/15 text-[#00E676] border border-[#00E676]/30">NATIVO</span>
+                                <span class="px-2 py-0.5 rounded-full text-[9.5px] font-mono font-bold bg-[#00E676]/15 text-[#00E676] border border-[#00E676]/30">PRONTO</span>
                             </div>
                             <p class="text-xs text-[#A1A1A6] leading-relaxed">
-                                Ingestão do webhook <code>orders/paid</code> com leitura de <code>note_attributes</code> para cookies <code>_fbp</code> e <code>_fbc</code>.
+                                Recebe cada pedido pago da sua loja e envia pro Meta Ads com os dados do comprador pra melhorar os anúncios.
                             </p>
                         </div>
                         <div class="pt-3 border-t border-white/[0.05] flex items-center justify-between text-[11px]">
-                            <span class="text-[#6E6E73]">Settings > Notifications > Webhook</span>
-                            <button onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); alert('URL do Webhook copiada!');" class="text-[#95BF47] hover:underline font-semibold">Copiar URL ➔</button>
+                            <span class="text-[#6E6E73]">📍 Configurações → Notificações → Webhook</span>
+                            <button onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); this.textContent='Copiado ✓'; setTimeout(()=>this.textContent='Copiar URL ➔', 2000);" class="text-[#95BF47] hover:underline font-semibold">Copiar URL ➔</button>
                         </div>
                     </div>
 
@@ -1949,18 +1948,18 @@
                                     </div>
                                     <div>
                                         <h4 class="text-sm font-bold text-[#F5F5F7] group-hover:text-[#2196F3] transition-colors">Monetizze</h4>
-                                        <p class="text-[11px] text-[#6E6E73]">Físicos & Digitais</p>
+                                        <p class="text-[11px] text-[#6E6E73]">Produtos físicos e digitais</p>
                                     </div>
                                 </div>
-                                <span class="px-2 py-0.5 rounded-full text-[9.5px] font-mono font-bold bg-[#00E676]/15 text-[#00E676] border border-[#00E676]/30">NATIVO</span>
+                                <span class="px-2 py-0.5 rounded-full text-[9.5px] font-mono font-bold bg-[#00E676]/15 text-[#00E676] border border-[#00E676]/30">PRONTO</span>
                             </div>
                             <p class="text-xs text-[#A1A1A6] leading-relaxed">
-                                Postback instantâneo de transações aprovadas, boletos impressos, pagamentos confirmados e estornos.
+                                Recebe vendas aprovadas, boletos pagos e estornos. Envia tudo pro Meta Ads na hora.
                             </p>
                         </div>
                         <div class="pt-3 border-t border-white/[0.05] flex items-center justify-between text-[11px]">
-                            <span class="text-[#6E6E73]">Ferramentas > Postback</span>
-                            <button onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); alert('URL do Webhook copiada!');" class="text-[#2196F3] hover:underline font-semibold">Copiar URL ➔</button>
+                            <span class="text-[#6E6E73]">📍 Ferramentas → Postback</span>
+                            <button onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); this.textContent='Copiado ✓'; setTimeout(()=>this.textContent='Copiar URL ➔', 2000);" class="text-[#2196F3] hover:underline font-semibold">Copiar URL ➔</button>
                         </div>
                     </div>
 
@@ -1974,18 +1973,18 @@
                                     </div>
                                     <div>
                                         <h4 class="text-sm font-bold text-[#F5F5F7] group-hover:text-[#FFC107] transition-colors">Eduzz</h4>
-                                        <p class="text-[11px] text-[#6E6E73]">Nutror & Cursos</p>
+                                        <p class="text-[11px] text-[#6E6E73]">Cursos e assinaturas</p>
                                     </div>
                                 </div>
-                                <span class="px-2 py-0.5 rounded-full text-[9.5px] font-mono font-bold bg-[#00E676]/15 text-[#00E676] border border-[#00E676]/30">NATIVO</span>
+                                <span class="px-2 py-0.5 rounded-full text-[9.5px] font-mono font-bold bg-[#00E676]/15 text-[#00E676] border border-[#00E676]/30">PRONTO</span>
                             </div>
                             <p class="text-xs text-[#A1A1A6] leading-relaxed">
-                                Integração com faturas geradas, pagas, reembolsos e cancelamentos com atribuição direta a campanhas.
+                                Recebe vendas, reembolsos e cancelamentos. Conecta cada venda à campanha certa no Meta Ads.
                             </p>
                         </div>
                         <div class="pt-3 border-t border-white/[0.05] flex items-center justify-between text-[11px]">
-                            <span class="text-[#6E6E73]">Avançado > Webhook</span>
-                            <button onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); alert('URL do Webhook copiada!');" class="text-[#FFC107] hover:underline font-semibold">Copiar URL ➔</button>
+                            <span class="text-[#6E6E73]">📍 Avançado → Webhook</span>
+                            <button onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); this.textContent='Copiado ✓'; setTimeout(()=>this.textContent='Copiar URL ➔', 2000);" class="text-[#FFC107] hover:underline font-semibold">Copiar URL ➔</button>
                         </div>
                     </div>
 
@@ -1999,18 +1998,18 @@
                                     </div>
                                     <div>
                                         <h4 class="text-sm font-bold text-[#F5F5F7] group-hover:text-[#9C27B0] transition-colors">Braip</h4>
-                                        <p class="text-[11px] text-[#6E6E73]">Produtos Físicos & Cápsulas</p>
+                                        <p class="text-[11px] text-[#6E6E73]">Produtos físicos e cápsulas</p>
                                     </div>
                                 </div>
-                                <span class="px-2 py-0.5 rounded-full text-[9.5px] font-mono font-bold bg-[#00E676]/15 text-[#00E676] border border-[#00E676]/30">NATIVO</span>
+                                <span class="px-2 py-0.5 rounded-full text-[9.5px] font-mono font-bold bg-[#00E676]/15 text-[#00E676] border border-[#00E676]/30">PRONTO</span>
                             </div>
                             <p class="text-xs text-[#A1A1A6] leading-relaxed">
-                                Suporte a postback de compras aprovadas com cálculo de frete, múltiplos itens de pedido e rastreio de SRC.
+                                Recebe vendas aprovadas com frete e múltiplos itens. Envia pro Meta Ads pra otimizar suas campanhas.
                             </p>
                         </div>
                         <div class="pt-3 border-t border-white/[0.05] flex items-center justify-between text-[11px]">
-                            <span class="text-[#6E6E73]">Ferramentas > Postback</span>
-                            <button onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); alert('URL do Webhook copiada!');" class="text-[#9C27B0] hover:underline font-semibold">Copiar URL ➔</button>
+                            <span class="text-[#6E6E73]">📍 Ferramentas → Postback</span>
+                            <button onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); this.textContent='Copiado ✓'; setTimeout(()=>this.textContent='Copiar URL ➔', 2000);" class="text-[#9C27B0] hover:underline font-semibold">Copiar URL ➔</button>
                         </div>
                     </div>
                 </div>
