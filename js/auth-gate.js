@@ -377,7 +377,15 @@
 
         async checkExistingSession() {
             try {
-                const res = await fetch('/api/saas-auth?action=session');
+                // Se o usuário acabou de clicar em Logout, não reautentica automaticamente
+                if (sessionStorage.getItem('radwan_logged_out') === 'true') {
+                    sessionStorage.removeItem('radwan_logged_out');
+                    return;
+                }
+
+                const res = await fetch('/api/saas-auth?action=session', {
+                    credentials: 'include'
+                });
                 if (res.ok) {
                     const data = await res.json();
                     if (data.authenticated && data.user) {
@@ -402,21 +410,27 @@
         }
 
         async logout() {
+            // Marca flag de logout explícito
+            sessionStorage.setItem('radwan_logged_out', 'true');
+
             try {
-                await fetch('/api/saas-auth?action=logout', { method: 'POST', credentials: 'include' });
+                await fetch('/api/saas-auth?action=logout', { 
+                    method: 'POST', 
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' }
+                });
             } catch (e) {}
 
             // Limpa tokens do cliente e storage local
             localStorage.removeItem('radwan_client_token');
             localStorage.removeItem('radwan_session');
             localStorage.removeItem('radwan_user');
-            sessionStorage.clear();
 
             // Força expiração do cookie no navegador
             document.cookie = 'radwan_session=; Max-Age=0; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax';
 
-            // Redireciona limpo para a tela de autenticação
-            window.location.replace('/app');
+            // Redireciona para /app (onde a tela de login estará aberta e bloqueada)
+            window.location.href = '/app';
         }
     }
 

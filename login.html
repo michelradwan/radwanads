@@ -448,6 +448,11 @@
                 <div>
                     <p class="sidebar-group-title">OPERAÇÕES & SISTEMA</p>
                     <nav class="space-y-1">
+                        <div class="nav-item" data-nav-target="integrations" title="Hub de Integrações (Webhooks, CAPI, Hotmart, Kiwify, etc)">
+                            <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                            <span class="truncate">Integrações</span>
+                            <span class="ml-auto text-[9.5px] px-1.5 py-0.2 rounded bg-[#00E676]/15 text-[#00E676] font-bold border border-[#00E676]/30 font-mono">14+</span>
+                        </div>
                         <div class="nav-item" data-nav-target="tracking" title="Saúde dos Pixels e Meta CAPI">
                             <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
                             <span class="truncate">Saúde do Rastreamento</span>
@@ -1713,6 +1718,139 @@
                         </div>
                     </div>
                 </div>
+                <!-- SEÇÃO INTEGRAÇÕES (14+ PLATAFORMAS & WEBHOOKS) -->
+                <section id="view-integrations" class="view-section hidden space-y-6">
+                    <!-- Header -->
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 pb-2 border-b border-white/[0.06]">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xl">🔌</span>
+                                <h2 class="text-base font-bold text-[#F5F5F7]">Hub de Integrações & Webhooks</h2>
+                                <span class="badge badge-active text-[10px]">14 Plataformas Suportadas</span>
+                            </div>
+                            <p class="text-xs text-[#A1A1A6] mt-0.5">Receba eventos de conversão e envie automaticamente para a Meta Graph CAPI.</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="window.dashboard?.testWebhookEvent()" class="btn btn-secondary btn-sm text-xs flex items-center gap-1.5">
+                                <span>⚡</span> <span>Disparar Evento Teste</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Card da URL Universal de Webhook -->
+                    <div class="p-5 rounded-2xl bg-gradient-to-r from-[#121217] to-[#181822] border border-[#FF2D2D]/30 space-y-3 relative overflow-hidden">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2.5 h-2.5 rounded-full bg-[#00E676] animate-pulse"></span>
+                                <span class="text-xs font-bold uppercase tracking-wider text-[#F5F5F7]">Sua URL Universal de Webhook</span>
+                            </div>
+                            <span class="text-[10px] text-[#A1A1A6] font-mono">POST • JSON / x-www-form-urlencoded</span>
+                        </div>
+                        <div class="flex items-center gap-2 bg-[#08080A] border border-white/[0.1] rounded-xl p-3">
+                            <input type="text" readonly value="https://radwanads.vercel.app/api/webhook" id="hub-webhook-url" class="bg-transparent text-xs text-[#F5F5F7] font-mono flex-1 outline-none">
+                            <button type="button" onclick="navigator.clipboard.writeText('https://radwanads.vercel.app/api/webhook'); this.textContent='Copiado!'; setTimeout(()=>this.textContent='Copiar URL', 2000);" class="btn btn-primary py-1.5 px-4 text-xs font-bold">
+                                Copiar URL
+                            </button>
+                        </div>
+                        <p class="text-[11px] text-[#A1A1A6]">
+                            Cole essa mesma URL em qualquer plataforma (Kiwify, Hotmart, Monetizze, Eduzz, Shopify, Braip, Yampi, etc). O RADWAN ADS identifica o formato automaticamente.
+                        </p>
+                    </div>
+
+                    <!-- Grid de Plataformas Suportadas -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <!-- Kiwify -->
+                        <div class="p-4 rounded-xl bg-[#111116] border border-white/[0.07] space-y-2.5 hover:border-white/[0.15] transition-all">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-8 h-8 rounded-lg bg-[#00E676]/10 text-[#00E676] font-bold flex items-center justify-center text-xs">KW</div>
+                                    <div>
+                                        <h4 class="text-xs font-bold text-[#F5F5F7]">Kiwify</h4>
+                                        <p class="text-[10px] text-[#6E6E73]">Vendas, Reembolsos, PIX</p>
+                                    </div>
+                                </div>
+                                <span class="badge badge-active text-[9.5px]">Nativo</span>
+                            </div>
+                            <p class="text-[11px] text-[#A1A1A6]">Configurações > Webhooks > Adicionar Webhook com a URL acima.</p>
+                        </div>
+
+                        <!-- Hotmart -->
+                        <div class="p-4 rounded-xl bg-[#111116] border border-white/[0.07] space-y-2.5 hover:border-white/[0.15] transition-all">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-8 h-8 rounded-lg bg-[#FF5722]/10 text-[#FF5722] font-bold flex items-center justify-center text-xs">HM</div>
+                                    <div>
+                                        <h4 class="text-xs font-bold text-[#F5F5F7]">Hotmart</h4>
+                                        <p class="text-[10px] text-[#6E6E73]">Webhook v2 & Legacy</p>
+                                    </div>
+                                </div>
+                                <span class="badge badge-active text-[9.5px]">Nativo</span>
+                            </div>
+                            <p class="text-[11px] text-[#A1A1A6]">Ferramentas > Webhook (API) > Configurar URL única.</p>
+                        </div>
+
+                        <!-- Shopify -->
+                        <div class="p-4 rounded-xl bg-[#111116] border border-white/[0.07] space-y-2.5 hover:border-white/[0.15] transition-all">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-8 h-8 rounded-lg bg-[#95BF47]/10 text-[#95BF47] font-bold flex items-center justify-center text-xs">SP</div>
+                                    <div>
+                                        <h4 class="text-xs font-bold text-[#F5F5F7]">Shopify</h4>
+                                        <p class="text-[10px] text-[#6E6E73]">Orders/Paid + _fbp / _fbc</p>
+                                    </div>
+                                </div>
+                                <span class="badge badge-active text-[9.5px]">Nativo</span>
+                            </div>
+                            <p class="text-[11px] text-[#A1A1A6]">Settings > Notifications > Webhooks > Order Creation / Payment.</p>
+                        </div>
+
+                        <!-- Monetizze -->
+                        <div class="p-4 rounded-xl bg-[#111116] border border-white/[0.07] space-y-2.5 hover:border-white/[0.15] transition-all">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-8 h-8 rounded-lg bg-[#2196F3]/10 text-[#2196F3] font-bold flex items-center justify-center text-xs">MZ</div>
+                                    <div>
+                                        <h4 class="text-xs font-bold text-[#F5F5F7]">Monetizze</h4>
+                                        <p class="text-[10px] text-[#6E6E73]">Postback / Webhook</p>
+                                    </div>
+                                </div>
+                                <span class="badge badge-active text-[9.5px]">Nativo</span>
+                            </div>
+                            <p class="text-[11px] text-[#A1A1A6]">Ferramentas > Postback > Adicionar URL do RADWAN ADS.</p>
+                        </div>
+
+                        <!-- Eduzz -->
+                        <div class="p-4 rounded-xl bg-[#111116] border border-white/[0.07] space-y-2.5 hover:border-white/[0.15] transition-all">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-8 h-8 rounded-lg bg-[#FFC107]/10 text-[#FFC107] font-bold flex items-center justify-center text-xs">ED</div>
+                                    <div>
+                                        <h4 class="text-xs font-bold text-[#F5F5F7]">Eduzz</h4>
+                                        <p class="text-[10px] text-[#6E6E73]">Nutror & Fatura Paga</p>
+                                    </div>
+                                </div>
+                                <span class="badge badge-active text-[9.5px]">Nativo</span>
+                            </div>
+                            <p class="text-[11px] text-[#A1A1A6]">Avançado > Webhook > Cadastrar nova URL.</p>
+                        </div>
+
+                        <!-- Braip -->
+                        <div class="p-4 rounded-xl bg-[#111116] border border-white/[0.07] space-y-2.5 hover:border-white/[0.15] transition-all">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-8 h-8 rounded-lg bg-[#9C27B0]/10 text-[#9C27B0] font-bold flex items-center justify-center text-xs">BP</div>
+                                    <div>
+                                        <h4 class="text-xs font-bold text-[#F5F5F7]">Braip</h4>
+                                        <p class="text-[10px] text-[#6E6E73]">Postback Transações</p>
+                                    </div>
+                                </div>
+                                <span class="badge badge-active text-[9.5px]">Nativo</span>
+                            </div>
+                            <p class="text-[11px] text-[#A1A1A6]">Ferramentas > Postback > Criar Configuração.</p>
+                        </div>
+                    </div>
+                </section>
+
                 <!-- Backdrop do Drawer Discreto (Apenas Mobile/Tablet Leve, Sem Blur Bloqueante) -->
                 <div id="op-map-drawer-backdrop" class="fixed inset-0 bg-black/20 md:hidden z-40 hidden" onclick="window.operationMapEngine?.closeDrawer()"></div>
             </section>
